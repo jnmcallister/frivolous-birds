@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://da6qc5wdt7kgd"]
+
+[ext_resource type="PackedScene" uid="uid://d12csarb4j7pb" path="res://Scenes/killzone.tscn" id="1_8gu0t"]
+[ext_resource type="Texture2D" uid="uid://dmfdgbartvq6l" path="res://icon.svg" id="2_ulakv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x17ai"]
+size = Vector2(128, 128)
+
+[node name="PipeSegment" instance=ExtResource("1_8gu0t")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="0"]
+shape = SubResource("RectangleShape2D_x17ai")
+
+[node name="Sprite2D" type="Sprite2D" parent="." index="1"]
+texture = ExtResource("2_ulakv")

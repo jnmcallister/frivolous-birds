@@ -1,8 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://d1gm2w32i67tp"]
-
-[ext_resource type="PackedScene" uid="uid://daajos2gmdvfu" path="res://Scenes/player_1.tscn" id="1_mkara"]
-
-[node name="player2" type="Node2D"]
-
-[node name="player1" parent="." instance=ExtResource("1_mkara")]
-jumpAction = "jumpP2"

@@ -1,16 +1,33 @@
-[gd_scene load_steps=3 format=3 uid="uid://br6454hx8ajer"]
+[gd_scene load_steps=5 format=3 uid="uid://br6454hx8ajer"]
 
-[ext_resource type="PackedScene" uid="uid://daajos2gmdvfu" path="res://Scenes/player_1.tscn" id="1_ebmjs"]
-[ext_resource type="PackedScene" uid="uid://d1gm2w32i67tp" path="res://Scenes/player_2.tscn" id="2_qxrlw"]
+[ext_resource type="PackedScene" uid="uid://daajos2gmdvfu" path="res://Scenes/player.tscn" id="1_ebmjs"]
+[ext_resource type="PackedScene" uid="uid://ifxgca25kcf1" path="res://Scenes/triple_pipe.tscn" id="3_3dryh"]
+[ext_resource type="PackedScene" uid="uid://d12csarb4j7pb" path="res://Scenes/killzone.tscn" id="3_wrm1d"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_3dryh"]
 
 [node name="Game" type="Node2D"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(600, 0)
-zoom = Vector2(0.5, 0.5)
+offset = Vector2(1000, 0)
+zoom = Vector2(0.4, 0.4)
 
-[node name="player1" parent="." instance=ExtResource("1_ebmjs")]
+[node name="Players" type="Node" parent="."]
+
+[node name="player1" parent="Players" instance=ExtResource("1_ebmjs")]
 position = Vector2(0, -300)
 
-[node name="player2" parent="." instance=ExtResource("2_qxrlw")]
-position = Vector2(0, 300)
+[node name="player2" parent="Players" instance=ExtResource("1_ebmjs")]
+position = Vector2(0, 100)
+jumpAction = "jumpP2"
+
+[node name="Environment" type="Node" parent="."]
+
+[node name="FloorKillzone" parent="Environment" instance=ExtResource("3_wrm1d")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/FloorKillzone"]
+position = Vector2(0, 562)
+shape = SubResource("WorldBoundaryShape2D_3dryh")
+
+[node name="TriplePipe" parent="Environment" instance=ExtResource("3_3dryh")]
+position = Vector2(600, 0)
