@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://br6454hx8ajer"]
 
 [ext_resource type="PackedScene" uid="uid://daajos2gmdvfu" path="res://Scenes/player.tscn" id="1_ebmjs"]
-[ext_resource type="PackedScene" uid="uid://ifxgca25kcf1" path="res://Scenes/triple_pipe.tscn" id="3_3dryh"]
 [ext_resource type="PackedScene" uid="uid://d12csarb4j7pb" path="res://Scenes/killzone.tscn" id="3_wrm1d"]
+[ext_resource type="PackedScene" uid="uid://bl2arrksj63td" path="res://Scenes/pipe_spawner.tscn" id="4_3dryh"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_3dryh"]
 
@@ -24,10 +24,10 @@ jumpAction = "jumpP2"
 [node name="Environment" type="Node" parent="."]
 
 [node name="FloorKillzone" parent="Environment" instance=ExtResource("3_wrm1d")]
+position = Vector2(0, 810)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/FloorKillzone"]
-position = Vector2(0, 562)
 shape = SubResource("WorldBoundaryShape2D_3dryh")
 
-[node name="TriplePipe" parent="Environment" instance=ExtResource("3_3dryh")]
-position = Vector2(600, 0)
+[node name="PipeSpawner" parent="Environment" instance=ExtResource("4_3dryh")]
+position = Vector2(2700, 0)
