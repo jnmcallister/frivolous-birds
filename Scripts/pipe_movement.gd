@@ -2,11 +2,11 @@ extends Node2D
 
 
 const speed: float = -400
-const respawn_x_pos: float = -700 # When the pipes go past this point, go back into pipe queue
+const respawn_x_pos: float = -1500 # When the pipes go past this point, go back into pipe queue
 
 signal respawn_pipe(Node2D)
 
-var move_pipe: bool = true
+var move_pipe: bool = false
 
 func _physics_process(delta: float) -> void:
 	if move_pipe:

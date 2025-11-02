@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://bmhbn8mohgs2k"]
+
+[ext_resource type="PackedScene" uid="uid://bi3hwnl6j3u3v" path="res://Scenes/pipe_segment_holder.tscn" id="1_db4s3"]
+[ext_resource type="PackedScene" uid="uid://da6qc5wdt7kgd" path="res://Scenes/pipe_segment.tscn" id="2_r488b"]
+
+[node name="DoublePipe" type="Node2D"]
+
+[node name="PipeSegmentHolder" parent="." instance=ExtResource("1_db4s3")]
+
+[node name="TopSegment" parent="PipeSegmentHolder" instance=ExtResource("2_r488b")]
+position = Vector2(0, -800)
+scale = Vector2(1, 7)
+
+[node name="BottomSegment" parent="PipeSegmentHolder" instance=ExtResource("2_r488b")]
+position = Vector2(0, 800)
+scale = Vector2(1, 7)

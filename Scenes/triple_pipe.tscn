@@ -1,18 +1,19 @@
 [gd_scene load_steps=3 format=3 uid="uid://ifxgca25kcf1"]
 
-[ext_resource type="Script" uid="uid://cucqyqmyjwmro" path="res://Scripts/pipe_movement.gd" id="1_mi0ht"]
+[ext_resource type="PackedScene" uid="uid://bi3hwnl6j3u3v" path="res://Scenes/pipe_segment_holder.tscn" id="1_mi0ht"]
 [ext_resource type="PackedScene" uid="uid://da6qc5wdt7kgd" path="res://Scenes/pipe_segment.tscn" id="1_qn1ws"]
 
 [node name="TriplePipe" type="Node2D"]
-script = ExtResource("1_mi0ht")
 
-[node name="TopSegment" parent="." instance=ExtResource("1_qn1ws")]
-position = Vector2(0, -900)
+[node name="PipeSegmentHolder" parent="." instance=ExtResource("1_mi0ht")]
+
+[node name="TopSegment" parent="PipeSegmentHolder" instance=ExtResource("1_qn1ws")]
+position = Vector2(0, -950)
 scale = Vector2(1, 5)
 
-[node name="MiddleSegment" parent="." instance=ExtResource("1_qn1ws")]
+[node name="MiddleSegment" parent="PipeSegmentHolder" instance=ExtResource("1_qn1ws")]
 scale = Vector2(1, 3)
 
-[node name="BottomSegment" parent="." instance=ExtResource("1_qn1ws")]
-position = Vector2(0, 900)
+[node name="BottomSegment" parent="PipeSegmentHolder" instance=ExtResource("1_qn1ws")]
+position = Vector2(0, 950)
 scale = Vector2(1, 5)
