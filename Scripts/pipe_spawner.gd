@@ -12,6 +12,7 @@ var triple_pipe_count: int = 8
 var double_pipe_count: int = 2
 
 @onready var timer: Timer = $Timer
+@onready var game_manager: Node2D = $"../.."
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -40,6 +41,9 @@ func instantiate_new_pipe(pipe: Resource) -> void:
 	
 	# Make pipe remove itself when it reaches end of screen
 	new_pipe.get_node("PipeSegmentHolder").respawn_pipe.connect(remove_pipe)
+	
+	# Signal to game manager to increase score when player crosses line
+	new_pipe.get_node("PipeSegmentHolder/PipeScoreArea").score_increment.connect(game_manager.on_score_increment)
 	
 	# Add to queue
 	free_pipes.push_back(new_pipe)

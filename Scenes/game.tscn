@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://br6454hx8ajer"]
+[gd_scene load_steps=7 format=3 uid="uid://br6454hx8ajer"]
 
 [ext_resource type="PackedScene" uid="uid://daajos2gmdvfu" path="res://Scenes/player.tscn" id="1_ebmjs"]
+[ext_resource type="Script" uid="uid://bbb1ynfp4rb5b" path="res://Scripts/game_manager.gd" id="1_wowpa"]
 [ext_resource type="PackedScene" uid="uid://d12csarb4j7pb" path="res://Scenes/killzone.tscn" id="3_wrm1d"]
 [ext_resource type="PackedScene" uid="uid://bl2arrksj63td" path="res://Scenes/pipe_spawner.tscn" id="4_3dryh"]
 [ext_resource type="PackedScene" uid="uid://dsw4dd8bsfses" path="res://Scenes/score_display.tscn" id="4_wowpa"]
@@ -8,6 +9,7 @@
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_3dryh"]
 
 [node name="Game" type="Node2D"]
+script = ExtResource("1_wowpa")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(1000, 0)

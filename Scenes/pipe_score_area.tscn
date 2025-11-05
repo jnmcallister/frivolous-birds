@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://12t5wktke00i"]
+
+[ext_resource type="Script" uid="uid://djnl1kfks65qj" path="res://Scripts/pipe_score_area.gd" id="1_fkkfl"]
+
+[node name="PipeScoreArea" type="Area2D"]
+collision_mask = 2
+script = ExtResource("1_fkkfl")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

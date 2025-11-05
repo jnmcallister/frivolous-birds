@@ -1,7 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://bmhbn8mohgs2k"]
+[gd_scene load_steps=5 format=3 uid="uid://bmhbn8mohgs2k"]
 
 [ext_resource type="PackedScene" uid="uid://bi3hwnl6j3u3v" path="res://Scenes/pipe_segment_holder.tscn" id="1_db4s3"]
 [ext_resource type="PackedScene" uid="uid://da6qc5wdt7kgd" path="res://Scenes/pipe_segment.tscn" id="2_r488b"]
+[ext_resource type="PackedScene" uid="uid://12t5wktke00i" path="res://Scenes/pipe_score_area.tscn" id="3_r488b"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r488b"]
+size = Vector2(20, 2000)
 
 [node name="DoublePipe" type="Node2D"]
 
@@ -14,3 +18,8 @@ scale = Vector2(1, 7)
 [node name="BottomSegment" parent="PipeSegmentHolder" instance=ExtResource("2_r488b")]
 position = Vector2(0, 800)
 scale = Vector2(1, 7)
+
+[node name="PipeScoreArea" parent="PipeSegmentHolder" instance=ExtResource("3_r488b")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PipeSegmentHolder/PipeScoreArea"]
+shape = SubResource("RectangleShape2D_r488b")
