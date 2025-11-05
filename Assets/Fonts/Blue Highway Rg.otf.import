@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://dandcakirkbwn"
-path="res://.godot/imported/Blue Highway D.otf-e5b6c9b248d99549a82055565e4cb41e.fontdata"
+uid="uid://dmsbru030krre"
+path="res://.godot/imported/Blue Highway Rg.otf-8d225ab43a6cb730d7691a8061be69be.fontdata"
 
 [deps]
 
-source_file="res://Fonts/Blue Highway D.otf"
-dest_files=["res://.godot/imported/Blue Highway D.otf-e5b6c9b248d99549a82055565e4cb41e.fontdata"]
+source_file="res://Assets/Fonts/Blue Highway Rg.otf"
+dest_files=["res://.godot/imported/Blue Highway Rg.otf-8d225ab43a6cb730d7691a8061be69be.fontdata"]
 
 [params]
 

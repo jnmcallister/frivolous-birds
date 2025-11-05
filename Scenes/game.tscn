@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://br6454hx8ajer"]
+[gd_scene load_steps=6 format=3 uid="uid://br6454hx8ajer"]
 
 [ext_resource type="PackedScene" uid="uid://daajos2gmdvfu" path="res://Scenes/player.tscn" id="1_ebmjs"]
 [ext_resource type="PackedScene" uid="uid://d12csarb4j7pb" path="res://Scenes/killzone.tscn" id="3_wrm1d"]
 [ext_resource type="PackedScene" uid="uid://bl2arrksj63td" path="res://Scenes/pipe_spawner.tscn" id="4_3dryh"]
+[ext_resource type="PackedScene" uid="uid://dsw4dd8bsfses" path="res://Scenes/score_display.tscn" id="4_wowpa"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_3dryh"]
 
@@ -31,3 +32,26 @@ shape = SubResource("WorldBoundaryShape2D_3dryh")
 
 [node name="PipeSpawner" parent="Environment" instance=ExtResource("4_3dryh")]
 position = Vector2(2700, 0)
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -440.0
+offset_top = -810.0
+offset_right = 2440.0
+offset_bottom = 810.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ScoreDisplay" parent="Control" instance=ExtResource("4_wowpa")]
+z_index = 1
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_bottom = 0.0
+offset_left = -434.0
+offset_top = 6.0
+offset_right = -7.0
+offset_bottom = 86.0
+grow_horizontal = 0
+grow_vertical = 1

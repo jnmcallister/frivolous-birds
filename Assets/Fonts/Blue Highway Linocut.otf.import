@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://cwunrv3x25417"
-path="res://.godot/imported/Blue Highway Bd.otf-13d43fa2c65c13d4a4e4fe2ae2885400.fontdata"
+uid="uid://cl43juwsmoe0i"
+path="res://.godot/imported/Blue Highway Linocut.otf-0bc49477dc5ac5ec0a69ce46b1850521.fontdata"
 
 [deps]
 
-source_file="res://Fonts/Blue Highway Bd.otf"
-dest_files=["res://.godot/imported/Blue Highway Bd.otf-13d43fa2c65c13d4a4e4fe2ae2885400.fontdata"]
+source_file="res://Assets/Fonts/Blue Highway Linocut.otf"
+dest_files=["res://.godot/imported/Blue Highway Linocut.otf-0bc49477dc5ac5ec0a69ce46b1850521.fontdata"]
 
 [params]
 

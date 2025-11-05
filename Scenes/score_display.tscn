@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://dsw4dd8bsfses"]
+
+[ext_resource type="FontFile" uid="uid://dmsbru030krre" path="res://Assets/Fonts/Blue Highway Rg.otf" id="1_s1pvd"]
+[ext_resource type="FontFile" uid="uid://cwunrv3x25417" path="res://Assets/Fonts/Blue Highway Bd.otf" id="2_rvd41"]
+
+[node name="ScoreDisplay" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 768.0
+offset_bottom = 432.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -466.0
+offset_bottom = 117.0
+grow_horizontal = 0
+theme_override_fonts/normal_font = ExtResource("1_s1pvd")
+theme_override_fonts/bold_font = ExtResource("2_rvd41")
+theme_override_font_sizes/normal_font_size = 64
+text = "Score: 0"
+scroll_active = false
+horizontal_alignment = 2
