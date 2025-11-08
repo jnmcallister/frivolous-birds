@@ -23,6 +23,10 @@ window/stretch/mode="canvas_items"
 
 project/assembly_name="Frivolous Birds"
 
+[global_group]
+
+player=""
+
 [input]
 
 jumpP1={

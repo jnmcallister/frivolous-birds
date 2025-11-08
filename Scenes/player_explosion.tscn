@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://c57maji1j8c1l"]
+
+[sub_resource type="Curve" id="Curve_n0k03"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.4977534, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_yudi0"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.5294118)
+
+[sub_resource type="Gradient" id="Gradient_g2ca0"]
+colors = PackedColorArray(0.92941177, 0.36078432, 0.047058824, 1, 1, 0.8016667, 0.14999998, 1)
+
+[node name="player_explosion" type="Node2D"]
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 160
+lifetime = 0.6
+one_shot = true
+explosiveness = 0.9
+spread = 180.0
+gravity = Vector2(0, 200)
+initial_velocity_min = 100.0
+initial_velocity_max = 800.0
+scale_amount_min = 10.0
+scale_amount_max = 40.0
+scale_amount_curve = SubResource("Curve_n0k03")
+color_ramp = SubResource("Gradient_yudi0")
+color_initial_ramp = SubResource("Gradient_g2ca0")
