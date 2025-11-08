@@ -11,10 +11,15 @@ var dead_players: int = 0
 var game_state: GameState = GameState.START_MENU
 
 @onready var score_display: Control = $"../UI/ScoreDisplay"
-@onready var start_button: Button = $"../UI/StartMenu/StartButton"
+@onready var start_menu: Control = $"../UI/StartMenu"
+@onready var game_over_menu: Control = $"../UI/GameOverMenu"
 
 signal game_start
 signal double_speed
+
+func _ready() -> void:
+	game_over_menu.hide()
+
 
 func on_score_increment() -> void:
 	score += 1
@@ -32,14 +37,14 @@ func on_player_died() -> void:
 		double_speed.emit()
 		
 	elif dead_players == 2:
-		# TODO - End the game
-		pass
-
-
-func get_game_state() -> GameState:
-	return game_state
+		# End the game
+		game_over_menu.show()
 
 
 func _on_start_button_pressed() -> void:
 	game_start.emit()
-	start_button.hide()
+	start_menu.hide()
+
+
+func _on_game_over_button_pressed() -> void:
+	get_tree().reload_current_scene() # Restart game
