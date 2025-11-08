@@ -5,8 +5,12 @@ extends Node2D
 const PIPE_SCENE_TRIPLE = preload("res://Scenes/triple_pipe.tscn")
 const PIPE_SCENE_DOUBLE = preload("res://Scenes/double_pipe.tscn")
 
+const pipe_speed_multiplier: float = 2 # How much to multiply pipe speed when player dies
+const pipe_rate_divisor: float = 2 # How much to divide spawn rate when player dies
+
 var pipe_elevation_max: float = 260
 var free_pipes: Array[Node2D] = []
+var all_pipes: Array[Node2D] = [] # Array of all pipes
 var triple_pipe_count: int = 8
 var double_pipe_count: int = 2
 var pipe_speed: float = -400
@@ -51,8 +55,9 @@ func instantiate_new_pipe(pipe: Resource) -> void:
 	# Signal to game manager to increase score when player crosses line
 	new_pipe.get_node("PipeSegmentHolder/PipeScoreArea").score_increment.connect(game_manager.on_score_increment)
 	
-	# Add to queue
+	# Add to queue and pipes array
 	free_pipes.push_back(new_pipe)
+	all_pipes.push_back(new_pipe)
 
 
 # Puts a pipe on the right side of the screen
@@ -99,5 +104,10 @@ func remove_pipe(pipe_node: Node2D) -> void:
 
 
 func double_pipe_speed() -> void:
-	pipe_speed *= 2
-	timer.wait_time /= 4
+	# Increase pipe speed and spawn rate
+	pipe_speed *= pipe_speed_multiplier
+	timer.wait_time /= pipe_rate_divisor
+	
+	# Iterate through all pipes and speed them up
+	for pipe in all_pipes:
+		pipe.get_node("PipeSegmentHolder").set_pipe_speed(pipe_speed)
