@@ -7,7 +7,6 @@ const PIPE_SCENE_DOUBLE = preload("res://Scenes/double_pipe.tscn")
 
 var pipe_elevation_max: float = 260
 var free_pipes: Array[Node2D] = []
-
 var triple_pipe_count: int = 8
 var double_pipe_count: int = 2
 var pipe_speed: float = -400
@@ -17,9 +16,14 @@ var pipe_speed: float = -400
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	game_manager.game_start.connect(start_spawning)
+	game_manager.double_speed.connect(double_pipe_speed)
+
+
+func start_spawning() -> void:
+	timer.start()
 	instantiate_pipes()
 	spawn_pipe()
-	game_manager.double_speed.connect(double_pipe_speed)
 
 
 # Instantiates several pipes and adds them to free_pipes queue

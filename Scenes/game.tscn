@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://br6454hx8ajer"]
+[gd_scene load_steps=8 format=3 uid="uid://br6454hx8ajer"]
 
 [ext_resource type="PackedScene" uid="uid://daajos2gmdvfu" path="res://Scenes/player.tscn" id="1_ebmjs"]
 [ext_resource type="Script" uid="uid://bbb1ynfp4rb5b" path="res://Scripts/game_manager.gd" id="1_wowpa"]
 [ext_resource type="PackedScene" uid="uid://d12csarb4j7pb" path="res://Scenes/killzone.tscn" id="3_wrm1d"]
 [ext_resource type="PackedScene" uid="uid://bl2arrksj63td" path="res://Scenes/pipe_spawner.tscn" id="4_3dryh"]
 [ext_resource type="PackedScene" uid="uid://dsw4dd8bsfses" path="res://Scenes/score_display.tscn" id="4_wowpa"]
+[ext_resource type="FontFile" uid="uid://cwunrv3x25417" path="res://Assets/Fonts/Blue Highway Bd.otf" id="6_i6g32"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_3dryh"]
 
@@ -38,7 +39,7 @@ shape = SubResource("WorldBoundaryShape2D_3dryh")
 [node name="PipeSpawner" parent="Environment" instance=ExtResource("4_3dryh")]
 position = Vector2(2700, 0)
 
-[node name="Control" type="Control" parent="."]
+[node name="UI" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
 offset_left = -440.0
@@ -48,7 +49,7 @@ offset_bottom = 810.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="ScoreDisplay" parent="Control" instance=ExtResource("4_wowpa")]
+[node name="ScoreDisplay" parent="UI" instance=ExtResource("4_wowpa")]
 z_index = 1
 layout_mode = 1
 anchors_preset = 1
@@ -60,3 +61,31 @@ offset_right = -7.0
 offset_bottom = 86.0
 grow_horizontal = 0
 grow_vertical = 1
+
+[node name="StartMenu" type="Control" parent="UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StartButton" type="Button" parent="UI/StartMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -229.0
+offset_top = -100.5
+offset_right = 229.0
+offset_bottom = 100.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("6_i6g32")
+theme_override_font_sizes/font_size = 64
+text = "Start Game (you'll regret it)"
+autowrap_mode = 2
+
+[connection signal="pressed" from="UI/StartMenu/StartButton" to="GameManager" method="_on_start_button_pressed"]

@@ -6,22 +6,35 @@ const JUMP_VELOCITY = -600.0
 
 @export var jumpAction: String = "jumpP1"
 
+var enable_movement: bool = false
+
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var collision: CollisionShape2D = $CollisionShape2D
 @onready var player_explosion: Node2D = $player_explosion
 @onready var game_manager: Node2D = %GameManager
 
+func _ready() -> void:
+	game_manager.game_start.connect(on_game_start)
+
+
+func on_game_start() -> void:
+	enable_movement = true
+
+
 func _physics_process(delta: float) -> void:
 	
-	# Add the gravity.
-	velocity += get_gravity() * delta
+	# Check if movement is enabled
+	if enable_movement:
+	
+		# Add the gravity.
+		velocity += get_gravity() * delta
 
-	# Handle jump.
-	if Input.is_action_just_pressed(jumpAction):
-		velocity.y = JUMP_VELOCITY
+		# Handle jump.
+		if Input.is_action_just_pressed(jumpAction):
+			velocity.y = JUMP_VELOCITY
 
-	# Move player
-	move_and_slide()
+		# Move player
+		move_and_slide()
 
 
 # Called when player touches killzone
