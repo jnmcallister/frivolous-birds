@@ -9,6 +9,9 @@
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_3dryh"]
 
 [node name="Game" type="Node2D"]
+
+[node name="GameManager" type="Node2D" parent="."]
+unique_name_in_owner = true
 script = ExtResource("1_wowpa")
 
 [node name="Camera2D" type="Camera2D" parent="."]

@@ -9,6 +9,7 @@ const JUMP_VELOCITY = -600.0
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var collision: CollisionShape2D = $CollisionShape2D
 @onready var player_explosion: Node2D = $player_explosion
+@onready var game_manager: Node2D = %GameManager
 
 func _physics_process(delta: float) -> void:
 	
@@ -35,3 +36,6 @@ func on_player_died() -> void:
 	# Disable collision
 	collision.process_mode = Node.PROCESS_MODE_DISABLED
 	collision.set_deferred("disabled", true)
+	
+	# Tell game manager that a player died
+	game_manager.on_player_died()

@@ -10,14 +10,16 @@ var free_pipes: Array[Node2D] = []
 
 var triple_pipe_count: int = 8
 var double_pipe_count: int = 2
+var pipe_speed: float = -400
 
 @onready var timer: Timer = $Timer
-@onready var game_manager: Node2D = $"../.."
+@onready var game_manager: Node2D = %GameManager
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	instantiate_pipes()
 	spawn_pipe()
+	game_manager.double_speed.connect(double_pipe_speed)
 
 
 # Instantiates several pipes and adds them to free_pipes queue
@@ -76,6 +78,7 @@ func initialize_pipe(pipe_node: Node2D) -> void:
 	
 	# Start movement
 	pipe_node.get_node("PipeSegmentHolder").set_move_pipe(true)
+	pipe_node.get_node("PipeSegmentHolder").set_pipe_speed(pipe_speed)
 
 
 # Removes pipe from scene and adds it to the free_pipes array
@@ -89,3 +92,8 @@ func remove_pipe(pipe_node: Node2D) -> void:
 	# Add this to queue
 	var pipe_parent = pipe_node.get_parent()
 	free_pipes.push_back(pipe_parent)
+
+
+func double_pipe_speed() -> void:
+	pipe_speed *= 2
+	timer.wait_time /= 4
