@@ -1,13 +1,18 @@
-[gd_scene load_steps=8 format=3 uid="uid://br6454hx8ajer"]
+[gd_scene load_steps=11 format=3 uid="uid://br6454hx8ajer"]
 
 [ext_resource type="PackedScene" uid="uid://daajos2gmdvfu" path="res://Scenes/player.tscn" id="1_ebmjs"]
 [ext_resource type="Script" uid="uid://bbb1ynfp4rb5b" path="res://Scripts/game_manager.gd" id="1_wowpa"]
 [ext_resource type="PackedScene" uid="uid://d12csarb4j7pb" path="res://Scenes/killzone.tscn" id="3_wrm1d"]
 [ext_resource type="PackedScene" uid="uid://bl2arrksj63td" path="res://Scenes/pipe_spawner.tscn" id="4_3dryh"]
 [ext_resource type="PackedScene" uid="uid://dsw4dd8bsfses" path="res://Scenes/score_display.tscn" id="4_wowpa"]
+[ext_resource type="PackedScene" uid="uid://wsg6b4iyhle4" path="res://Scenes/top_area.tscn" id="5_1l0tm"]
 [ext_resource type="FontFile" uid="uid://cwunrv3x25417" path="res://Assets/Fonts/Blue Highway Bd.otf" id="6_i6g32"]
+[ext_resource type="FontFile" uid="uid://dmsbru030krre" path="res://Assets/Fonts/Blue Highway Rg.otf" id="8_v158k"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_3dryh"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_1l0tm"]
+normal = Vector2(0, 1)
 
 [node name="Game" type="Node2D"]
 
@@ -38,6 +43,13 @@ shape = SubResource("WorldBoundaryShape2D_3dryh")
 
 [node name="PipeSpawner" parent="Environment" instance=ExtResource("4_3dryh")]
 position = Vector2(2700, 0)
+
+[node name="TopArea" parent="Environment" instance=ExtResource("5_1l0tm")]
+position = Vector2(0, -1000)
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/TopArea"]
+shape = SubResource("WorldBoundaryShape2D_1l0tm")
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
@@ -89,6 +101,7 @@ text = "Start Game (you'll regret it)"
 autowrap_mode = 2
 
 [node name="GameOverMenu" type="Control" parent="UI"]
+z_index = 99
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -131,5 +144,29 @@ theme_override_font_sizes/font_size = 64
 text = "Retry"
 autowrap_mode = 2
 
+[node name="TauntText" type="Control" parent="UI"]
+z_index = 100
+anchors_preset = 0
+offset_left = 568.0
+offset_top = 543.0
+offset_right = 2060.0
+offset_bottom = 1049.0
+mouse_filter = 2
+
+[node name="TauntLabel" type="RichTextLabel" parent="UI/TauntText"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("8_v158k")
+theme_override_font_sizes/normal_font_size = 64
+
+[node name="TauntTimer" type="Timer" parent="UI/TauntText"]
+wait_time = 4.0
+
+[connection signal="cheating_taunt" from="Environment/TopArea" to="GameManager" method="_on_top_area_cheating_taunt"]
 [connection signal="pressed" from="UI/StartMenu/StartButton" to="GameManager" method="_on_start_button_pressed"]
 [connection signal="pressed" from="UI/GameOverMenu/GameOverButton" to="GameManager" method="_on_game_over_button_pressed"]
+[connection signal="timeout" from="UI/TauntText/TauntTimer" to="GameManager" method="_on_taunt_timer_timeout"]
