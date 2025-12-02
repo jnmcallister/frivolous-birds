@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://ifxgca25kcf1"]
+[gd_scene load_steps=6 format=3 uid="uid://ifxgca25kcf1"]
 
+[ext_resource type="Script" uid="uid://y00h2kxcr7xn" path="res://Scripts/triple_pipe.gd" id="1_1kt0n"]
 [ext_resource type="PackedScene" uid="uid://bi3hwnl6j3u3v" path="res://Scenes/pipe_segment_holder.tscn" id="1_mi0ht"]
 [ext_resource type="PackedScene" uid="uid://da6qc5wdt7kgd" path="res://Scenes/pipe_segment.tscn" id="1_qn1ws"]
 [ext_resource type="PackedScene" uid="uid://12t5wktke00i" path="res://Scenes/pipe_score_area.tscn" id="3_v3bdt"]
@@ -8,6 +9,7 @@
 size = Vector2(20, 2000)
 
 [node name="TriplePipe" type="Node2D"]
+script = ExtResource("1_1kt0n")
 
 [node name="PipeSegmentHolder" parent="." instance=ExtResource("1_mi0ht")]
 

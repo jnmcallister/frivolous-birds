@@ -88,6 +88,11 @@ func initialize_pipe(pipe_node: Node2D) -> void:
 	# Start movement
 	pipe_node.get_node("PipeSegmentHolder").set_move_pipe(true)
 	pipe_node.get_node("PipeSegmentHolder").set_pipe_speed(pipe_speed)
+	
+	# Call initialize pipe function if it exists
+	var pipe_script = pipe_node.get_script()
+	if pipe_script:
+		pipe_node.init_pipe()
 
 
 # Removes pipe from scene and adds it to the free_pipes array
