@@ -2,7 +2,7 @@ class_name player
 extends CharacterBody2D
 
 
-const JUMP_VELOCITY = -600.0
+const JUMP_VELOCITY = -700.0
 
 @export var jumpAction: String = "jumpP1"
 

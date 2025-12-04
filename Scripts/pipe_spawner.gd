@@ -5,8 +5,8 @@ extends Node2D
 const PIPE_SCENE_TRIPLE = preload("res://Scenes/triple_pipe.tscn")
 const PIPE_SCENE_DOUBLE = preload("res://Scenes/double_pipe.tscn")
 
-const pipe_speed_multiplier: float = 2 # How much to multiply pipe speed when player dies
-const pipe_rate_divisor: float = 2 # How much to divide spawn rate when player dies
+const pipe_speed_multiplier: float = 3 # How much to multiply pipe speed when player dies
+const pipe_rate_divisor: float = 3 # How much to divide spawn rate when player dies
 
 var pipe_elevation_max: float = 260
 var free_pipes: Array[Node2D] = []
