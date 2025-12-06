@@ -5,7 +5,7 @@
 [node name="PipeSpawner" type="Node2D"]
 script = ExtResource("1_uc0l5")
 
-[node name="Timer" type="Timer" parent="."]
+[node name="SpawnTimer" type="Timer" parent="."]
 wait_time = 3.0
 
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_timer_timeout"]

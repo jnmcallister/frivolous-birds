@@ -15,7 +15,7 @@ var triple_pipe_count: int = 8
 var double_pipe_count: int = 2
 var pipe_speed: float = -400
 
-@onready var timer: Timer = $Timer
+@onready var spawn_timer: Timer = $SpawnTimer
 @onready var game_manager: Node2D = %GameManager
 
 # Called when the node enters the scene tree for the first time.
@@ -25,7 +25,7 @@ func _ready() -> void:
 
 
 func start_spawning() -> void:
-	timer.start()
+	spawn_timer.start()
 	instantiate_pipes()
 	spawn_pipe()
 
@@ -111,7 +111,7 @@ func remove_pipe(pipe_node: Node2D) -> void:
 func double_pipe_speed() -> void:
 	# Increase pipe speed and spawn rate
 	pipe_speed *= pipe_speed_multiplier
-	timer.wait_time /= pipe_rate_divisor
+	spawn_timer.wait_time /= pipe_rate_divisor
 	
 	# Iterate through all pipes and speed them up
 	for pipe in all_pipes:
