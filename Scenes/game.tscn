@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://br6454hx8ajer"]
+[gd_scene load_steps=12 format=3 uid="uid://br6454hx8ajer"]
 
 [ext_resource type="PackedScene" uid="uid://daajos2gmdvfu" path="res://Scenes/player.tscn" id="1_ebmjs"]
 [ext_resource type="Script" uid="uid://bbb1ynfp4rb5b" path="res://Scripts/game_manager.gd" id="1_wowpa"]
+[ext_resource type="Texture2D" uid="uid://sisex64j5ebl" path="res://Assets/Art/player_blue.png" id="3_h4fw4"]
 [ext_resource type="PackedScene" uid="uid://d12csarb4j7pb" path="res://Scenes/killzone.tscn" id="3_wrm1d"]
 [ext_resource type="PackedScene" uid="uid://bl2arrksj63td" path="res://Scenes/pipe_spawner.tscn" id="4_3dryh"]
 [ext_resource type="PackedScene" uid="uid://dsw4dd8bsfses" path="res://Scenes/score_display.tscn" id="4_wowpa"]
@@ -32,6 +33,7 @@ position = Vector2(0, -300)
 [node name="player2" parent="Players" instance=ExtResource("1_ebmjs")]
 position = Vector2(0, 100)
 jumpAction = "jumpP2"
+bird_texture = ExtResource("3_h4fw4")
 
 [node name="Environment" type="Node" parent="."]
 

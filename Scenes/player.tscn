@@ -1,11 +1,11 @@
 [gd_scene load_steps=5 format=3 uid="uid://daajos2gmdvfu"]
 
 [ext_resource type="Script" uid="uid://ctni680jrjmne" path="res://Scripts/player.gd" id="1_cvnsp"]
-[ext_resource type="Texture2D" uid="uid://dmfdgbartvq6l" path="res://icon.svg" id="1_v0iea"]
+[ext_resource type="Texture2D" uid="uid://b1imstp3sa3yi" path="res://Assets/Art/player_red.png" id="2_6t5aa"]
 [ext_resource type="PackedScene" uid="uid://c57maji1j8c1l" path="res://Scenes/player_explosion.tscn" id="3_6t5aa"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v0iea"]
-size = Vector2(100, 100)
+size = Vector2(162, 100)
 
 [node name="player1" type="CharacterBody2D" groups=["player"]]
 collision_layer = 2
@@ -13,7 +13,8 @@ collision_mask = 7
 script = ExtResource("1_cvnsp")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_v0iea")
+texture = ExtResource("2_6t5aa")
+offset = Vector2(-20, -20)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_v0iea")

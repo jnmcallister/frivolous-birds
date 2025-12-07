@@ -3,8 +3,12 @@ extends CharacterBody2D
 
 
 const JUMP_VELOCITY = -700.0
+const SPRITE_ROTATION_MIN = -15
+const SPRITE_ROTATION_MAX = 100
+const SPRITE_ROTATION_SPEED = 80
 
 @export var jumpAction: String = "jumpP1"
+@export var bird_texture: Texture2D
 
 var enable_movement: bool = false
 
@@ -16,6 +20,10 @@ var enable_movement: bool = false
 
 func _ready() -> void:
 	game_manager.game_start.connect(on_game_start)
+	
+	# Set sprite
+	if bird_texture:
+		sprite.texture = bird_texture
 
 
 func on_game_start() -> void:
@@ -30,9 +38,19 @@ func _physics_process(delta: float) -> void:
 		# Add the gravity.
 		velocity += get_gravity() * delta * pipe_spawner.get_gravity_multiplier()
 
+		# Rotate sprite
+		if sprite.rotation_degrees < SPRITE_ROTATION_MAX:
+			sprite.rotation_degrees += SPRITE_ROTATION_SPEED * delta
+		elif sprite.rotation_degrees > SPRITE_ROTATION_MAX:
+			sprite.rotation_degrees = SPRITE_ROTATION_MAX
+
 		# Handle jump.
 		if Input.is_action_just_pressed(jumpAction):
+			# Set velocity
 			velocity.y = JUMP_VELOCITY * pipe_spawner.get_jump_multiplier()
+			
+			# Rotate sprite
+			sprite.rotation_degrees = SPRITE_ROTATION_MIN
 
 		# Move player
 		move_and_slide()
