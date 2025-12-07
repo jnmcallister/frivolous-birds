@@ -1,6 +1,6 @@
 extends Node2D
 
-const MAX_HEIGHT_DIFFERENCE = 150; # Moves the middle segment up or down by at most this ammount
+const MAX_HEIGHT_DIFFERENCE = 125; # Moves the middle segment up or down by at most this ammount
 
 @onready var middle_segment: Area2D = $PipeSegmentHolder/MiddleSegment
 

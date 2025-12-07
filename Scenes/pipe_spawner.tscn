@@ -8,4 +8,8 @@ script = ExtResource("1_uc0l5")
 [node name="SpawnTimer" type="Timer" parent="."]
 wait_time = 3.0
 
-[connection signal="timeout" from="SpawnTimer" to="." method="_on_timer_timeout"]
+[node name="SpeedIncreaseTimer" type="Timer" parent="."]
+wait_time = 5.0
+
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
+[connection signal="timeout" from="SpeedIncreaseTimer" to="." method="_on_speed_increase_timer_timeout"]

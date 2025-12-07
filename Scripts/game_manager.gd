@@ -42,6 +42,7 @@ var taunt_mode: bool = false # Becomes true when player starts flying above the 
 
 signal game_start
 signal double_speed
+signal game_over
 
 func _ready() -> void:
 	game_over_menu.hide()
@@ -72,6 +73,7 @@ func on_player_died() -> void:
 	elif dead_players == 2:
 		# End the game
 		game_over_menu.show()
+		game_over.emit()
 
 
 func _on_start_button_pressed() -> void:

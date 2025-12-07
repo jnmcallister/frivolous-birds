@@ -5,8 +5,12 @@ extends Node2D
 const PIPE_SCENE_TRIPLE = preload("res://Scenes/triple_pipe.tscn")
 const PIPE_SCENE_DOUBLE = preload("res://Scenes/double_pipe.tscn")
 
-const pipe_speed_multiplier: float = 3 # How much to multiply pipe speed when player dies
-const pipe_rate_divisor: float = 3 # How much to divide spawn rate when player dies
+const pipe_death_speed_multiplier: float = 3 # How much to multiply pipe speed when player dies
+const pipe_death_rate_divisor: float = 3 # How much to divide spawn rate when player dies
+const pipe_speed_multiplier: float = 1.1 # How much to multiply pipe speed after speed increase timer is up
+const pipe_rate_divisor: float = 1.1 # How much to divide spawn rate after speed increase timer is up
+const gravity_multiplier_increase = 1.05 # How much to increase the gravity multiplier after speed increase timer is up
+const jump_multipler_increase = 1.025 # How much to increase player jump velocity after speed increase timer is up
 
 var pipe_elevation_max: float = 260
 var free_pipes: Array[Node2D] = []
@@ -14,18 +18,23 @@ var all_pipes: Array[Node2D] = [] # Array of all pipes
 var triple_pipe_count: int = 8
 var double_pipe_count: int = 2
 var pipe_speed: float = -400
+var gravity_multipler: float = 1 # Multiplier for player gravity
+var jump_multiplier: float = 1 # Multiplier for player jump velocity
 
 @onready var spawn_timer: Timer = $SpawnTimer
+@onready var speed_increase_timer: Timer = $SpeedIncreaseTimer
 @onready var game_manager: Node2D = %GameManager
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	game_manager.game_start.connect(start_spawning)
-	game_manager.double_speed.connect(double_pipe_speed)
+	game_manager.double_speed.connect(multiply_pipe_speed)
+	game_manager.game_over.connect(on_game_over)
 
 
 func start_spawning() -> void:
 	spawn_timer.start()
+	speed_increase_timer.start()
 	instantiate_pipes()
 	spawn_pipe()
 
@@ -77,7 +86,7 @@ func spawn_pipe() -> void:
 		instantiate_pipes()
 
 
-func _on_timer_timeout() -> void:
+func _on_spawn_timer_timeout() -> void:
 	spawn_pipe()
 
 
@@ -108,11 +117,39 @@ func remove_pipe(pipe_node: Node2D) -> void:
 	free_pipes.push_back(pipe_parent)
 
 
-func double_pipe_speed() -> void:
+# Multiplies pipe speed and spawn rate after a player dies
+func multiply_pipe_speed() -> void:
 	# Increase pipe speed and spawn rate
-	pipe_speed *= pipe_speed_multiplier
-	spawn_timer.wait_time /= pipe_rate_divisor
+	pipe_speed *= pipe_death_speed_multiplier
+	spawn_timer.wait_time /= pipe_death_rate_divisor
+	
+	# Reset spawn timer
+	spawn_timer.start()
 	
 	# Iterate through all pipes and speed them up
 	for pipe in all_pipes:
 		pipe.get_node("PipeSegmentHolder").set_pipe_speed(pipe_speed)
+
+
+func _on_speed_increase_timer_timeout() -> void:
+	# Increase pipe speed and spawn rate, and player gravity and jump velocity
+	pipe_speed *= pipe_speed_multiplier
+	spawn_timer.wait_time /= pipe_rate_divisor
+	gravity_multipler *= gravity_multiplier_increase
+	jump_multiplier *= jump_multipler_increase
+	
+	# Iterate through all pipes and speed them up
+	for pipe in all_pipes:
+		pipe.get_node("PipeSegmentHolder").set_pipe_speed(pipe_speed)
+
+
+func get_gravity_multiplier() -> float:
+	return gravity_multipler
+
+
+func get_jump_multiplier() -> float:
+	return jump_multiplier
+
+
+func on_game_over() -> void:
+	speed_increase_timer.stop()

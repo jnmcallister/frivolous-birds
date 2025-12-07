@@ -42,6 +42,7 @@ position = Vector2(0, 810)
 shape = SubResource("WorldBoundaryShape2D_3dryh")
 
 [node name="PipeSpawner" parent="Environment" instance=ExtResource("4_3dryh")]
+unique_name_in_owner = true
 position = Vector2(2700, 0)
 
 [node name="TopArea" parent="Environment" instance=ExtResource("5_1l0tm")]

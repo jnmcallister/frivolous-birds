@@ -12,6 +12,7 @@ var enable_movement: bool = false
 @onready var collision: CollisionShape2D = $CollisionShape2D
 @onready var player_explosion: Node2D = $player_explosion
 @onready var game_manager: Node2D = %GameManager
+@onready var pipe_spawner: Node2D = %PipeSpawner
 
 func _ready() -> void:
 	game_manager.game_start.connect(on_game_start)
@@ -27,11 +28,11 @@ func _physics_process(delta: float) -> void:
 	if enable_movement:
 	
 		# Add the gravity.
-		velocity += get_gravity() * delta
+		velocity += get_gravity() * delta * pipe_spawner.get_gravity_multiplier()
 
 		# Handle jump.
 		if Input.is_action_just_pressed(jumpAction):
-			velocity.y = JUMP_VELOCITY
+			velocity.y = JUMP_VELOCITY * pipe_spawner.get_jump_multiplier()
 
 		# Move player
 		move_and_slide()
