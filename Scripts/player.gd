@@ -11,6 +11,7 @@ const SPRITE_ROTATION_SPEED = 80
 @export var bird_texture: Texture2D
 
 var enable_movement: bool = false
+var player_collide_force: float = 50 # Force to apply to player when they collide with another player
 
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var collision: CollisionShape2D = $CollisionShape2D
@@ -54,6 +55,15 @@ func _physics_process(delta: float) -> void:
 
 		# Move player
 		move_and_slide()
+		
+		# Handle collisions with other players
+		for i in get_slide_collision_count():
+			var col_obj = get_slide_collision(i) # Get object at index i
+			if col_obj.get_collider() is player: # Check if this is a player
+				# Add "bounce" force to other player
+				var other_player = col_obj.get_collider() as player
+				other_player.velocity -= col_obj.get_normal() * player_collide_force
+				velocity += col_obj.get_normal() * player_collide_force
 
 
 # Called when player touches killzone
