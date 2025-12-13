@@ -12,8 +12,9 @@ const SPRITE_ROTATION_SPEED = 80
 
 var enable_movement: bool = false
 var player_collide_force: float = 50 # Force to apply to player when they collide with another player
-var turkey_init_x_velocity: Vector2 = Vector2(200, 800) # When the player dies, set the x velocity of the turkey to somewhere in this range
-var turkey_init_y_velocity: Vector2 = Vector2(-500, -3000)# When the player dies, set the y velocity of the turkey to somewhere in this range
+var turkey_init_x_velocity: Vector2 = Vector2(200, 600) # When the player dies, set the x velocity of the turkey to somewhere in this range
+var turkey_init_y_velocity: Vector2 = Vector2(-500, -2000)# When the player dies, set the y velocity of the turkey to somewhere in this range
+var turkey_init_rotation_velocity: Vector2 = Vector2(5, 40) # When the player dies, set the rotation velocity of the turkey to somewhere in this range (degrees/second)
 
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var collision: CollisionShape2D = $CollisionShape2D
@@ -74,12 +75,15 @@ func on_player_died() -> void:
 	# Start particles
 	player_explosion.get_node("CPUParticles2D").emitting = true
 	
-	# Throw turkey out of player
+	# Calculate velocities of turkey (dead player sprite)
 	var turkey_x_velocity = randf_range(turkey_init_x_velocity.x, turkey_init_x_velocity.y)
 	var turkey_y_velocity = randf_range(turkey_init_y_velocity.x, turkey_init_y_velocity.y)
 	var turkey_velocity: Vector2 = Vector2(turkey_x_velocity, turkey_y_velocity)
+	var turkey_rotation_velocity = randf_range(turkey_init_rotation_velocity.x, turkey_init_rotation_velocity.y)
+	
+	# Throw turkey out of player
 	turkey.reparent(get_tree().root)
-	turkey.on_player_death(turkey_velocity)
+	turkey.on_player_death(turkey_velocity, turkey_rotation_velocity)
 	
 	# Hide player
 	sprite.process_mode = Node.PROCESS_MODE_DISABLED

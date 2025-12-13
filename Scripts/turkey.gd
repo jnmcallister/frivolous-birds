@@ -6,16 +6,18 @@ extends Sprite2D
 
 var active: bool = false # Becomes true when player dies
 var velocity: Vector2 = Vector2.ZERO
+var rotation_velocity: float = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	turkey_sprite.hide()
 
 
-func on_player_death(init_velocity: Vector2) -> void:
+func on_player_death(init_velocity: Vector2, init_rotation_velocity: float) -> void:
 	# Allow turkey to move
 	active = true
 	velocity = init_velocity
+	rotation_velocity = init_rotation_velocity
 	
 	# Unhide turkey
 	turkey_sprite.show()
@@ -30,3 +32,6 @@ func _process(delta: float) -> void:
 		
 		# Accelerate y velocity with gravity
 		velocity += ProjectSettings.get_setting("physics/2d/default_gravity") * ProjectSettings.get_setting("physics/2d/default_gravity_vector") * delta
+		
+		# Rotate
+		rotate(deg_to_rad(rotation_velocity))
