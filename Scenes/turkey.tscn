@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://b5j8km7bvs4tq"]
+
+[ext_resource type="Texture2D" uid="uid://g2jo4k0b0d1j" path="res://Assets/Art/player_death.png" id="1_jr36y"]
+[ext_resource type="Script" uid="uid://cvto8o14sksmf" path="res://Scripts/turkey.gd" id="2_q1nv2"]
+
+[node name="Turkey" type="Sprite2D"]
+texture = ExtResource("1_jr36y")
+script = ExtResource("2_q1nv2")
