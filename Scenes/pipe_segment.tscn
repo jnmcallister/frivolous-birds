@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://da6qc5wdt7kgd"]
 
 [ext_resource type="PackedScene" uid="uid://d12csarb4j7pb" path="res://Scenes/killzone.tscn" id="1_8gu0t"]
-[ext_resource type="Texture2D" uid="uid://defswctmptlga" path="res://Assets/Art/giraffe-01.png" id="2_knv7s"]
+[ext_resource type="Texture2D" uid="uid://17khi5uvku7d" path="res://Assets/Art/giraffe_3x.png" id="2_knv7s"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x17ai"]
 size = Vector2(128, 128)

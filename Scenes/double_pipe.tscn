@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://bmhbn8mohgs2k"]
+[gd_scene load_steps=7 format=3 uid="uid://bmhbn8mohgs2k"]
 
 [ext_resource type="PackedScene" uid="uid://bi3hwnl6j3u3v" path="res://Scenes/pipe_segment_holder.tscn" id="1_db4s3"]
 [ext_resource type="PackedScene" uid="uid://da6qc5wdt7kgd" path="res://Scenes/pipe_segment.tscn" id="2_r488b"]
 [ext_resource type="PackedScene" uid="uid://cs87dw8laxtt3" path="res://Scenes/pipe_segment_2.tscn" id="3_pvbee"]
 [ext_resource type="PackedScene" uid="uid://12t5wktke00i" path="res://Scenes/pipe_score_area.tscn" id="3_r488b"]
+[ext_resource type="Texture2D" uid="uid://ht807nb0tlqm" path="res://Assets/Art/giraffe_7x.png" id="4_bb6b6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r488b"]
 size = Vector2(20, 2000)
@@ -26,11 +27,13 @@ scale = Vector2(1, 7)
 
 [node name="TopSegment2" parent="PipeSegmentHolder" instance=ExtResource("3_pvbee")]
 position = Vector2(0, -800)
-scale = Vector2(1, 7)
+texture = ExtResource("4_bb6b6")
+scale_factor = 7.0
 
 [node name="BottomSegment2" parent="PipeSegmentHolder" instance=ExtResource("3_pvbee")]
 position = Vector2(0, 800)
-scale = Vector2(1, 7)
+texture = ExtResource("4_bb6b6")
+scale_factor = 7.0
 
 [node name="PipeScoreArea" parent="PipeSegmentHolder" instance=ExtResource("3_r488b")]
 
