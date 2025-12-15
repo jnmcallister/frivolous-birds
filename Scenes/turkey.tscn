@@ -5,4 +5,5 @@
 
 [node name="Turkey" type="Sprite2D"]
 texture = ExtResource("1_jr36y")
+offset = Vector2(12, -32)
 script = ExtResource("2_q1nv2")
