@@ -11,19 +11,22 @@ const pipe_speed_multiplier: float = 1.1 # How much to multiply pipe speed after
 const pipe_rate_divisor: float = 1.1 # How much to divide spawn rate after speed increase timer is up
 const gravity_multiplier_increase = 1.05 # How much to increase the gravity multiplier after speed increase timer is up
 const jump_multipler_increase = 1.025 # How much to increase player jump velocity after speed increase timer is up
+const pipe_speed_default = -400 # Default speed of pipes before it's increased
 
 var pipe_elevation_max: float = 260
 var free_pipes: Array[Node2D] = []
 var all_pipes: Array[Node2D] = [] # Array of all pipes
 var triple_pipe_count: int = 8
 var double_pipe_count: int = 2
-var pipe_speed: float = -400
+var pipe_speed: float = pipe_speed_default
 var gravity_multipler: float = 1 # Multiplier for player gravity
 var jump_multiplier: float = 1 # Multiplier for player jump velocity
 
 @onready var spawn_timer: Timer = $SpawnTimer
 @onready var speed_increase_timer: Timer = $SpeedIncreaseTimer
 @onready var game_manager: Node2D = %GameManager
+
+signal speed_increased(new_speed: float)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -129,6 +132,9 @@ func multiply_pipe_speed() -> void:
 	# Iterate through all pipes and speed them up
 	for pipe in all_pipes:
 		pipe.get_node("PipeSegmentHolder").set_pipe_speed(pipe_speed)
+	
+	# Send signal
+	speed_increased.emit(pipe_speed)
 
 
 func _on_speed_increase_timer_timeout() -> void:
@@ -141,6 +147,9 @@ func _on_speed_increase_timer_timeout() -> void:
 	# Iterate through all pipes and speed them up
 	for pipe in all_pipes:
 		pipe.get_node("PipeSegmentHolder").set_pipe_speed(pipe_speed)
+	
+	# Send signal
+	speed_increased.emit(pipe_speed)
 
 
 func get_gravity_multiplier() -> float:
@@ -153,3 +162,7 @@ func get_jump_multiplier() -> float:
 
 func on_game_over() -> void:
 	speed_increase_timer.stop()
+
+
+func get_pipe_speed_default() -> float:
+	return pipe_speed_default

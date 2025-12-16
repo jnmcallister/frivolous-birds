@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://ba8ihu64e5ns6"]
+
+[ext_resource type="Shader" uid="uid://5py02m3oymdf" path="res://Shaders/looping_shader.gdshader" id="1_oltiy"]
+[ext_resource type="Texture2D" uid="uid://bbkmdlvmvekdp" path="res://Assets/Art/ground_snow.png" id="2_02qk3"]
+[ext_resource type="Script" uid="uid://cjh2kldhtk3ec" path="res://Scripts/ground.gd" id="3_02qk3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_s6h8e"]
+shader = ExtResource("1_oltiy")
+shader_parameter/direction = Vector2(1, 0)
+shader_parameter/speed = -0.8
+shader_parameter/custom_time = 0.0
+
+[node name="Ground" type="Sprite2D"]
+texture_repeat = 3
+material = SubResource("ShaderMaterial_s6h8e")
+texture = ExtResource("2_02qk3")
+region_enabled = true
+region_rect = Rect2(0, 0, 10240, 256)
+script = ExtResource("3_02qk3")
+shader = SubResource("ShaderMaterial_s6h8e")

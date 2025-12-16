@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://br6454hx8ajer"]
+[gd_scene load_steps=13 format=3 uid="uid://br6454hx8ajer"]
 
 [ext_resource type="PackedScene" uid="uid://daajos2gmdvfu" path="res://Scenes/player.tscn" id="1_ebmjs"]
 [ext_resource type="Script" uid="uid://bbb1ynfp4rb5b" path="res://Scripts/game_manager.gd" id="1_wowpa"]
@@ -8,12 +8,13 @@
 [ext_resource type="PackedScene" uid="uid://dsw4dd8bsfses" path="res://Scenes/score_display.tscn" id="4_wowpa"]
 [ext_resource type="PackedScene" uid="uid://wsg6b4iyhle4" path="res://Scenes/top_area.tscn" id="5_1l0tm"]
 [ext_resource type="FontFile" uid="uid://cwunrv3x25417" path="res://Assets/Fonts/Blue Highway Bd.otf" id="6_i6g32"]
+[ext_resource type="PackedScene" uid="uid://ba8ihu64e5ns6" path="res://Scenes/ground.tscn" id="7_ldgsr"]
 [ext_resource type="FontFile" uid="uid://dmsbru030krre" path="res://Assets/Fonts/Blue Highway Rg.otf" id="8_v158k"]
-
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_3dryh"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_1l0tm"]
 normal = Vector2(0, 1)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_3dryh"]
 
 [node name="Game" type="Node2D"]
 
@@ -37,12 +38,6 @@ bird_texture = ExtResource("3_h4fw4")
 
 [node name="Environment" type="Node" parent="."]
 
-[node name="FloorKillzone" parent="Environment" instance=ExtResource("3_wrm1d")]
-position = Vector2(0, 810)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/FloorKillzone"]
-shape = SubResource("WorldBoundaryShape2D_3dryh")
-
 [node name="PipeSpawner" parent="Environment" instance=ExtResource("4_3dryh")]
 unique_name_in_owner = true
 position = Vector2(2700, 0)
@@ -53,6 +48,16 @@ collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/TopArea"]
 shape = SubResource("WorldBoundaryShape2D_1l0tm")
+
+[node name="Ground" parent="Environment" instance=ExtResource("7_ldgsr")]
+z_index = 2
+position = Vector2(40, 825)
+
+[node name="FloorKillzone" parent="Environment/Ground" instance=ExtResource("3_wrm1d")]
+position = Vector2(0, -41)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/Ground/FloorKillzone"]
+shape = SubResource("WorldBoundaryShape2D_3dryh")
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
