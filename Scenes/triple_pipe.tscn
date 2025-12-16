@@ -1,11 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://ifxgca25kcf1"]
+[gd_scene load_steps=7 format=3 uid="uid://ifxgca25kcf1"]
 
 [ext_resource type="Script" uid="uid://y00h2kxcr7xn" path="res://Scripts/triple_pipe.gd" id="1_1kt0n"]
 [ext_resource type="PackedScene" uid="uid://bi3hwnl6j3u3v" path="res://Scenes/pipe_segment_holder.tscn" id="1_mi0ht"]
-[ext_resource type="PackedScene" uid="uid://da6qc5wdt7kgd" path="res://Scenes/pipe_segment.tscn" id="1_qn1ws"]
 [ext_resource type="PackedScene" uid="uid://12t5wktke00i" path="res://Scenes/pipe_score_area.tscn" id="3_v3bdt"]
 [ext_resource type="Texture2D" uid="uid://etdb4o08f0yl" path="res://Assets/Art/giraffe_5x.png" id="5_0s6ou"]
-[ext_resource type="PackedScene" uid="uid://cs87dw8laxtt3" path="res://Scenes/pipe_segment_2.tscn" id="5_5y6gr"]
+[ext_resource type="PackedScene" uid="uid://cs87dw8laxtt3" path="res://Scenes/pipe_segment.tscn" id="5_5y6gr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v3bdt"]
 size = Vector2(20, 2000)
@@ -15,31 +14,15 @@ script = ExtResource("1_1kt0n")
 
 [node name="PipeSegmentHolder" parent="." instance=ExtResource("1_mi0ht")]
 
-[node name="TopSegment" parent="PipeSegmentHolder" instance=ExtResource("1_qn1ws")]
-process_mode = 4
-visible = false
+[node name="TopSegment" parent="PipeSegmentHolder" instance=ExtResource("5_5y6gr")]
 position = Vector2(0, -950)
-scale = Vector2(1, 5)
-
-[node name="MiddleSegment" parent="PipeSegmentHolder" instance=ExtResource("1_qn1ws")]
-process_mode = 4
-visible = false
-scale = Vector2(1, 3)
-
-[node name="BottomSegment" parent="PipeSegmentHolder" instance=ExtResource("1_qn1ws")]
-process_mode = 4
-visible = false
-position = Vector2(0, 950)
-scale = Vector2(1, 5)
-
-[node name="TopSegment2" parent="PipeSegmentHolder" instance=ExtResource("5_5y6gr")]
-position = Vector2(0, -950)
+scale = Vector2(1, -1)
 texture = ExtResource("5_0s6ou")
 scale_factor = 5.0
 
-[node name="MiddleSegment2" parent="PipeSegmentHolder" instance=ExtResource("5_5y6gr")]
+[node name="MiddleSegment" parent="PipeSegmentHolder" instance=ExtResource("5_5y6gr")]
 
-[node name="BottomSegment2" parent="PipeSegmentHolder" instance=ExtResource("5_5y6gr")]
+[node name="BottomSegment" parent="PipeSegmentHolder" instance=ExtResource("5_5y6gr")]
 position = Vector2(0, 950)
 texture = ExtResource("5_0s6ou")
 scale_factor = 5.0

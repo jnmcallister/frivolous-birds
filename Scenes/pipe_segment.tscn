@@ -1,22 +1,26 @@
-[gd_scene load_steps=4 format=3 uid="uid://da6qc5wdt7kgd"]
+[gd_scene load_steps=6 format=3 uid="uid://cs87dw8laxtt3"]
 
 [ext_resource type="PackedScene" uid="uid://d12csarb4j7pb" path="res://Scenes/killzone.tscn" id="1_8gu0t"]
+[ext_resource type="Script" uid="uid://cobjdvu4suwvl" path="res://Scripts/pipe_segment.gd" id="2_iw5jf"]
 [ext_resource type="Texture2D" uid="uid://17khi5uvku7d" path="res://Assets/Art/giraffe_3x.png" id="2_knv7s"]
+[ext_resource type="Texture2D" uid="uid://hr30d2nr7lf" path="res://Assets/Art/prot_test_square.png" id="4_2864p"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_x17ai"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o3coq"]
 size = Vector2(128, 128)
 
-[node name="PipeSegment" instance=ExtResource("1_8gu0t")]
-collision_layer = 4
-collision_mask = 6
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="0"]
-shape = SubResource("RectangleShape2D_x17ai")
-
-[node name="Sprite2D" type="Sprite2D" parent="." index="1"]
+[node name="PipeSegment" type="Sprite2D"]
 texture = ExtResource("2_knv7s")
 centered = false
 offset = Vector2(-128, -90)
-region_enabled = true
 region_rect = Rect2(0, 0, 192, 128)
 region_filter_clip_enabled = true
+script = ExtResource("2_iw5jf")
+
+[node name="Killzone" parent="." instance=ExtResource("1_8gu0t")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Killzone"]
+shape = SubResource("RectangleShape2D_o3coq")
+
+[node name="DebugCollisionSprite" type="Sprite2D" parent="Killzone/CollisionShape2D"]
+visible = false
+texture = ExtResource("4_2864p")
