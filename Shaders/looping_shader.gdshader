@@ -1,9 +1,8 @@
 shader_type canvas_item;
 
 uniform vec2 direction;
-uniform float speed;
 varying vec4 modulate; // Grabs colors after modulate/self-modulate
-uniform float custom_time;
+uniform float offset;
 
 void vertex() // Applies to every single vertex
 {
@@ -12,6 +11,6 @@ void vertex() // Applies to every single vertex
 
 void fragment() // Applies to every single pixel
 {
-	vec2 move = direction * custom_time * speed;
+	vec2 move = direction * offset;
 	COLOR = texture(TEXTURE, UV+move) * modulate;
 }

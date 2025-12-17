@@ -4,9 +4,9 @@ extends Sprite2D
 
 @export var shader: ShaderMaterial
 
-var speed_divisor: float = 500
-var shader_time: float = 0
+var speed_divisor: float = -500
 var pipe_speed: float = 0
+var shader_offset: float = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -15,8 +15,8 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	shader_time += delta
-	shader.set_shader_parameter("custom_time", shader_time * pipe_speed / speed_divisor)
+	shader_offset += delta * pipe_speed / speed_divisor
+	shader.set_shader_parameter("offset", shader_offset)
 
 
 func increase_speed(new_pipe_speed: float) -> void:
