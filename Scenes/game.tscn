@@ -51,7 +51,7 @@ shape = SubResource("WorldBoundaryShape2D_1l0tm")
 
 [node name="Ground" parent="Environment" instance=ExtResource("7_ldgsr")]
 z_index = 2
-position = Vector2(40, 825)
+position = Vector2(38, 750)
 
 [node name="FloorKillzone" parent="Environment/Ground" instance=ExtResource("3_wrm1d")]
 position = Vector2(0, -41)

@@ -7,14 +7,13 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_s6h8e"]
 shader = ExtResource("1_oltiy")
 shader_parameter/direction = Vector2(1, 0)
-shader_parameter/speed = -0.8
-shader_parameter/custom_time = 0.0
+shader_parameter/offset = 0.0
 
 [node name="Ground" type="Sprite2D"]
 texture_repeat = 3
 material = SubResource("ShaderMaterial_s6h8e")
 texture = ExtResource("2_02qk3")
 region_enabled = true
-region_rect = Rect2(0, 0, 10240, 256)
+region_rect = Rect2(0, 0, 10240, 128)
 script = ExtResource("3_02qk3")
 shader = SubResource("ShaderMaterial_s6h8e")
