@@ -24,11 +24,4 @@ func increase_speed(new_pipe_speed: float) -> void:
 
 
 func set_speed(new_pipe_speed: float) -> void:
-	#shader.set_shader_parameter("speed", pipe_speed / speed_divisor)
 	pipe_speed = new_pipe_speed
-	#print(get_shader_offset())
-	#shader.set_shader_parameter("offset", get_shader_offset())
-
-
-func get_shader_offset() -> float:
-	return shader.get_shader_parameter("direction").x * Time.get_ticks_msec() * 1000 * shader.get_shader_parameter("speed")

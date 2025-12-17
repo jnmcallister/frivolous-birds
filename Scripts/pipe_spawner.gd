@@ -13,7 +13,8 @@ const gravity_multiplier_increase = 1.05 # How much to increase the gravity mult
 const jump_multipler_increase = 1.025 # How much to increase player jump velocity after speed increase timer is up
 const pipe_speed_default = -400 # Default speed of pipes before it's increased
 
-var pipe_elevation_max: float = 260
+var pipe_elevation_max: float = 180 # Lowest height the pipes can spawn at
+var pipe_elevation_min: float = -260 # Highest height the pipes can spawn at
 var free_pipes: Array[Node2D] = []
 var all_pipes: Array[Node2D] = [] # Array of all pipes
 var triple_pipe_count: int = 8
@@ -95,7 +96,7 @@ func _on_spawn_timer_timeout() -> void:
 
 func initialize_pipe(pipe_node: Node2D) -> void:
 	# Set y position randomly
-	pipe_node.position.y = randf_range(-pipe_elevation_max, pipe_elevation_max)
+	pipe_node.position.y = randf_range(pipe_elevation_min, pipe_elevation_max)
 	
 	# Start movement
 	pipe_node.get_node("PipeSegmentHolder").set_move_pipe(true)
