@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://br6454hx8ajer"]
+[gd_scene load_steps=14 format=3 uid="uid://br6454hx8ajer"]
 
 [ext_resource type="PackedScene" uid="uid://daajos2gmdvfu" path="res://Scenes/player.tscn" id="1_ebmjs"]
 [ext_resource type="Script" uid="uid://bbb1ynfp4rb5b" path="res://Scripts/game_manager.gd" id="1_wowpa"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://wsg6b4iyhle4" path="res://Scenes/top_area.tscn" id="5_1l0tm"]
 [ext_resource type="FontFile" uid="uid://cwunrv3x25417" path="res://Assets/Fonts/Blue Highway Bd.otf" id="6_i6g32"]
 [ext_resource type="PackedScene" uid="uid://ba8ihu64e5ns6" path="res://Scenes/ground.tscn" id="7_ldgsr"]
+[ext_resource type="Texture2D" uid="uid://det6ps3rnrlnr" path="res://Assets/Art/sky-05.png" id="8_o5yvi"]
 [ext_resource type="FontFile" uid="uid://dmsbru030krre" path="res://Assets/Fonts/Blue Highway Rg.otf" id="8_v158k"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_1l0tm"]
@@ -58,6 +59,15 @@ position = Vector2(0, -41)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/Ground/FloorKillzone"]
 shape = SubResource("WorldBoundaryShape2D_3dryh")
+
+[node name="Background" type="Node" parent="Environment"]
+
+[node name="Sky" type="Sprite2D" parent="Environment/Background"]
+z_index = -10
+position = Vector2(997, -3.5420555e-12)
+scale = Vector2(1.52, 1.52)
+texture = ExtResource("8_o5yvi")
+region_rect = Rect2(0, 0, 1920, 1080)
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
