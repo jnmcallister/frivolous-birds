@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://daajos2gmdvfu"]
 
 [ext_resource type="Script" uid="uid://ctni680jrjmne" path="res://Scripts/player.gd" id="1_cvnsp"]
-[ext_resource type="Texture2D" uid="uid://b1imstp3sa3yi" path="res://Assets/Art/player_red.png" id="2_6t5aa"]
 [ext_resource type="PackedScene" uid="uid://c57maji1j8c1l" path="res://Scenes/player_explosion.tscn" id="3_6t5aa"]
+[ext_resource type="SpriteFrames" uid="uid://bhxj44dap1fxq" path="res://Assets/Art/player_red.tres" id="3_fkybt"]
 [ext_resource type="PackedScene" uid="uid://b5j8km7bvs4tq" path="res://Scenes/turkey.tscn" id="4_vgqql"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v0iea"]
@@ -12,10 +12,12 @@ size = Vector2(162, 100)
 collision_layer = 2
 collision_mask = 7
 script = ExtResource("1_cvnsp")
+bird_sprite_frames = ExtResource("3_fkybt")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_6t5aa")
-offset = Vector2(-20, -20)
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("3_fkybt")
+animation = &"jump"
+autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_v0iea")
@@ -24,3 +26,5 @@ shape = SubResource("RectangleShape2D_v0iea")
 
 [node name="Turkey" parent="." instance=ExtResource("4_vgqql")]
 position = Vector2(0, -50)
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_sprite_animation_finished"]

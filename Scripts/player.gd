@@ -8,7 +8,8 @@ const SPRITE_ROTATION_MAX = 100
 const SPRITE_ROTATION_SPEED = 80
 
 @export var jumpAction: String = "jumpP1"
-@export var bird_texture: Texture2D
+#@export var bird_texture: Texture2D
+@export var bird_sprite_frames: SpriteFrames
 
 var enable_movement: bool = false
 var player_collide_force: float = 50 # Force to apply to player when they collide with another player
@@ -16,7 +17,8 @@ var turkey_init_x_velocity: Vector2 = Vector2(200, 600) # When the player dies, 
 var turkey_init_y_velocity: Vector2 = Vector2(-500, -2000)# When the player dies, set the y velocity of the turkey to somewhere in this range
 var turkey_init_rotation_velocity: Vector2 = Vector2(5, 40) # When the player dies, set the rotation velocity of the turkey to somewhere in this range (degrees/second)
 
-@onready var sprite: Sprite2D = $Sprite2D
+#@onready var sprite: Sprite2D = $Sprite2D
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var collision: CollisionShape2D = $CollisionShape2D
 @onready var player_explosion: Node2D = $player_explosion
 @onready var game_manager: Node2D = %GameManager
@@ -27,8 +29,10 @@ func _ready() -> void:
 	game_manager.game_start.connect(on_game_start)
 	
 	# Set sprite
-	if bird_texture:
-		sprite.texture = bird_texture
+	#if bird_texture:
+		#sprite.texture = bird_texture
+	if bird_sprite_frames:
+		animated_sprite.sprite_frames = bird_sprite_frames
 
 
 func on_game_start() -> void:
@@ -44,18 +48,14 @@ func _physics_process(delta: float) -> void:
 		velocity += get_gravity() * delta * pipe_spawner.get_gravity_multiplier()
 
 		# Rotate sprite
-		if sprite.rotation_degrees < SPRITE_ROTATION_MAX:
-			sprite.rotation_degrees += SPRITE_ROTATION_SPEED * delta
-		elif sprite.rotation_degrees > SPRITE_ROTATION_MAX:
-			sprite.rotation_degrees = SPRITE_ROTATION_MAX
+		if animated_sprite.rotation_degrees < SPRITE_ROTATION_MAX:
+			animated_sprite.rotation_degrees += SPRITE_ROTATION_SPEED * delta
+		elif animated_sprite.rotation_degrees > SPRITE_ROTATION_MAX:
+			animated_sprite.rotation_degrees = SPRITE_ROTATION_MAX
 
 		# Handle jump.
 		if Input.is_action_just_pressed(jumpAction):
-			# Set velocity
-			velocity.y = JUMP_VELOCITY * pipe_spawner.get_jump_multiplier()
-			
-			# Rotate sprite
-			sprite.rotation_degrees = SPRITE_ROTATION_MIN
+			jump()
 
 		# Move player
 		move_and_slide()
@@ -68,6 +68,18 @@ func _physics_process(delta: float) -> void:
 				var other_player = col_obj.get_collider() as player
 				other_player.velocity -= col_obj.get_normal() * player_collide_force
 				velocity += col_obj.get_normal() * player_collide_force
+
+
+func jump() -> void:
+	# Set velocity
+	velocity.y = JUMP_VELOCITY * pipe_spawner.get_jump_multiplier()
+	
+	# Rotate sprite
+	animated_sprite.rotation_degrees = SPRITE_ROTATION_MIN
+	
+	# Start flap animation
+	animated_sprite.stop()
+	animated_sprite.play("jump")
 
 
 # Called when player touches killzone
@@ -86,8 +98,8 @@ func on_player_died() -> void:
 	turkey.on_player_death(turkey_velocity, turkey_rotation_velocity)
 	
 	# Hide player
-	sprite.process_mode = Node.PROCESS_MODE_DISABLED
-	sprite.visible = false
+	animated_sprite.process_mode = Node.PROCESS_MODE_DISABLED
+	animated_sprite.visible = false
 	
 	# Disable collision
 	collision.process_mode = Node.PROCESS_MODE_DISABLED
@@ -95,3 +107,9 @@ func on_player_died() -> void:
 	
 	# Tell game manager that a player died
 	game_manager.on_player_died()
+
+
+func _on_sprite_animation_finished() -> void:
+	# Check which animation this is
+	if animated_sprite.animation == "jump":
+		animated_sprite.play("idle")
