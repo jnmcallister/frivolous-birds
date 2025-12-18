@@ -1,0 +1,23 @@
+extends Parallax2D
+
+@onready var pipe_spawner: Node2D = %PipeSpawner
+@onready var parallax: Parallax2D = $"."
+
+var old_pipe_speed: float = 0 # Speed of pipe before speed increase
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	old_pipe_speed = pipe_spawner.get_pipe_speed_default()
+	pipe_spawner.speed_increased.connect(increase_speed)
+
+
+func increase_speed(new_speed: float) -> void:
+	# Find the percent difference between old and new speeds
+	# If the previous speed was -400 and the new speed is -440, the % difference will be 1.1
+	var percent_difference = new_speed / old_pipe_speed
+	
+	# Set old pipe speed to this
+	old_pipe_speed = new_speed
+	
+	# Increase speed of scrolling parallax
+	parallax.autoscroll *= percent_difference

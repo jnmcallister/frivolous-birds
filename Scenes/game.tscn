@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://br6454hx8ajer"]
+[gd_scene load_steps=17 format=3 uid="uid://br6454hx8ajer"]
 
 [ext_resource type="PackedScene" uid="uid://daajos2gmdvfu" path="res://Scenes/player.tscn" id="1_ebmjs"]
 [ext_resource type="Script" uid="uid://bbb1ynfp4rb5b" path="res://Scripts/game_manager.gd" id="1_wowpa"]
@@ -11,6 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://ba8ihu64e5ns6" path="res://Scenes/ground.tscn" id="7_ldgsr"]
 [ext_resource type="Texture2D" uid="uid://det6ps3rnrlnr" path="res://Assets/Art/sky-05.png" id="8_o5yvi"]
 [ext_resource type="FontFile" uid="uid://dmsbru030krre" path="res://Assets/Fonts/Blue Highway Rg.otf" id="8_v158k"]
+[ext_resource type="Script" uid="uid://cekpawgdqxmwp" path="res://Scripts/background_parallax.gd" id="9_1phco"]
+[ext_resource type="Texture2D" uid="uid://dqq0nyreunuw0" path="res://Assets/Art/Background/background_test.png" id="9_rfjv2"]
 [ext_resource type="PackedScene" uid="uid://55qnksj32pc0" path="res://Scenes/vt_button.tscn" id="10_rku1e"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_1l0tm"]
@@ -69,6 +71,20 @@ position = Vector2(997, -3.5420555e-12)
 scale = Vector2(1.52, 1.52)
 texture = ExtResource("8_o5yvi")
 region_rect = Rect2(0, 0, 1920, 1080)
+
+[node name="Mountains" type="Node2D" parent="Environment/Background"]
+position = Vector2(512, 0)
+
+[node name="MountainsParallax" type="Parallax2D" parent="Environment/Background/Mountains"]
+z_index = -8
+scroll_offset = Vector2(0, 269)
+repeat_size = Vector2(1024, 0)
+autoscroll = Vector2(-64, 0)
+repeat_times = 3
+script = ExtResource("9_1phco")
+
+[node name="Sprite2D" type="Sprite2D" parent="Environment/Background/Mountains/MountainsParallax"]
+texture = ExtResource("9_rfjv2")
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
