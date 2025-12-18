@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://daajos2gmdvfu" path="res://Scenes/player.tscn" id="1_ebmjs"]
 [ext_resource type="Script" uid="uid://bbb1ynfp4rb5b" path="res://Scripts/game_manager.gd" id="1_wowpa"]
-[ext_resource type="SpriteFrames" uid="uid://cmxg0myift1uw" path="res://Assets/Art/player_blue.tres" id="3_o5yvi"]
+[ext_resource type="SpriteFrames" uid="uid://cqgayohmruhep" path="res://Assets/Art/player_green.tres" id="3_nb51f"]
 [ext_resource type="PackedScene" uid="uid://d12csarb4j7pb" path="res://Scenes/killzone.tscn" id="3_wrm1d"]
 [ext_resource type="PackedScene" uid="uid://bl2arrksj63td" path="res://Scenes/pipe_spawner.tscn" id="4_3dryh"]
 [ext_resource type="PackedScene" uid="uid://dsw4dd8bsfses" path="res://Scenes/score_display.tscn" id="4_wowpa"]
@@ -39,7 +39,7 @@ position = Vector2(0, -300)
 [node name="player2" parent="Players" instance=ExtResource("1_ebmjs")]
 position = Vector2(0, 100)
 jumpAction = "jumpP2"
-bird_sprite_frames = ExtResource("3_o5yvi")
+bird_sprite_frames = ExtResource("3_nb51f")
 
 [node name="Environment" type="Node" parent="."]
 
