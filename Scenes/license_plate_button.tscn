@@ -1,0 +1,37 @@
+[gd_scene load_steps=7 format=3 uid="uid://binn8tnwfsy6k"]
+
+[ext_resource type="FontFile" uid="uid://dplgetq6g2rqf" path="res://Assets/Fonts/Unispace Bd.otf" id="1_wnh3g"]
+[ext_resource type="Texture2D" uid="uid://dymuc6hvojcqw" path="res://Assets/Art/ui_button_vt.png" id="2_mrh44"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_15lkw"]
+texture = ExtResource("2_mrh44")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wnh3g"]
+texture = ExtResource("2_mrh44")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mrh44"]
+texture = ExtResource("2_mrh44")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wnh3g"]
+bg_color = Color(1, 1, 1, 0.08627451)
+
+[node name="LicensePlateButton" type="Button"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -256.0
+offset_top = -128.0
+offset_right = 256.0
+offset_bottom = 128.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("1_wnh3g")
+theme_override_font_sizes/font_size = 88
+theme_override_styles/normal = SubResource("StyleBoxTexture_15lkw")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_wnh3g")
+theme_override_styles/hover = SubResource("StyleBoxTexture_mrh44")
+theme_override_styles/focus = SubResource("StyleBoxFlat_wnh3g")
+text = "1234567"
+autowrap_mode = 2
