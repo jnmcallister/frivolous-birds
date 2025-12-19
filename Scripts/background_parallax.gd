@@ -4,6 +4,7 @@ extends Parallax2D
 @onready var parallax: Parallax2D = $"."
 
 @export var x_offset_bounds: Vector2 # Min and max values for x offset (on _ready)
+@export var x_repeat_size_bounds: Vector2 # Min and max values for x repeat size. If both are 0, ignore this
 
 var old_pipe_speed: float = 0 # Speed of pipe before speed increase
 
@@ -17,6 +18,10 @@ func _ready() -> void:
 	
 	# Randomize x offset
 	parallax.scroll_offset.x = randf_range(x_offset_bounds.x, x_offset_bounds.y)
+	
+	# Randomize x repeat size
+	if x_repeat_size_bounds.x != 0 or x_repeat_size_bounds.y != 0: # Ignore if both are 0
+		parallax.repeat_size.x = randf_range(x_repeat_size_bounds.x, x_repeat_size_bounds.y)
 
 
 func increase_speed(new_speed: float) -> void:
