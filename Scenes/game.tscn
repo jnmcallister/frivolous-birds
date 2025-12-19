@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://br6454hx8ajer"]
+[gd_scene load_steps=19 format=3 uid="uid://br6454hx8ajer"]
 
 [ext_resource type="PackedScene" uid="uid://daajos2gmdvfu" path="res://Scenes/player.tscn" id="1_ebmjs"]
 [ext_resource type="Script" uid="uid://bbb1ynfp4rb5b" path="res://Scripts/game_manager.gd" id="1_wowpa"]
@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://cus406if5coe5" path="res://Assets/Art/Background/background_mountains-01.png" id="10_1phco"]
 [ext_resource type="PackedScene" uid="uid://55qnksj32pc0" path="res://Scenes/vt_button.tscn" id="10_rku1e"]
 [ext_resource type="Texture2D" uid="uid://uo3gq14abk1u" path="res://Assets/Art/Background/background_mountains-02.png" id="11_nb51f"]
+[ext_resource type="Texture2D" uid="uid://baar54mtnf7dy" path="res://Assets/Art/Background/background_snowman.png" id="12_nnt18"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_1l0tm"]
 normal = Vector2(0, 1)
@@ -97,6 +98,22 @@ script = ExtResource("9_1phco")
 
 [node name="Sprite2D" type="Sprite2D" parent="Environment/Background/Mountains/MountainsParallax2"]
 texture = ExtResource("11_nb51f")
+
+[node name="Objects" type="Node2D" parent="Environment/Background"]
+position = Vector2(0, 590)
+
+[node name="Snowmen" type="Parallax2D" parent="Environment/Background/Objects"]
+z_index = -7
+scroll_offset = Vector2(-3967, -64)
+repeat_size = Vector2(7000, 0)
+autoscroll = Vector2(-300, 0)
+repeat_times = 3
+script = ExtResource("9_1phco")
+x_offset_bounds = Vector2(-600, -4000)
+
+[node name="Sprite2D" type="Sprite2D" parent="Environment/Background/Objects/Snowmen"]
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("12_nnt18")
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3

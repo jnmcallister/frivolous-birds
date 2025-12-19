@@ -3,12 +3,20 @@ extends Parallax2D
 @onready var pipe_spawner: Node2D = %PipeSpawner
 @onready var parallax: Parallax2D = $"."
 
+@export var x_offset_bounds: Vector2 # Min and max values for x offset (on _ready)
+
 var old_pipe_speed: float = 0 # Speed of pipe before speed increase
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	# Get initial pipe speed
 	old_pipe_speed = pipe_spawner.get_pipe_speed_default()
+	
+	# Connect to speed increase event
 	pipe_spawner.speed_increased.connect(increase_speed)
+	
+	# Randomize x offset
+	parallax.scroll_offset.x = randf_range(x_offset_bounds.x, x_offset_bounds.y)
 
 
 func increase_speed(new_speed: float) -> void:
