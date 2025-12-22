@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://br6454hx8ajer"]
+[gd_scene load_steps=20 format=3 uid="uid://br6454hx8ajer"]
 
 [ext_resource type="PackedScene" uid="uid://daajos2gmdvfu" path="res://Scenes/player.tscn" id="1_ebmjs"]
 [ext_resource type="Script" uid="uid://bbb1ynfp4rb5b" path="res://Scripts/game_manager.gd" id="1_wowpa"]
@@ -13,6 +13,7 @@
 [ext_resource type="FontFile" uid="uid://dmsbru030krre" path="res://Assets/Fonts/Blue Highway Rg.otf" id="8_v158k"]
 [ext_resource type="Script" uid="uid://cekpawgdqxmwp" path="res://Scripts/background_parallax.gd" id="9_1phco"]
 [ext_resource type="Texture2D" uid="uid://cus406if5coe5" path="res://Assets/Art/Background/background_mountains-01.png" id="10_1phco"]
+[ext_resource type="Texture2D" uid="uid://clj0i2gsv2hgw" path="res://Assets/Art/Background/background_clouds-01.png" id="10_ewbju"]
 [ext_resource type="PackedScene" uid="uid://55qnksj32pc0" path="res://Scenes/vt_button.tscn" id="10_rku1e"]
 [ext_resource type="Texture2D" uid="uid://uo3gq14abk1u" path="res://Assets/Art/Background/background_mountains-02.png" id="11_nb51f"]
 [ext_resource type="Texture2D" uid="uid://baar54mtnf7dy" path="res://Assets/Art/Background/background_snowman.png" id="12_nnt18"]
@@ -73,6 +74,37 @@ position = Vector2(997, -3.5420555e-12)
 scale = Vector2(1.52, 1.52)
 texture = ExtResource("8_o5yvi")
 region_rect = Rect2(0, 0, 1920, 1080)
+
+[node name="Clouds" type="Node2D" parent="Environment/Background"]
+position = Vector2(512, -822)
+
+[node name="CloudsParallax" type="Parallax2D" parent="Environment/Background/Clouds"]
+z_index = -8
+scroll_offset = Vector2(0, 193)
+repeat_size = Vector2(4096, 0)
+autoscroll = Vector2(-18, 0)
+repeat_times = 3
+script = ExtResource("9_1phco")
+x_offset_bounds = Vector2(-1000, -2000)
+x_repeat_size_bounds = Vector2(3000, 6000)
+
+[node name="Sprite2D" type="Sprite2D" parent="Environment/Background/Clouds/CloudsParallax"]
+scale = Vector2(2, 2)
+texture = ExtResource("10_ewbju")
+
+[node name="CloudsParallax2" type="Parallax2D" parent="Environment/Background/Clouds"]
+z_index = -8
+scroll_offset = Vector2(283, 608)
+repeat_size = Vector2(4096, 0)
+autoscroll = Vector2(-15, 0)
+repeat_times = 3
+script = ExtResource("9_1phco")
+x_offset_bounds = Vector2(0, -800)
+x_repeat_size_bounds = Vector2(2000, 5000)
+
+[node name="Sprite2D" type="Sprite2D" parent="Environment/Background/Clouds/CloudsParallax2"]
+scale = Vector2(2, 2)
+texture = ExtResource("10_ewbju")
 
 [node name="Mountains" type="Node2D" parent="Environment/Background"]
 position = Vector2(512, 0)
