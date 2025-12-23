@@ -1,7 +1,8 @@
-[gd_scene load_steps=20 format=3 uid="uid://br6454hx8ajer"]
+[gd_scene load_steps=21 format=3 uid="uid://br6454hx8ajer"]
 
 [ext_resource type="PackedScene" uid="uid://daajos2gmdvfu" path="res://Scenes/player.tscn" id="1_ebmjs"]
 [ext_resource type="Script" uid="uid://bbb1ynfp4rb5b" path="res://Scripts/game_manager.gd" id="1_wowpa"]
+[ext_resource type="PackedScene" uid="uid://dfyqiilpeknal" path="res://Scenes/music_manager.tscn" id="2_85qyi"]
 [ext_resource type="SpriteFrames" uid="uid://cqgayohmruhep" path="res://Assets/Art/player_green.tres" id="3_nb51f"]
 [ext_resource type="PackedScene" uid="uid://d12csarb4j7pb" path="res://Scenes/killzone.tscn" id="3_wrm1d"]
 [ext_resource type="PackedScene" uid="uid://bl2arrksj63td" path="res://Scenes/pipe_spawner.tscn" id="4_3dryh"]
@@ -28,6 +29,9 @@ normal = Vector2(0, 1)
 [node name="GameManager" type="Node2D" parent="."]
 unique_name_in_owner = true
 script = ExtResource("1_wowpa")
+
+[node name="MusicManager" parent="." instance=ExtResource("2_85qyi")]
+unique_name_in_owner = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(1000, 0)

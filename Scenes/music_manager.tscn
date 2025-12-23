@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://dfyqiilpeknal"]
+
+[ext_resource type="Script" uid="uid://b3depehjc0x1u" path="res://Scripts/music_manager.gd" id="1_hsxb6"]
+[ext_resource type="AudioStream" uid="uid://bl55tortw30ai" path="res://Assets/Music/frivolousBirds_twoPlayerTheme.wav" id="2_sdmu8"]
+[ext_resource type="AudioStream" uid="uid://cfm88r1ljqw64" path="res://Assets/Music/frivolousBirds_onePlayerTheme.wav" id="3_sdmu8"]
+
+[node name="MusicManager" type="Node"]
+script = ExtResource("1_hsxb6")
+
+[node name="TwoPlayerTheme" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_sdmu8")
+
+[node name="OnePlayerTheme" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_sdmu8")
