@@ -12,3 +12,8 @@ stream = ExtResource("2_sdmu8")
 
 [node name="OnePlayerTheme" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_sdmu8")
+
+[node name="SongSlowdownTimer" type="Timer" parent="."]
+wait_time = 3.0
+
+[connection signal="timeout" from="SongSlowdownTimer" to="." method="_on_song_slowdown_timer_timeout"]
