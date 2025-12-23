@@ -41,7 +41,7 @@ func on_second_player_died() -> void:
 	pitching_down = true
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	# Check if the song should be pitched down
 	if pitching_down:
 		# Get the new pitch scale
