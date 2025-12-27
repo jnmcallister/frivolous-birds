@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://daajos2gmdvfu"]
+[gd_scene load_steps=7 format=3 uid="uid://daajos2gmdvfu"]
 
 [ext_resource type="Script" uid="uid://ctni680jrjmne" path="res://Scripts/player.gd" id="1_cvnsp"]
 [ext_resource type="PackedScene" uid="uid://c57maji1j8c1l" path="res://Scenes/player_explosion.tscn" id="3_6t5aa"]
 [ext_resource type="SpriteFrames" uid="uid://bhxj44dap1fxq" path="res://Assets/Art/player_red.tres" id="3_fkybt"]
 [ext_resource type="PackedScene" uid="uid://b5j8km7bvs4tq" path="res://Scenes/turkey.tscn" id="4_vgqql"]
+[ext_resource type="AudioStream" uid="uid://c6xnerik8hsq5" path="res://Assets/SFX/explosion-02.wav" id="5_fkybt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v0iea"]
 size = Vector2(162, 100)
@@ -26,5 +27,8 @@ shape = SubResource("RectangleShape2D_v0iea")
 
 [node name="Turkey" parent="." instance=ExtResource("4_vgqql")]
 position = Vector2(0, -50)
+
+[node name="DeathSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_fkybt")
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_sprite_animation_finished"]

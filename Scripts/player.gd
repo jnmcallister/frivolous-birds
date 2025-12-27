@@ -24,6 +24,7 @@ var turkey_init_rotation_velocity: Vector2 = Vector2(5, 40) # When the player di
 @onready var game_manager: Node2D = %GameManager
 @onready var pipe_spawner: Node2D = %PipeSpawner
 @onready var turkey: Sprite2D = $Turkey
+@onready var death_sound: AudioStreamPlayer = $DeathSound
 
 func _ready() -> void:
 	game_manager.game_start.connect(on_game_start)
@@ -104,6 +105,9 @@ func on_player_died() -> void:
 	# Disable collision
 	collision.process_mode = Node.PROCESS_MODE_DISABLED
 	collision.set_deferred("disabled", true)
+	
+	# Play sounds
+	death_sound.play()
 	
 	# Tell game manager that a player died
 	game_manager.on_player_died()
