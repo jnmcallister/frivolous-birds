@@ -15,7 +15,7 @@ var enable_movement: bool = false
 var player_collide_force: float = 50 # Force to apply to player when they collide with another player
 var turkey_init_x_velocity: Vector2 = Vector2(200, 600) # When the player dies, set the x velocity of the turkey to somewhere in this range
 var turkey_init_y_velocity: Vector2 = Vector2(-500, -2000)# When the player dies, set the y velocity of the turkey to somewhere in this range
-var turkey_init_rotation_velocity: Vector2 = Vector2(5, 40) # When the player dies, set the rotation velocity of the turkey to somewhere in this range (degrees/second)
+var turkey_init_rotation_velocity: Vector2 = Vector2(360 * 2, 360 * 4) # When the player dies, set the rotation velocity of the turkey to somewhere in this range (degrees/second)
 
 #@onready var sprite: Sprite2D = $Sprite2D
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D

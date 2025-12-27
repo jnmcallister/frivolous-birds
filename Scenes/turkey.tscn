@@ -1,9 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://b5j8km7bvs4tq"]
+[gd_scene load_steps=4 format=3 uid="uid://b5j8km7bvs4tq"]
 
 [ext_resource type="Texture2D" uid="uid://g2jo4k0b0d1j" path="res://Assets/Art/player_death.png" id="1_jr36y"]
 [ext_resource type="Script" uid="uid://cvto8o14sksmf" path="res://Scripts/turkey.gd" id="2_q1nv2"]
+[ext_resource type="AudioStream" uid="uid://ccvp5rbptavlv" path="res://Assets/SFX/spinning_object-01.wav" id="3_q1nv2"]
 
 [node name="Turkey" type="Sprite2D"]
 texture = ExtResource("1_jr36y")
 offset = Vector2(12, -32)
 script = ExtResource("2_q1nv2")
+
+[node name="SpinSounds" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_q1nv2")
