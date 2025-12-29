@@ -10,10 +10,12 @@ script = ExtResource("1_hsxb6")
 [node name="TwoPlayerTheme" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_sdmu8")
 volume_db = -6.0
+bus = &"music"
 
 [node name="OnePlayerTheme" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_sdmu8")
 volume_db = -6.0
+bus = &"music"
 
 [node name="SongSlowdownTimer" type="Timer" parent="."]
 wait_time = 3.0

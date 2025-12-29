@@ -51,6 +51,7 @@ func _ready() -> void:
 	game_over_menu.hide()
 	taunt_label.hide()
 	settings_menu.hide()
+	settings_menu.get_node("SettingsBackButton").pressed.connect(_on_settings_back_button_pressed)
 
 
 func on_score_increment() -> void:

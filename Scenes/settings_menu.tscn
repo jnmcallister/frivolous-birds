@@ -1,0 +1,97 @@
+[gd_scene load_steps=6 format=3 uid="uid://c2tw1i52qxo2f"]
+
+[ext_resource type="Texture2D" uid="uid://biwclha3idhwd" path="res://Builds/WebGL/index.icon.png" id="1_7y5a0"]
+[ext_resource type="FontFile" uid="uid://cwunrv3x25417" path="res://Assets/Fonts/Blue Highway Bd.otf" id="2_h2y1r"]
+[ext_resource type="PackedScene" uid="uid://55qnksj32pc0" path="res://Scenes/vt_button.tscn" id="3_3etfd"]
+[ext_resource type="FontFile" uid="uid://dmsbru030krre" path="res://Assets/Fonts/Blue Highway Rg.otf" id="4_3etfd"]
+[ext_resource type="PackedScene" uid="uid://brt1clltyuxfj" path="res://Scenes/audio_slider.tscn" id="5_rahb6"]
+
+[node name="SettingsMenu" type="Control"]
+z_index = 99
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1728.0
+offset_bottom = 972.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BackgroundRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_7y5a0")
+
+[node name="SettingsTitle" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -690.5
+offset_top = 32.0
+offset_right = 690.5
+offset_bottom = 363.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_h2y1r")
+theme_override_font_sizes/font_size = 256
+text = "Settings"
+horizontal_alignment = 1
+
+[node name="SettingsBackButton" parent="." instance=ExtResource("3_3etfd")]
+layout_mode = 1
+offset_left = -1261.0
+offset_top = 474.0
+offset_right = -749.0
+offset_bottom = 730.0
+text = "BACK"
+
+[node name="Options" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -598.0
+offset_top = -385.0
+offset_right = 598.0
+offset_bottom = 385.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Contents" type="VBoxContainer" parent="Options"]
+layout_mode = 2
+
+[node name="MasterVolLabel" type="Label" parent="Options/Contents"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_3etfd")
+theme_override_font_sizes/font_size = 128
+text = "Master Volume"
+
+[node name="MasterVolSlider" parent="Options/Contents" instance=ExtResource("5_rahb6")]
+layout_mode = 2
+bus_name = "Master"
+
+[node name="MusicVolLabel" type="Label" parent="Options/Contents"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_3etfd")
+theme_override_font_sizes/font_size = 128
+text = "Music Volume"
+
+[node name="MusicVolSlider" parent="Options/Contents" instance=ExtResource("5_rahb6")]
+layout_mode = 2
+bus_name = "music"
+
+[node name="SFXVolLabel" type="Label" parent="Options/Contents"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_3etfd")
+theme_override_font_sizes/font_size = 128
+text = "SFX Volume"
+
+[node name="SFXVolSlider" parent="Options/Contents" instance=ExtResource("5_rahb6")]
+layout_mode = 2
+bus_name = "sfx"
