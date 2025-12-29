@@ -33,12 +33,15 @@ var decrease_score_taunt: int = 12 # What line of dialogue should the player's s
 var decrease_score_amount: int = 9999 # How much should the player's score decrease
 var taunt_mode: bool = false # Becomes true when player starts flying above the pipes
 
-@onready var score_display: Control = $"../UI/ScoreDisplay"
-@onready var start_menu: Control = $"../UI/StartMenu"
-@onready var game_over_menu: Control = $"../UI/GameOverMenu"
 @onready var top_area: Area2D = $"../Environment/TopArea"
+@onready var score_display: Control = $"../UI/ScoreDisplay"
 @onready var taunt_label: RichTextLabel = $"../UI/TauntText/TauntLabel"
 @onready var taunt_timer: Timer = $"../UI/TauntText/TauntTimer"
+
+# Menus
+@onready var start_menu: Control = $"../UI/StartMenu"
+@onready var game_over_menu: Control = $"../UI/GameOverMenu"
+@onready var settings_menu: Control = $"../UI/SettingsMenu"
 
 signal game_start
 signal double_speed
@@ -47,6 +50,7 @@ signal game_over
 func _ready() -> void:
 	game_over_menu.hide()
 	taunt_label.hide()
+	settings_menu.hide()
 
 
 func on_score_increment() -> void:
@@ -79,6 +83,14 @@ func on_player_died() -> void:
 func _on_start_button_pressed() -> void:
 	game_start.emit()
 	start_menu.hide()
+
+
+func _on_settings_button_pressed() -> void:
+	settings_menu.show()
+
+
+func _on_settings_back_button_pressed() -> void:
+	settings_menu.hide()
 
 
 func _on_game_over_button_pressed() -> void:
