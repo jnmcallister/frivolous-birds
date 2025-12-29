@@ -25,6 +25,7 @@ var turkey_init_rotation_velocity: Vector2 = Vector2(360 * 2, 360 * 4) # When th
 @onready var pipe_spawner: Node2D = %PipeSpawner
 @onready var turkey: Sprite2D = $Turkey
 @onready var death_sound: AudioStreamPlayer = $DeathSound
+@onready var flap_sound: AudioStreamPlayer = $FlapSound
 
 func _ready() -> void:
 	game_manager.game_start.connect(on_game_start)
@@ -81,6 +82,9 @@ func jump() -> void:
 	# Start flap animation
 	animated_sprite.stop()
 	animated_sprite.play("jump")
+	
+	# Play flap sound
+	flap_sound.play()
 
 
 # Called when player touches killzone

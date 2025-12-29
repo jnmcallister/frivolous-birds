@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://daajos2gmdvfu"]
+[gd_scene load_steps=12 format=3 uid="uid://daajos2gmdvfu"]
 
 [ext_resource type="Script" uid="uid://ctni680jrjmne" path="res://Scripts/player.gd" id="1_cvnsp"]
 [ext_resource type="PackedScene" uid="uid://c57maji1j8c1l" path="res://Scenes/player_explosion.tscn" id="3_6t5aa"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://b5j8km7bvs4tq" path="res://Scenes/turkey.tscn" id="4_vgqql"]
 [ext_resource type="AudioStream" uid="uid://c6xnerik8hsq5" path="res://Assets/SFX/explosion-02.wav" id="5_fkybt"]
 [ext_resource type="AudioStream" uid="uid://dfn776cfryiwb" path="res://Assets/SFX/bird_death-01.wav" id="6_x3wgy"]
+[ext_resource type="AudioStream" uid="uid://bxojq15jskis8" path="res://Assets/SFX/flap-01.wav" id="7_8erm5"]
+[ext_resource type="AudioStream" uid="uid://ckldgu45fa1mw" path="res://Assets/SFX/flap-02.wav" id="8_f1ek2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v0iea"]
 size = Vector2(162, 100)
@@ -16,6 +18,14 @@ stream_0/stream = ExtResource("5_fkybt")
 stream_0/volume = 0.0
 stream_1/stream = ExtResource("6_x3wgy")
 stream_1/volume = 0.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_tx1dd"]
+playback_mode = 1
+random_pitch = 1.2
+random_volume_offset_db = 1.0
+streams_count = 2
+stream_0/stream = ExtResource("7_8erm5")
+stream_1/stream = ExtResource("8_f1ek2")
 
 [node name="player1" type="CharacterBody2D" groups=["player"]]
 collision_layer = 2
@@ -39,5 +49,9 @@ position = Vector2(0, -50)
 [node name="DeathSound" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamSynchronized_3smsa")
 volume_db = 6.0
+
+[node name="FlapSound" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_tx1dd")
+volume_db = -6.0
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_sprite_animation_finished"]
