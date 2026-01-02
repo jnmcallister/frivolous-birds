@@ -2,8 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://d12csarb4j7pb" path="res://Scenes/killzone.tscn" id="1_8gu0t"]
 [ext_resource type="Script" uid="uid://cobjdvu4suwvl" path="res://Scripts/pipe_segment.gd" id="2_iw5jf"]
-[ext_resource type="Texture2D" uid="uid://17khi5uvku7d" path="res://Assets/Art/giraffe_3x.png" id="2_knv7s"]
-[ext_resource type="Texture2D" uid="uid://hr30d2nr7lf" path="res://Assets/Art/prot_test_square.png" id="4_2864p"]
+[ext_resource type="Texture2D" uid="uid://17khi5uvku7d" path="res://Assets/Art/Gameplay/giraffe_3x.png" id="2_knv7s"]
+[ext_resource type="Texture2D" uid="uid://hr30d2nr7lf" path="res://Assets/Art/Misc/prot_test_square.png" id="4_2864p"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o3coq"]
 size = Vector2(128, 128)

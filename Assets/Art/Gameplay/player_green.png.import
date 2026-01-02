@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bbkmdlvmvekdp"
-path="res://.godot/imported/ground_snow.png-1c9e9197c3e55a9d54be3f2dbca81907.ctex"
+uid="uid://b54t62awclyi8"
+path="res://.godot/imported/player_green.png-15069726328c30de144e3e955f15cf1a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Art/ground_snow.png"
-dest_files=["res://.godot/imported/ground_snow.png-1c9e9197c3e55a9d54be3f2dbca81907.ctex"]
+source_file="res://Assets/Art/Gameplay/player_green.png"
+dest_files=["res://.godot/imported/player_green.png-15069726328c30de144e3e955f15cf1a.ctex"]
 
 [params]
 

@@ -29,6 +29,8 @@ project/assembly_name="Frivolous Birds"
 folder_colors={
 "res://Assets/": "red",
 "res://Assets/Art/Background/": "blue",
+"res://Assets/Art/Gameplay/": "teal",
+"res://Assets/Art/Misc/": "purple",
 "res://Assets/Fonts/": "purple",
 "res://Assets/Music/": "orange",
 "res://Assets/SFX/": "yellow",

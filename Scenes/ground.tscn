@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://ba8ihu64e5ns6"]
 
 [ext_resource type="Shader" uid="uid://5py02m3oymdf" path="res://Shaders/looping_shader.gdshader" id="1_oltiy"]
-[ext_resource type="Texture2D" uid="uid://bbkmdlvmvekdp" path="res://Assets/Art/ground_snow.png" id="2_02qk3"]
+[ext_resource type="Texture2D" uid="uid://bbkmdlvmvekdp" path="res://Assets/Art/Gameplay/ground_snow.png" id="2_02qk3"]
 [ext_resource type="Script" uid="uid://cjh2kldhtk3ec" path="res://Scripts/ground.gd" id="3_02qk3"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_s6h8e"]

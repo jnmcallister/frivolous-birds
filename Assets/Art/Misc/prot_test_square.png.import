@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://etdb4o08f0yl"
-path="res://.godot/imported/giraffe_5x.png-79120579b1e77501feda8cc74a5c83dd.ctex"
+uid="uid://hr30d2nr7lf"
+path="res://.godot/imported/prot_test_square.png-3607327066d3a4c95d9857579e14143c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Art/giraffe_5x.png"
-dest_files=["res://.godot/imported/giraffe_5x.png-79120579b1e77501feda8cc74a5c83dd.ctex"]
+source_file="res://Assets/Art/Misc/prot_test_square.png"
+dest_files=["res://.godot/imported/prot_test_square.png-3607327066d3a4c95d9857579e14143c.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://sisex64j5ebl"
-path="res://.godot/imported/player_blue.png-efed04236e4cacdf9f99b4100e9f08cf.ctex"
+uid="uid://17khi5uvku7d"
+path="res://.godot/imported/giraffe_3x.png-7b10ceb1be75a8161f3a96b948e54c44.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Art/player_blue.png"
-dest_files=["res://.godot/imported/player_blue.png-efed04236e4cacdf9f99b4100e9f08cf.ctex"]
+source_file="res://Assets/Art/Gameplay/giraffe_3x.png"
+dest_files=["res://.godot/imported/giraffe_3x.png-7b10ceb1be75a8161f3a96b948e54c44.ctex"]
 
 [params]
 

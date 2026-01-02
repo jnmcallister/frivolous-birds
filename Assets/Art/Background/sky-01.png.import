@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://17khi5uvku7d"
-path="res://.godot/imported/giraffe_3x.png-f3603b236ae56420966c16ae3f50b676.ctex"
+uid="uid://76dx31iyv3e2"
+path="res://.godot/imported/sky-01.png-4948cee9a20308b920cccd8ac26f5323.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Art/giraffe_3x.png"
-dest_files=["res://.godot/imported/giraffe_3x.png-f3603b236ae56420966c16ae3f50b676.ctex"]
+source_file="res://Assets/Art/Background/sky-01.png"
+dest_files=["res://.godot/imported/sky-01.png-4948cee9a20308b920cccd8ac26f5323.ctex"]
 
 [params]
 

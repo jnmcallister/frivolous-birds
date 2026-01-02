@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://76dx31iyv3e2"
-path="res://.godot/imported/sky-01.png-ed87f71645b3b336cb3d24135a9eb789.ctex"
+uid="uid://g2jo4k0b0d1j"
+path="res://.godot/imported/player_death.png-51eeab7385d0b30973d886bb2fde4918.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Art/sky-01.png"
-dest_files=["res://.godot/imported/sky-01.png-ed87f71645b3b336cb3d24135a9eb789.ctex"]
+source_file="res://Assets/Art/Gameplay/player_death.png"
+dest_files=["res://.godot/imported/player_death.png-51eeab7385d0b30973d886bb2fde4918.ctex"]
 
 [params]
 
