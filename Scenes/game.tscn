@@ -188,6 +188,11 @@ grow_vertical = 2
 
 [node name="StartButton" parent="UI/StartMenu" instance=ExtResource("10_rku1e")]
 layout_mode = 1
+offset_left = -259.0
+offset_top = -191.00006
+offset_right = 253.0
+offset_bottom = 64.99994
+rotation = 0.053265374
 text = "START"
 
 [node name="SettingsButton" parent="UI/StartMenu" instance=ExtResource("17_7nbq1")]
@@ -195,13 +200,15 @@ layout_mode = 1
 anchors_preset = 7
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_top = -554.0
-offset_bottom = -298.0
+offset_left = -267.0
+offset_top = -576.0
+offset_right = 245.0
+offset_bottom = -320.0
 grow_vertical = 0
+rotation = -0.027083654
 text = "OPTIONS"
 
 [node name="GameOverMenu" type="Control" parent="UI"]
-visible = false
 z_index = 99
 layout_mode = 1
 anchors_preset = 15
@@ -229,8 +236,11 @@ text = "GAME OVER!"
 
 [node name="GameOverButton" parent="UI/GameOverMenu" instance=ExtResource("19_exi56")]
 layout_mode = 1
-offset_top = 256.0
-offset_bottom = 512.0
+offset_left = -267.0
+offset_top = 198.00012
+offset_right = 245.0
+offset_bottom = 454.00012
+rotation = 0.061033353
 text = "RETRY"
 
 [node name="TauntText" type="Control" parent="UI"]
