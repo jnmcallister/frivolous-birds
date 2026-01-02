@@ -31,6 +31,7 @@ folder_colors={
 "res://Assets/Art/Background/": "blue",
 "res://Assets/Art/Gameplay/": "teal",
 "res://Assets/Art/Misc/": "purple",
+"res://Assets/Art/UI/": "orange",
 "res://Assets/Fonts/": "purple",
 "res://Assets/Music/": "orange",
 "res://Assets/SFX/": "yellow",
