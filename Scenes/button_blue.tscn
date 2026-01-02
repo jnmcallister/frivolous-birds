@@ -1,0 +1,22 @@
+[gd_scene load_steps=6 format=3 uid="uid://df0oi4nx4wjrf"]
+
+[ext_resource type="PackedScene" uid="uid://binn8tnwfsy6k" path="res://Scenes/license_plate_button.tscn" id="1_384vt"]
+[ext_resource type="Texture2D" uid="uid://cg0js7werw5di" path="res://Assets/Art/UI/ui_button_blue.png" id="2_2tox3"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_a1hyw"]
+texture = ExtResource("2_2tox3")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_iuslb"]
+texture = ExtResource("2_2tox3")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dt7bv"]
+texture = ExtResource("2_2tox3")
+
+[node name="ButtonBlue" instance=ExtResource("1_384vt")]
+theme_override_colors/font_color = Color(0.009564507, 0.104438, 0.24932829, 1)
+theme_override_colors/font_focus_color = Color(0.050980393, 0.30588236, 0.6431373, 1)
+theme_override_colors/font_pressed_color = Color(0.109919034, 0.42350537, 0.8341384, 1)
+theme_override_colors/font_hover_color = Color(0.051104754, 0.30450863, 0.6429704, 1)
+theme_override_styles/normal = SubResource("StyleBoxTexture_a1hyw")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_iuslb")
+theme_override_styles/hover = SubResource("StyleBoxTexture_dt7bv")

@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://chbtdicif5oyy" path="res://Assets/Art/UI/ui_settings_background.png" id="1_3etfd"]
 [ext_resource type="FontFile" uid="uid://cwunrv3x25417" path="res://Assets/Fonts/Blue Highway Bd.otf" id="2_h2y1r"]
-[ext_resource type="PackedScene" uid="uid://55qnksj32pc0" path="res://Scenes/vt_button.tscn" id="3_3etfd"]
+[ext_resource type="PackedScene" uid="uid://cwtjrkfhpwvxe" path="res://Scenes/button_skier.tscn" id="3_3etfd"]
 [ext_resource type="FontFile" uid="uid://dmsbru030krre" path="res://Assets/Fonts/Blue Highway Rg.otf" id="4_3etfd"]
 [ext_resource type="PackedScene" uid="uid://brt1clltyuxfj" path="res://Scenes/audio_slider.tscn" id="5_rahb6"]
 
@@ -45,11 +45,18 @@ horizontal_alignment = 1
 
 [node name="SettingsBackButton" parent="." instance=ExtResource("3_3etfd")]
 layout_mode = 1
-offset_left = -1351.0
-offset_top = 528.0
-offset_right = -839.0
-offset_bottom = 784.0
-text = "BACK"
+anchors_preset = 2
+anchor_left = 0.0
+anchor_top = 1.0
+anchor_right = 0.0
+anchor_bottom = 1.0
+offset_left = 89.0
+offset_top = -282.0
+offset_right = 601.0
+offset_bottom = -26.0
+grow_horizontal = 1
+grow_vertical = 0
+text = "   BACK"
 
 [node name="Options" type="PanelContainer" parent="."]
 layout_mode = 1

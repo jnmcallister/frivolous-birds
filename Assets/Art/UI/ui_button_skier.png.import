@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dymuc6hvojcqw"
-path="res://.godot/imported/ui_button_vt.png-613d676017e59cfede60c868b2b783fb.ctex"
+uid="uid://bl3qpysyuac7h"
+path="res://.godot/imported/ui_button_skier.png-1aa3296eb8fc9cacf539802a004a0c8b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Art/UI/ui_button_vt.png"
-dest_files=["res://.godot/imported/ui_button_vt.png-613d676017e59cfede60c868b2b783fb.ctex"]
+source_file="res://Assets/Art/UI/ui_button_skier.png"
+dest_files=["res://.godot/imported/ui_button_skier.png-1aa3296eb8fc9cacf539802a004a0c8b.ctex"]
 
 [params]
 

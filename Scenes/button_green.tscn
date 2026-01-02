@@ -2,4 +2,5 @@
 
 [ext_resource type="PackedScene" uid="uid://binn8tnwfsy6k" path="res://Scenes/license_plate_button.tscn" id="1_yey24"]
 
-[node name="VTButton" instance=ExtResource("1_yey24")]
+[node name="ButtonGreen" instance=ExtResource("1_yey24")]
+theme_override_colors/font_pressed_color = Color(0.30071387, 0.80729353, 0.36492422, 1)

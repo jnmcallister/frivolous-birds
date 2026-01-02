@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://br6454hx8ajer"]
+[gd_scene load_steps=24 format=3 uid="uid://br6454hx8ajer"]
 
 [ext_resource type="PackedScene" uid="uid://daajos2gmdvfu" path="res://Scenes/player.tscn" id="1_ebmjs"]
 [ext_resource type="Script" uid="uid://bbb1ynfp4rb5b" path="res://Scripts/game_manager.gd" id="1_wowpa"]
@@ -15,9 +15,11 @@
 [ext_resource type="Script" uid="uid://cekpawgdqxmwp" path="res://Scripts/background_parallax.gd" id="9_1phco"]
 [ext_resource type="Texture2D" uid="uid://cus406if5coe5" path="res://Assets/Art/Background/background_mountains-01.png" id="10_1phco"]
 [ext_resource type="Texture2D" uid="uid://clj0i2gsv2hgw" path="res://Assets/Art/Background/background_clouds-01.png" id="10_ewbju"]
-[ext_resource type="PackedScene" uid="uid://55qnksj32pc0" path="res://Scenes/vt_button.tscn" id="10_rku1e"]
+[ext_resource type="PackedScene" uid="uid://55qnksj32pc0" path="res://Scenes/button_green.tscn" id="10_rku1e"]
 [ext_resource type="Texture2D" uid="uid://uo3gq14abk1u" path="res://Assets/Art/Background/background_mountains-02.png" id="11_nb51f"]
 [ext_resource type="Texture2D" uid="uid://baar54mtnf7dy" path="res://Assets/Art/Background/background_snowman.png" id="12_nnt18"]
+[ext_resource type="PackedScene" uid="uid://df0oi4nx4wjrf" path="res://Scenes/button_blue.tscn" id="17_7nbq1"]
+[ext_resource type="PackedScene" uid="uid://6rgrcwpxyhay" path="res://Scenes/button_trees.tscn" id="19_exi56"]
 [ext_resource type="PackedScene" uid="uid://c2tw1i52qxo2f" path="res://Scenes/settings_menu.tscn" id="19_iivbl"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_1l0tm"]
@@ -188,10 +190,14 @@ grow_vertical = 2
 layout_mode = 1
 text = "START"
 
-[node name="SettingsButton" parent="UI/StartMenu" instance=ExtResource("10_rku1e")]
+[node name="SettingsButton" parent="UI/StartMenu" instance=ExtResource("17_7nbq1")]
 layout_mode = 1
-offset_top = 256.0
-offset_bottom = 512.0
+anchors_preset = 7
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -554.0
+offset_bottom = -298.0
+grow_vertical = 0
 text = "OPTIONS"
 
 [node name="GameOverMenu" type="Control" parent="UI"]
@@ -221,23 +227,11 @@ theme_override_fonts/font = ExtResource("6_i6g32")
 theme_override_font_sizes/font_size = 256
 text = "GAME OVER!"
 
-[node name="GameOverButton" type="Button" parent="UI/GameOverMenu"]
+[node name="GameOverButton" parent="UI/GameOverMenu" instance=ExtResource("19_exi56")]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -229.0
-offset_top = 269.0
-offset_right = 229.0
-offset_bottom = 470.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_fonts/font = ExtResource("6_i6g32")
-theme_override_font_sizes/font_size = 64
-text = "Retry"
-autowrap_mode = 2
+offset_top = 256.0
+offset_bottom = 512.0
+text = "RETRY"
 
 [node name="TauntText" type="Control" parent="UI"]
 z_index = 100
@@ -247,6 +241,7 @@ offset_top = 543.0
 offset_right = 2060.0
 offset_bottom = 1049.0
 mouse_filter = 2
+metadata/_edit_lock_ = true
 
 [node name="TauntLabel" type="RichTextLabel" parent="UI/TauntText"]
 layout_mode = 1
@@ -257,11 +252,13 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/normal_font = ExtResource("8_v158k")
 theme_override_font_sizes/normal_font_size = 64
+metadata/_edit_lock_ = true
 
 [node name="TauntTimer" type="Timer" parent="UI/TauntText"]
 wait_time = 4.0
 
 [node name="SettingsMenu" parent="UI" instance=ExtResource("19_iivbl")]
+visible = false
 layout_mode = 1
 offset_right = 0.0
 offset_bottom = 0.0

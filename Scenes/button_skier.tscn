@@ -1,0 +1,25 @@
+[gd_scene load_steps=6 format=3 uid="uid://cwtjrkfhpwvxe"]
+
+[ext_resource type="PackedScene" uid="uid://binn8tnwfsy6k" path="res://Scenes/license_plate_button.tscn" id="1_fho1g"]
+[ext_resource type="Texture2D" uid="uid://bl3qpysyuac7h" path="res://Assets/Art/UI/ui_button_skier.png" id="2_hhy8h"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xb44p"]
+texture = ExtResource("2_hhy8h")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_yfxej"]
+texture = ExtResource("2_hhy8h")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_x24cf"]
+texture = ExtResource("2_hhy8h")
+
+[node name="ButtonSkier" instance=ExtResource("1_fho1g")]
+theme_override_colors/font_color = Color(0.9466172, 0.9669387, 0.99743694, 1)
+theme_override_colors/font_focus_color = Color(0.76535213, 0.8544481, 0.9922479, 1)
+theme_override_colors/font_pressed_color = Color(0.43452156, 0.64858377, 0.9769493, 1)
+theme_override_colors/font_hover_color = Color(0.7647059, 0.85490197, 0.99215686, 1)
+theme_override_colors/font_outline_color = Color(2.4065375e-08, 0.12002804, 0.22321653, 1)
+theme_override_constants/outline_size = 12
+theme_override_styles/normal = SubResource("StyleBoxTexture_xb44p")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_yfxej")
+theme_override_styles/hover = SubResource("StyleBoxTexture_x24cf")
+text = "   1234"
