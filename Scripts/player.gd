@@ -113,6 +113,9 @@ func on_player_died() -> void:
 	# Play sounds
 	death_sound.play()
 	
+	# Disable movement
+	enable_movement = false
+	
 	# Tell game manager that a player died
 	game_manager.on_player_died()
 
