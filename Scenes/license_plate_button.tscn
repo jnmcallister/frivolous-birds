@@ -1,7 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://binn8tnwfsy6k"]
+[gd_scene load_steps=12 format=3 uid="uid://binn8tnwfsy6k"]
 
 [ext_resource type="FontFile" uid="uid://dplgetq6g2rqf" path="res://Assets/Fonts/Unispace Bd.otf" id="1_wnh3g"]
 [ext_resource type="Texture2D" uid="uid://bdxbxdwhxdnkg" path="res://Assets/Art/UI/ui_button_green.png" id="2_wnh3g"]
+[ext_resource type="Script" uid="uid://b0c8clff74ggt" path="res://Scripts/basic_button.gd" id="3_mrh44"]
+[ext_resource type="AudioStream" uid="uid://6gxi874cum6a" path="res://Assets/SFX/button_press-01.wav" id="4_y2snt"]
+[ext_resource type="AudioStream" uid="uid://p6qu6geonbg0" path="res://Assets/SFX/button_press-02.wav" id="5_hbmyo"]
+[ext_resource type="AudioStream" uid="uid://c3vyahe4678p3" path="res://Assets/SFX/button_press-03.wav" id="6_q0ffq"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_15lkw"]
 texture = ExtResource("2_wnh3g")
@@ -14,6 +18,13 @@ texture = ExtResource("2_wnh3g")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wnh3g"]
 bg_color = Color(1, 1, 1, 0.08627451)
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ewtal"]
+random_pitch = 1.1
+streams_count = 3
+stream_0/stream = ExtResource("4_y2snt")
+stream_1/stream = ExtResource("5_hbmyo")
+stream_2/stream = ExtResource("6_q0ffq")
 
 [node name="LicensePlateButton" type="Button"]
 anchors_preset = 8
@@ -35,3 +46,23 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_mrh44")
 theme_override_styles/focus = SubResource("StyleBoxFlat_wnh3g")
 text = "1234567"
 autowrap_mode = 2
+script = ExtResource("3_mrh44")
+
+[node name="HoverSound" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_ewtal")
+volume_db = -12.0
+bus = &"sfx"
+
+[node name="ButtonDownSound" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_ewtal")
+volume_db = -6.0
+bus = &"sfx"
+
+[node name="PressedSound" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_ewtal")
+pitch_scale = 0.9
+bus = &"sfx"
+
+[connection signal="button_down" from="." to="." method="_on_button_down"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="pressed" from="." to="." method="_on_pressed"]
