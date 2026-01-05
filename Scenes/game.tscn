@@ -268,10 +268,10 @@ text = "GAME OVER!"
 [node name="GameOverButton" parent="UI/GameOverMenu" instance=ExtResource("19_exi56")]
 layout_mode = 1
 offset_left = -267.0
-offset_top = 198.00012
+offset_top = 201.0
 offset_right = 245.0
-offset_bottom = 454.00012
-rotation = 0.061033353
+offset_bottom = 457.0
+rotation = 0.042752124
 text = "RETRY"
 
 [node name="TauntText" type="Control" parent="UI"]
