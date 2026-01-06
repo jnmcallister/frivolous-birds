@@ -35,6 +35,9 @@ var taunt_mode: bool = false # Becomes true when player starts flying above the 
 
 var preloaded_scene = preload("res://Scenes/game.tscn")
 
+const PLAYER_1_JUMP_ACTION: String = "jumpP1"
+const PLAYER_2_JUMP_ACTION: String = "jumpP2"
+
 @onready var top_area: Area2D = $"../Environment/TopArea"
 @onready var score_display: Control = $"../UI/ScoreDisplay"
 @onready var taunt_label: RichTextLabel = $"../UI/TauntText/TauntLabel"
@@ -54,6 +57,15 @@ func _ready() -> void:
 	taunt_label.hide()
 	settings_menu.hide()
 	settings_menu.get_node("SettingsBackButton").pressed.connect(_on_settings_back_button_pressed)
+
+
+func _input(event: InputEvent) -> void:
+	# Make sure game is in start menu
+	if game_state == GameState.START_MENU:
+		
+		# Allow player to press either jump button to start the game
+		if event.is_action_pressed(PLAYER_1_JUMP_ACTION) or event.is_action_pressed(PLAYER_2_JUMP_ACTION):
+			start_game()
 
 
 func on_score_increment() -> void:
@@ -81,11 +93,17 @@ func on_player_died() -> void:
 		# End the game
 		game_over_menu.show()
 		game_over.emit()
+		game_state = GameState.GAME_OVER
+
+
+func start_game() -> void:
+	game_start.emit()
+	start_menu.hide()
+	game_state = GameState.PLAYING
 
 
 func _on_start_button_pressed() -> void:
-	game_start.emit()
-	start_menu.hide()
+	start_game()
 
 
 func _on_settings_button_pressed() -> void:
