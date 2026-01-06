@@ -33,6 +33,8 @@ var decrease_score_taunt: int = 12 # What line of dialogue should the player's s
 var decrease_score_amount: int = 9999 # How much should the player's score decrease
 var taunt_mode: bool = false # Becomes true when player starts flying above the pipes
 
+var preloaded_scene = preload("res://Scenes/game.tscn")
+
 @onready var top_area: Area2D = $"../Environment/TopArea"
 @onready var score_display: Control = $"../UI/ScoreDisplay"
 @onready var taunt_label: RichTextLabel = $"../UI/TauntText/TauntLabel"
@@ -95,7 +97,7 @@ func _on_settings_back_button_pressed() -> void:
 
 
 func _on_game_over_button_pressed() -> void:
-	get_tree().reload_current_scene() # Restart game
+	get_tree().change_scene_to_packed(preloaded_scene) # Restart game
 
 
 func _on_top_area_cheating_taunt() -> void:
