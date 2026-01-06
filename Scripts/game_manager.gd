@@ -37,6 +37,7 @@ var preloaded_scene = preload("res://Scenes/game.tscn")
 
 const PLAYER_1_JUMP_ACTION: String = "jumpP1"
 const PLAYER_2_JUMP_ACTION: String = "jumpP2"
+const RESTART_ACTION: String = "restart"
 
 @onready var top_area: Area2D = $"../Environment/TopArea"
 @onready var score_display: Control = $"../UI/ScoreDisplay"
@@ -60,12 +61,19 @@ func _ready() -> void:
 
 
 func _input(event: InputEvent) -> void:
-	# Make sure game is in start menu
+	# Start menu hotkeys
 	if game_state == GameState.START_MENU:
 		
 		# Allow player to press either jump button to start the game
 		if event.is_action_pressed(PLAYER_1_JUMP_ACTION) or event.is_action_pressed(PLAYER_2_JUMP_ACTION):
 			start_game()
+	
+	# Game over screen hotkeys
+	if game_state == GameState.GAME_OVER:
+		
+		# Allow player to press a key to quickly restart
+		if event.is_action_pressed(RESTART_ACTION):
+			restart_game()
 
 
 func on_score_increment() -> void:
@@ -114,8 +122,12 @@ func _on_settings_back_button_pressed() -> void:
 	settings_menu.hide()
 
 
+func restart_game() -> void:
+	get_tree().change_scene_to_packed(preloaded_scene) # Reload scene using preloaded scene
+
+
 func _on_game_over_button_pressed() -> void:
-	get_tree().change_scene_to_packed(preloaded_scene) # Restart game
+	restart_game()
 
 
 func _on_top_area_cheating_taunt() -> void:
