@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://br6454hx8ajer"]
+[gd_scene load_steps=27 format=3 uid="uid://br6454hx8ajer"]
 
 [ext_resource type="PackedScene" uid="uid://daajos2gmdvfu" path="res://Scenes/player.tscn" id="1_ebmjs"]
 [ext_resource type="Script" uid="uid://bbb1ynfp4rb5b" path="res://Scripts/game_manager.gd" id="1_wowpa"]
@@ -22,6 +22,8 @@
 [ext_resource type="PackedScene" uid="uid://df0oi4nx4wjrf" path="res://Scenes/button_blue.tscn" id="17_7nbq1"]
 [ext_resource type="PackedScene" uid="uid://6rgrcwpxyhay" path="res://Scenes/button_trees.tscn" id="19_exi56"]
 [ext_resource type="PackedScene" uid="uid://c2tw1i52qxo2f" path="res://Scenes/settings_menu.tscn" id="19_iivbl"]
+[ext_resource type="Texture2D" uid="uid://2jyx1h4ku3j2" path="res://Assets/Art/UI/ui_tutorial_red.png" id="19_mg4q0"]
+[ext_resource type="Texture2D" uid="uid://bvr7er31ox6xs" path="res://Assets/Art/UI/ui_tutorial_green.png" id="20_vm72l"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_1l0tm"]
 normal = Vector2(0, 1)
@@ -218,10 +220,10 @@ grow_vertical = 2
 
 [node name="StartButton" parent="UI/StartMenu" instance=ExtResource("10_rku1e")]
 layout_mode = 1
-offset_left = -259.0
-offset_top = -191.00006
-offset_right = 253.0
-offset_bottom = 64.99994
+offset_left = 117.62952
+offset_top = -414.00003
+offset_right = 629.6294
+offset_bottom = -158.0
 rotation = 0.053265374
 text = "START"
 
@@ -230,15 +232,46 @@ layout_mode = 1
 anchors_preset = 7
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = -267.0
-offset_top = -576.0
-offset_right = 245.0
-offset_bottom = -320.0
+offset_left = 109.62952
+offset_top = -799.0
+offset_right = 621.6294
+offset_bottom = -543.0
 grow_vertical = 0
 rotation = -0.027083654
 text = "OPTIONS"
 
+[node name="RedTutorial" type="TextureRect" parent="UI/StartMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -790.0
+offset_top = -395.0
+offset_right = -96.0
+offset_bottom = -203.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("19_mg4q0")
+
+[node name="GreenTutorial" type="TextureRect" parent="UI/StartMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -790.0
+offset_top = 5.0
+offset_right = -96.0
+offset_bottom = 197.00012
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("20_vm72l")
+
 [node name="GameOverMenu" type="Control" parent="UI"]
+visible = false
 z_index = 99
 layout_mode = 1
 anchors_preset = 15
@@ -300,7 +333,6 @@ theme_override_colors/default_color = Color(0.95686275, 0.9843137, 1, 1)
 theme_override_constants/outline_size = 8
 theme_override_fonts/normal_font = ExtResource("8_v158k")
 theme_override_font_sizes/normal_font_size = 76
-text = "test"
 metadata/_edit_lock_ = true
 
 [node name="TauntTimer" type="Timer" parent="UI/TauntText"]
