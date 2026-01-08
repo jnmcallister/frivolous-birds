@@ -14,6 +14,9 @@ config/name="Frivolous Birds"
 config/tags=PackedStringArray("arcade", "local_coop", "multiplayer", "platformer", "singleplayer")
 run/main_scene="uid://br6454hx8ajer"
 config/features=PackedStringArray("4.5", "Forward Plus")
+boot_splash/bg_color=Color(0.9529412, 0.65882355, 0.22352941, 1)
+boot_splash/fullsize=false
+boot_splash/image="uid://beyjmhvgnla00"
 config/icon="uid://8l3vjaxfrgan"
 
 [display]
