@@ -1,7 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://binn8tnwfsy6k"]
+[gd_scene load_steps=13 format=3 uid="uid://binn8tnwfsy6k"]
 
 [ext_resource type="FontFile" uid="uid://dplgetq6g2rqf" path="res://Assets/Fonts/Unispace Bd.otf" id="1_wnh3g"]
 [ext_resource type="Texture2D" uid="uid://bdxbxdwhxdnkg" path="res://Assets/Art/UI/ui_button_green.png" id="2_wnh3g"]
+[ext_resource type="Texture2D" uid="uid://23kwecyd3f7n" path="res://Assets/Art/UI/ui_button_focus.png" id="3_hbmyo"]
 [ext_resource type="Script" uid="uid://b0c8clff74ggt" path="res://Scripts/basic_button.gd" id="3_mrh44"]
 [ext_resource type="AudioStream" uid="uid://6gxi874cum6a" path="res://Assets/SFX/button_press-01.wav" id="4_y2snt"]
 [ext_resource type="AudioStream" uid="uid://p6qu6geonbg0" path="res://Assets/SFX/button_press-02.wav" id="5_hbmyo"]
@@ -16,8 +17,12 @@ texture = ExtResource("2_wnh3g")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mrh44"]
 texture = ExtResource("2_wnh3g")
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wnh3g"]
-bg_color = Color(1, 1, 1, 0.08627451)
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_q0ffq"]
+texture = ExtResource("3_hbmyo")
+expand_margin_left = 30.0
+expand_margin_top = 30.0
+expand_margin_right = 30.0
+expand_margin_bottom = 30.0
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ewtal"]
 random_pitch = 1.1
@@ -43,7 +48,7 @@ theme_override_font_sizes/font_size = 88
 theme_override_styles/normal = SubResource("StyleBoxTexture_15lkw")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_wnh3g")
 theme_override_styles/hover = SubResource("StyleBoxTexture_mrh44")
-theme_override_styles/focus = SubResource("StyleBoxFlat_wnh3g")
+theme_override_styles/focus = SubResource("StyleBoxTexture_q0ffq")
 text = "1234567"
 autowrap_mode = 2
 script = ExtResource("3_mrh44")
