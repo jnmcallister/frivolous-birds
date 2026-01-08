@@ -14,3 +14,8 @@ func _on_button_down() -> void:
 
 func _on_pressed() -> void:
 	pressed_sound.play()
+
+
+func _on_focus_entered() -> void:
+	if hover_sound:
+		hover_sound.play()
