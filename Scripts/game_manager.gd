@@ -9,6 +9,8 @@ enum GameState{
 var score: int = 0
 var dead_players: int = 0
 var game_state: GameState = GameState.START_MENU
+var allow_jump_from_start: bool = false # If true, players can press either jump button in the start menu to start the game
+var allow_quick_restart: bool = false # If true, pressing space in game over menu will restart the game
 
 var taunts: Array[String] = ["you're not a good person you know", 
 "You think you're all clever with your \"i can fly above the obstacles\" nonsense",
@@ -44,6 +46,11 @@ const RESTART_ACTION: String = "restart"
 @onready var taunt_label: RichTextLabel = $"../UI/TauntText/TauntLabel"
 @onready var taunt_timer: Timer = $"../UI/TauntText/TauntTimer"
 
+# Buttons
+@onready var start_button: Button = $"../UI/StartMenu/StartButton"
+@onready var game_over_button: Button = $"../UI/GameOverMenu/GameOverButton"
+@onready var settings_button: Button = $"../UI/StartMenu/SettingsButton"
+
 # Menus
 @onready var start_menu: Control = $"../UI/StartMenu"
 @onready var game_over_menu: Control = $"../UI/GameOverMenu"
@@ -54,10 +61,16 @@ signal double_speed
 signal game_over
 
 func _ready() -> void:
+	# Hide menus
 	game_over_menu.hide()
 	taunt_label.hide()
 	settings_menu.hide()
+	
+	# Connect signals
 	settings_menu.get_node("SettingsBackButton").pressed.connect(_on_settings_back_button_pressed)
+	
+	# Select start button as default
+	start_button.grab_focus()
 
 
 func _input(event: InputEvent) -> void:
@@ -65,15 +78,17 @@ func _input(event: InputEvent) -> void:
 	if game_state == GameState.START_MENU:
 		
 		# Allow player to press either jump button to start the game
-		if event.is_action_pressed(PLAYER_1_JUMP_ACTION) or event.is_action_pressed(PLAYER_2_JUMP_ACTION):
-			start_game()
+		if allow_jump_from_start:
+			if event.is_action_pressed(PLAYER_1_JUMP_ACTION) or event.is_action_pressed(PLAYER_2_JUMP_ACTION):
+				start_game()
 	
 	# Game over screen hotkeys
 	if game_state == GameState.GAME_OVER:
 		
 		# Allow player to press a key to quickly restart
-		if event.is_action_pressed(RESTART_ACTION):
-			restart_game()
+		if allow_quick_restart:
+			if event.is_action_pressed(RESTART_ACTION):
+				restart_game()
 
 
 func on_score_increment() -> void:
@@ -99,9 +114,8 @@ func on_player_died() -> void:
 		
 	elif dead_players == 2:
 		# End the game
-		game_over_menu.show()
-		game_over.emit()
-		game_state = GameState.GAME_OVER
+		end_game()
+		
 
 
 func start_game() -> void:
@@ -110,16 +124,34 @@ func start_game() -> void:
 	game_state = GameState.PLAYING
 
 
+# Call when the game is over
+func end_game() -> void:
+	game_over_menu.show()
+	game_over.emit()
+	game_state = GameState.GAME_OVER
+	game_over_button.grab_focus()
+
+
 func _on_start_button_pressed() -> void:
 	start_game()
 
 
 func _on_settings_button_pressed() -> void:
+	# Show settings menu only
 	settings_menu.show()
+	start_menu.hide()
+	
+	# Focus on back button
+	settings_menu.get_node("SettingsBackButton").grab_focus()
 
 
 func _on_settings_back_button_pressed() -> void:
+	# Hide settings menu
 	settings_menu.hide()
+	start_menu.show()
+	
+	# Focus on start menu settings button
+	settings_button.grab_focus()
 
 
 func restart_game() -> void:
