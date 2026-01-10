@@ -33,6 +33,6 @@ func _on_drag_started() -> void:
 	slider_click_sound_player.play()
 
 
-func _on_drag_ended(value_changed: bool) -> void:
+func _on_drag_ended(_value_changed: bool) -> void:
 	# Stop playing sounds
 	slider_click_sound_player.stop()
