@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://brt1clltyuxfj"]
+[gd_scene load_steps=12 format=3 uid="uid://brt1clltyuxfj"]
 
 [ext_resource type="Texture2D" uid="uid://7uts0jpvswcm" path="res://Assets/Art/UI/ui_slider.png" id="1_o8y5x"]
 [ext_resource type="Script" uid="uid://dycdqf5gfiae1" path="res://Scripts/audio_slider.gd" id="1_pmn3i"]
 [ext_resource type="Texture2D" uid="uid://cubawnjlc47j7" path="res://Assets/Art/UI/ui_slider_fill.png" id="2_o0wol"]
 [ext_resource type="Texture2D" uid="uid://d0gmdhbbhibs3" path="res://Assets/Art/UI/ui_slider_fill_selected.png" id="3_cqeg0"]
+[ext_resource type="AudioStream" uid="uid://47u8v7puq2ap" path="res://Assets/SFX/popping-01.wav" id="5_k3ehq"]
 
 [sub_resource type="DPITexture" id="DPITexture_pmn3i"]
 
@@ -52,3 +53,9 @@ theme_override_styles/grabber_area_highlight = SubResource("StyleBoxTexture_o0wo
 max_value = 1.0
 step = 0.01
 script = ExtResource("1_pmn3i")
+
+[node name="SliderClickSoundPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_k3ehq")
+
+[connection signal="drag_ended" from="." to="." method="_on_drag_ended"]
+[connection signal="drag_started" from="." to="." method="_on_drag_started"]
