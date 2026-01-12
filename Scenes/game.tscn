@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://br6454hx8ajer"]
+[gd_scene load_steps=29 format=3 uid="uid://br6454hx8ajer"]
 
 [ext_resource type="PackedScene" uid="uid://daajos2gmdvfu" path="res://Scenes/player.tscn" id="1_ebmjs"]
 [ext_resource type="Script" uid="uid://bbb1ynfp4rb5b" path="res://Scripts/game_manager.gd" id="1_wowpa"]
@@ -16,6 +16,7 @@
 [ext_resource type="Script" uid="uid://cekpawgdqxmwp" path="res://Scripts/background_parallax.gd" id="9_1phco"]
 [ext_resource type="Texture2D" uid="uid://cus406if5coe5" path="res://Assets/Art/Background/background_mountains-01.png" id="10_1phco"]
 [ext_resource type="Texture2D" uid="uid://clj0i2gsv2hgw" path="res://Assets/Art/Background/background_clouds-01.png" id="10_ewbju"]
+[ext_resource type="Texture2D" uid="uid://ckpeivnh0r2qd" path="res://Assets/Art/Gameplay/ground_snow_under.png" id="10_fkdbe"]
 [ext_resource type="PackedScene" uid="uid://55qnksj32pc0" path="res://Scenes/button_green.tscn" id="10_rku1e"]
 [ext_resource type="Texture2D" uid="uid://uo3gq14abk1u" path="res://Assets/Art/Background/background_mountains-02.png" id="11_nb51f"]
 [ext_resource type="Texture2D" uid="uid://baar54mtnf7dy" path="res://Assets/Art/Background/background_snowman.png" id="12_nnt18"]
@@ -80,7 +81,7 @@ shape = SubResource("WorldBoundaryShape2D_3dryh")
 [node name="BelowGround" parent="Environment" instance=ExtResource("7_ldgsr")]
 z_index = 2
 position = Vector2(38, 878)
-scale = Vector2(1, -1)
+texture = ExtResource("10_fkdbe")
 
 [node name="Background" type="Node" parent="Environment"]
 
