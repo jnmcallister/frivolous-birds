@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://c57maji1j8c1l"]
+[gd_scene load_steps=7 format=3 uid="uid://c57maji1j8c1l"]
 
 [ext_resource type="Texture2D" uid="uid://bpcyeu0kj1j8k" path="res://Assets/Art/Particles/particle_circle.png" id="1_yudi0"]
 
@@ -7,14 +7,38 @@ _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.4977534, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Gradient" id="Gradient_yudi0"]
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.5294118)
+offsets = PackedFloat32Array(0.02739726, 1)
+colors = PackedColorArray(0.23753929, 0.23753908, 0.23753902, 1, 1, 1, 1, 0.5294118)
 
 [sub_resource type="Gradient" id="Gradient_g2ca0"]
-colors = PackedColorArray(0.92941177, 0.36078432, 0.047058824, 1, 1, 0.8016667, 0.14999998, 1)
+colors = PackedColorArray(0.6890987, 0.66479397, 0.66049826, 1, 0.44170526, 0.42824546, 0.3794686, 1)
+
+[sub_resource type="Gradient" id="Gradient_ibckk"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.5294118)
+
+[sub_resource type="Gradient" id="Gradient_io0rh"]
+offsets = PackedFloat32Array(0, 0.9931507)
+colors = PackedColorArray(0.92941177, 0.35686275, 0.043137256, 1, 1, 0.8, 0.14509805, 1)
 
 [node name="player_explosion" type="Node2D"]
 
-[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+[node name="SmokeParticles" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 200
+texture = ExtResource("1_yudi0")
+lifetime = 1.2
+one_shot = true
+explosiveness = 0.9
+spread = 180.0
+gravity = Vector2(0, 90)
+initial_velocity_min = 100.0
+initial_velocity_max = 800.0
+scale_amount_min = 0.25
+scale_amount_curve = SubResource("Curve_n0k03")
+color_ramp = SubResource("Gradient_yudi0")
+color_initial_ramp = SubResource("Gradient_g2ca0")
+
+[node name="FireParticles" type="CPUParticles2D" parent="."]
 emitting = false
 amount = 160
 texture = ExtResource("1_yudi0")
@@ -27,5 +51,5 @@ initial_velocity_min = 200.0
 initial_velocity_max = 800.0
 scale_amount_min = 0.25
 scale_amount_curve = SubResource("Curve_n0k03")
-color_ramp = SubResource("Gradient_yudi0")
-color_initial_ramp = SubResource("Gradient_g2ca0")
+color_ramp = SubResource("Gradient_ibckk")
+color_initial_ramp = SubResource("Gradient_io0rh")
