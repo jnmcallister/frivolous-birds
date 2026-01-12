@@ -18,7 +18,8 @@ var turkey_init_y_velocity: Vector2 = Vector2(-500, -2000)# When the player dies
 var turkey_init_rotation_velocity: Vector2 = Vector2(360 * 2, 360 * 4) # When the player dies, set the rotation velocity of the turkey to somewhere in this range (degrees/second)
 
 #@onready var sprite: Sprite2D = $Sprite2D
-@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D # Animates player sprites
+@onready var animation_player: AnimationPlayer = $AnimationPlayer # Animates player scale (squash and stretch)
 @onready var collision: CollisionShape2D = $CollisionShape2D
 @onready var player_explosion: Node2D = $player_explosion
 @onready var game_manager: Node2D = %GameManager
@@ -39,6 +40,7 @@ func _ready() -> void:
 
 func on_game_start() -> void:
 	enable_movement = true
+	animation_player.play("falling") # Exit idle animation
 
 
 func _physics_process(delta: float) -> void:
@@ -82,6 +84,7 @@ func jump() -> void:
 	# Start flap animation
 	animated_sprite.stop()
 	animated_sprite.play("jump")
+	animation_player.play("jump")
 	
 	# Play flap sound
 	flap_sound.play()
@@ -124,3 +127,4 @@ func _on_sprite_animation_finished() -> void:
 	# Check which animation this is
 	if animated_sprite.animation == "jump":
 		animated_sprite.play("idle")
+		animation_player.play("falling")
