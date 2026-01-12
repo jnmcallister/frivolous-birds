@@ -72,6 +72,7 @@ position = Vector2(38, 750)
 
 [node name="FloorKillzone" parent="Environment/Ground" instance=ExtResource("3_wrm1d")]
 position = Vector2(0, -41)
+killzone_type = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/Ground/FloorKillzone"]
 shape = SubResource("WorldBoundaryShape2D_3dryh")

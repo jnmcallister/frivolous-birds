@@ -1,6 +1,10 @@
 class_name player
 extends CharacterBody2D
 
+enum KillzoneType{
+	SNOW,
+	GIRAFFE
+}
 
 const JUMP_VELOCITY = -700.0
 const SPRITE_ROTATION_MIN = -15
@@ -91,10 +95,19 @@ func jump() -> void:
 
 
 # Called when player touches killzone
-func on_player_died() -> void:
-	# Start particles
-	player_explosion.get_node("FireParticles").emitting = true
-	player_explosion.get_node("SmokeParticles").emitting = true
+func on_player_died(killzone_type: KillzoneType) -> void:
+	
+	# Check which type of killzone this is
+	if killzone_type == KillzoneType.GIRAFFE:
+		
+		# Start particles
+		player_explosion.get_node("FireParticles").emitting = true
+		player_explosion.get_node("SmokeParticles").emitting = true
+		
+	elif killzone_type == KillzoneType.SNOW:
+		
+		# Start particles
+		player_explosion.get_node("SnowParticles").emitting = true
 	
 	# Calculate velocities of turkey (dead player sprite)
 	var turkey_x_velocity = randf_range(turkey_init_x_velocity.x, turkey_init_x_velocity.y)
