@@ -1,8 +1,9 @@
-[gd_scene load_steps=27 format=3 uid="uid://br6454hx8ajer"]
+[gd_scene load_steps=28 format=3 uid="uid://br6454hx8ajer"]
 
 [ext_resource type="PackedScene" uid="uid://daajos2gmdvfu" path="res://Scenes/player.tscn" id="1_ebmjs"]
 [ext_resource type="Script" uid="uid://bbb1ynfp4rb5b" path="res://Scripts/game_manager.gd" id="1_wowpa"]
 [ext_resource type="PackedScene" uid="uid://dfyqiilpeknal" path="res://Scenes/music_manager.tscn" id="2_85qyi"]
+[ext_resource type="PackedScene" uid="uid://cejtn4qcjdjy4" path="res://Scenes/camera_shake_cam.tscn" id="3_22asu"]
 [ext_resource type="SpriteFrames" uid="uid://cqgayohmruhep" path="res://Assets/Art/Gameplay/player_green.tres" id="3_nb51f"]
 [ext_resource type="PackedScene" uid="uid://d12csarb4j7pb" path="res://Scenes/killzone.tscn" id="3_wrm1d"]
 [ext_resource type="PackedScene" uid="uid://bl2arrksj63td" path="res://Scenes/pipe_spawner.tscn" id="4_3dryh"]
@@ -39,9 +40,8 @@ script = ExtResource("1_wowpa")
 [node name="MusicManager" parent="." instance=ExtResource("2_85qyi")]
 unique_name_in_owner = true
 
-[node name="Camera2D" type="Camera2D" parent="."]
-offset = Vector2(1000, 0)
-zoom = Vector2(0.4, 0.4)
+[node name="Camera" parent="." instance=ExtResource("3_22asu")]
+unique_name_in_owner = true
 
 [node name="Players" type="Node" parent="."]
 
@@ -77,12 +77,17 @@ killzone_type = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/Ground/FloorKillzone"]
 shape = SubResource("WorldBoundaryShape2D_3dryh")
 
+[node name="BelowGround" parent="Environment" instance=ExtResource("7_ldgsr")]
+z_index = 2
+position = Vector2(38, 878)
+scale = Vector2(1, -1)
+
 [node name="Background" type="Node" parent="Environment"]
 
 [node name="Sky" type="Sprite2D" parent="Environment/Background"]
 z_index = -15
 position = Vector2(997, -3.5420555e-12)
-scale = Vector2(1.52, 1.52)
+scale = Vector2(1.75, 1.75)
 texture = ExtResource("8_o5yvi")
 region_rect = Rect2(0, 0, 1920, 1080)
 

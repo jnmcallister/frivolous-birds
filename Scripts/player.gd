@@ -21,6 +21,12 @@ var turkey_init_x_velocity: Vector2 = Vector2(200, 600) # When the player dies, 
 var turkey_init_y_velocity: Vector2 = Vector2(-500, -2000)# When the player dies, set the y velocity of the turkey to somewhere in this range
 var turkey_init_rotation_velocity: Vector2 = Vector2(360 * 2, 360 * 4) # When the player dies, set the rotation velocity of the turkey to somewhere in this range (degrees/second)
 
+# Camera shake
+var player_jump_shake_intensity: float = 0
+var player_jump_shake_time: float = 0
+var player_death_shake_intensity: float = 150
+var player_death_shake_time: float = 0.8
+
 #@onready var sprite: Sprite2D = $Sprite2D
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D # Animates player sprites
 @onready var animation_player: AnimationPlayer = $AnimationPlayer # Animates player scale (squash and stretch)
@@ -28,6 +34,7 @@ var turkey_init_rotation_velocity: Vector2 = Vector2(360 * 2, 360 * 4) # When th
 @onready var player_explosion: Node2D = $player_explosion
 @onready var game_manager: Node2D = %GameManager
 @onready var pipe_spawner: Node2D = %PipeSpawner
+@onready var camera: Camera2D = %Camera
 @onready var turkey: Sprite2D = $Turkey
 @onready var death_sound: AudioStreamPlayer = $DeathSound
 @onready var flap_sound: AudioStreamPlayer = $FlapSound
@@ -92,6 +99,9 @@ func jump() -> void:
 	
 	# Play flap sound
 	flap_sound.play()
+	
+	# Shake camera
+	camera.shake_camera(player_jump_shake_intensity, player_jump_shake_time)
 
 
 # Called when player touches killzone
@@ -135,6 +145,9 @@ func on_player_died(killzone_type: KillzoneType) -> void:
 	
 	# Tell game manager that a player died
 	game_manager.on_player_died()
+	
+	# Shake camera
+	camera.shake_camera(player_death_shake_intensity, player_death_shake_time)
 
 
 func _on_sprite_animation_finished() -> void:
