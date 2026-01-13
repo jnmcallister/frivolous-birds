@@ -175,7 +175,12 @@ func _on_settings_back_button_pressed() -> void:
 
 
 func restart_game() -> void:
-	get_tree().change_scene_to_packed(preloaded_scene) # Reload scene using preloaded scene
+	
+	# Reset time scale
+	Engine.time_scale = 1
+	
+	# Reload scene using preloaded scene
+	get_tree().change_scene_to_packed(preloaded_scene)
 
 
 func _on_game_over_button_pressed() -> void:
