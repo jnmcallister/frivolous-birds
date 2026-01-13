@@ -27,17 +27,23 @@ var player_jump_shake_time: float = 0
 var player_death_shake_intensity: float = 150
 var player_death_shake_time: float = 0.8
 
+# Time freeze FX
+var player_death_time_freeze: float = 0.12 # Duration of time freeze after player dies
+var player_death_time_slowdown: float = 0.05 # How fast should time move during time freeze
+
 #@onready var sprite: Sprite2D = $Sprite2D
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D # Animates player sprites
 @onready var animation_player: AnimationPlayer = $AnimationPlayer # Animates player scale (squash and stretch)
 @onready var collision: CollisionShape2D = $CollisionShape2D
 @onready var player_explosion: Node2D = $player_explosion
-@onready var game_manager: Node2D = %GameManager
-@onready var pipe_spawner: Node2D = %PipeSpawner
-@onready var camera: Camera2D = %Camera
 @onready var turkey: Sprite2D = $Turkey
 @onready var death_sound: AudioStreamPlayer = $DeathSound
 @onready var flap_sound: AudioStreamPlayer = $FlapSound
+
+@onready var game_manager: Node2D = %GameManager
+@onready var pipe_spawner: Node2D = %PipeSpawner
+@onready var camera: Camera2D = %Camera
+@onready var time_freezer: Node = %TimeFreezer
 
 func _ready() -> void:
 	game_manager.game_start.connect(on_game_start)
@@ -148,6 +154,9 @@ func on_player_died(killzone_type: KillzoneType) -> void:
 	
 	# Shake camera
 	camera.shake_camera(player_death_shake_intensity, player_death_shake_time)
+	
+	# Freeze time
+	time_freezer.freeze_time(player_death_time_freeze, player_death_time_slowdown)
 
 
 func _on_sprite_animation_finished() -> void:

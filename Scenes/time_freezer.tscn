@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://cng4dy32vvoc4"]
+
+[ext_resource type="Script" uid="uid://dm1d1ovjx87yf" path="res://Scripts/time_freezer.gd" id="1_q8bjq"]
+
+[node name="TimeFreezer" type="Node"]
+script = ExtResource("1_q8bjq")
+
+[node name="FreezeTimer" type="Timer" parent="."]
+one_shot = true
+ignore_time_scale = true
+
+[connection signal="timeout" from="FreezeTimer" to="." method="_on_freeze_timer_timeout"]

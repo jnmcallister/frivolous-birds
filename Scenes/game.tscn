@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://br6454hx8ajer"]
+[gd_scene load_steps=30 format=3 uid="uid://br6454hx8ajer"]
 
 [ext_resource type="PackedScene" uid="uid://daajos2gmdvfu" path="res://Scenes/player.tscn" id="1_ebmjs"]
 [ext_resource type="Script" uid="uid://bbb1ynfp4rb5b" path="res://Scripts/game_manager.gd" id="1_wowpa"]
@@ -7,6 +7,7 @@
 [ext_resource type="SpriteFrames" uid="uid://cqgayohmruhep" path="res://Assets/Art/Gameplay/player_green.tres" id="3_nb51f"]
 [ext_resource type="PackedScene" uid="uid://d12csarb4j7pb" path="res://Scenes/killzone.tscn" id="3_wrm1d"]
 [ext_resource type="PackedScene" uid="uid://bl2arrksj63td" path="res://Scenes/pipe_spawner.tscn" id="4_3dryh"]
+[ext_resource type="PackedScene" uid="uid://cng4dy32vvoc4" path="res://Scenes/time_freezer.tscn" id="4_81klo"]
 [ext_resource type="PackedScene" uid="uid://dsw4dd8bsfses" path="res://Scenes/score_display.tscn" id="4_wowpa"]
 [ext_resource type="PackedScene" uid="uid://wsg6b4iyhle4" path="res://Scenes/top_area.tscn" id="5_1l0tm"]
 [ext_resource type="FontFile" uid="uid://cwunrv3x25417" path="res://Assets/Fonts/Blue Highway Bd.otf" id="6_i6g32"]
@@ -34,6 +35,9 @@ normal = Vector2(0, 1)
 
 [node name="Game" type="Node2D"]
 
+[node name="Camera" parent="." instance=ExtResource("3_22asu")]
+unique_name_in_owner = true
+
 [node name="GameManager" type="Node2D" parent="."]
 unique_name_in_owner = true
 script = ExtResource("1_wowpa")
@@ -41,7 +45,7 @@ script = ExtResource("1_wowpa")
 [node name="MusicManager" parent="." instance=ExtResource("2_85qyi")]
 unique_name_in_owner = true
 
-[node name="Camera" parent="." instance=ExtResource("3_22asu")]
+[node name="TimeFreezer" parent="." instance=ExtResource("4_81klo")]
 unique_name_in_owner = true
 
 [node name="Players" type="Node" parent="."]
