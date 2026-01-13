@@ -1,10 +1,11 @@
-[gd_scene load_steps=30 format=3 uid="uid://br6454hx8ajer"]
+[gd_scene load_steps=31 format=3 uid="uid://br6454hx8ajer"]
 
 [ext_resource type="PackedScene" uid="uid://daajos2gmdvfu" path="res://Scenes/player.tscn" id="1_ebmjs"]
 [ext_resource type="Script" uid="uid://bbb1ynfp4rb5b" path="res://Scripts/game_manager.gd" id="1_wowpa"]
 [ext_resource type="PackedScene" uid="uid://dfyqiilpeknal" path="res://Scenes/music_manager.tscn" id="2_85qyi"]
 [ext_resource type="PackedScene" uid="uid://cejtn4qcjdjy4" path="res://Scenes/camera_shake_cam.tscn" id="3_22asu"]
 [ext_resource type="SpriteFrames" uid="uid://cqgayohmruhep" path="res://Assets/Art/Gameplay/player_green.tres" id="3_nb51f"]
+[ext_resource type="AudioStream" uid="uid://5djb4qkxs8ac" path="res://Assets/SFX/deepPitch-02.wav" id="3_tgy6u"]
 [ext_resource type="PackedScene" uid="uid://d12csarb4j7pb" path="res://Scenes/killzone.tscn" id="3_wrm1d"]
 [ext_resource type="PackedScene" uid="uid://bl2arrksj63td" path="res://Scenes/pipe_spawner.tscn" id="4_3dryh"]
 [ext_resource type="PackedScene" uid="uid://cng4dy32vvoc4" path="res://Scenes/time_freezer.tscn" id="4_81klo"]
@@ -41,6 +42,10 @@ unique_name_in_owner = true
 [node name="GameManager" type="Node2D" parent="."]
 unique_name_in_owner = true
 script = ExtResource("1_wowpa")
+
+[node name="GameOverSound" type="AudioStreamPlayer" parent="GameManager"]
+stream = ExtResource("3_tgy6u")
+bus = &"sfx"
 
 [node name="MusicManager" parent="." instance=ExtResource("2_85qyi")]
 unique_name_in_owner = true

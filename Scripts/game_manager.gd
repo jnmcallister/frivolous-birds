@@ -51,6 +51,7 @@ const RESTART_ACTION: String = "restart"
 @onready var taunt_label: RichTextLabel = $"../UI/TauntText/TauntLabel"
 @onready var taunt_timer: Timer = $"../UI/TauntText/TauntTimer"
 @onready var time_freezer: Node = %TimeFreezer
+@onready var game_over_sound: AudioStreamPlayer = $GameOverSound
 
 # Buttons
 @onready var start_button: Button = $"../UI/StartMenu/StartButton"
@@ -122,8 +123,6 @@ func on_player_died() -> void:
 		time_freezer.freeze_time(player_first_death_time_freeze, player_death_time_slowdown)
 		
 	elif dead_players == 2:
-		# Freeze time
-		time_freezer.freeze_time(player_second_death_time_freeze, player_death_time_slowdown)
 		
 		# End the game
 		end_game()
@@ -138,10 +137,19 @@ func start_game() -> void:
 
 # Call when the game is over
 func end_game() -> void:
+	# Freeze time
+	time_freezer.freeze_time(player_second_death_time_freeze, player_death_time_slowdown)
+	
+	# Play SFX
+	game_over_sound.play()
+	
+	# Show game over menu
 	game_over_menu.show()
+	game_over_button.grab_focus()
+	
+	# Communicate that it's game over
 	game_over.emit()
 	game_state = GameState.GAME_OVER
-	game_over_button.grab_focus()
 
 
 func _on_start_button_pressed() -> void:
