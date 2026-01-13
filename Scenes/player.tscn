@@ -9,6 +9,36 @@
 [ext_resource type="AudioStream" uid="uid://bxojq15jskis8" path="res://Assets/SFX/flap-01.wav" id="7_8erm5"]
 [ext_resource type="AudioStream" uid="uid://ckldgu45fa1mw" path="res://Assets/SFX/flap-02.wav" id="8_f1ek2"]
 
+[sub_resource type="Animation" id="Animation_tx1dd"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_gymyn"]
+resource_name = "falling"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.1, 0.9)]
+}
+
 [sub_resource type="Animation" id="Animation_8erm5"]
 resource_name = "idle"
 loop_mode = 1
@@ -41,36 +71,6 @@ tracks/0/keys = {
 "values": [Vector2(1, 1), Vector2(0.8, 1.25), Vector2(1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_tx1dd"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_gymyn"]
-resource_name = "falling"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(1, 1), Vector2(1.1, 0.9)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_gymyn"]
 _data = {
 &"RESET": SubResource("Animation_tx1dd"),
@@ -98,6 +98,7 @@ stream_0/stream = ExtResource("7_8erm5")
 stream_1/stream = ExtResource("8_f1ek2")
 
 [node name="player1" type="CharacterBody2D" groups=["player"]]
+z_index = 15
 collision_layer = 2
 collision_mask = 7
 script = ExtResource("1_cvnsp")

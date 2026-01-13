@@ -37,6 +37,11 @@ var taunt_mode: bool = false # Becomes true when player starts flying above the 
 
 var preloaded_scene = preload("res://Scenes/game.tscn")
 
+# Time freeze FX
+var player_first_death_time_freeze: float = 0.12 # Duration of time freeze after player first dies
+var player_second_death_time_freeze: float = 0.8 # Duration of time freeze after player second dies
+var player_death_time_slowdown: float = 0.05 # How fast should time move during time freeze
+
 const PLAYER_1_JUMP_ACTION: String = "jumpP1"
 const PLAYER_2_JUMP_ACTION: String = "jumpP2"
 const RESTART_ACTION: String = "restart"
@@ -45,6 +50,7 @@ const RESTART_ACTION: String = "restart"
 @onready var score_display: Control = $"../UI/ScoreDisplay"
 @onready var taunt_label: RichTextLabel = $"../UI/TauntText/TauntLabel"
 @onready var taunt_timer: Timer = $"../UI/TauntText/TauntTimer"
+@onready var time_freezer: Node = %TimeFreezer
 
 # Buttons
 @onready var start_button: Button = $"../UI/StartMenu/StartButton"
@@ -112,7 +118,13 @@ func on_player_died() -> void:
 		# Double the pipe speed
 		double_speed.emit()
 		
+		# Freeze time
+		time_freezer.freeze_time(player_first_death_time_freeze, player_death_time_slowdown)
+		
 	elif dead_players == 2:
+		# Freeze time
+		time_freezer.freeze_time(player_second_death_time_freeze, player_death_time_slowdown)
+		
 		# End the game
 		end_game()
 		
