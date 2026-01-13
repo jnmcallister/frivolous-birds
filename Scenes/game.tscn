@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://br6454hx8ajer"]
+[gd_scene load_steps=32 format=3 uid="uid://br6454hx8ajer"]
 
 [ext_resource type="PackedScene" uid="uid://daajos2gmdvfu" path="res://Scenes/player.tscn" id="1_ebmjs"]
 [ext_resource type="Script" uid="uid://bbb1ynfp4rb5b" path="res://Scripts/game_manager.gd" id="1_wowpa"]
@@ -27,6 +27,7 @@
 [ext_resource type="PackedScene" uid="uid://6rgrcwpxyhay" path="res://Scenes/button_trees.tscn" id="19_exi56"]
 [ext_resource type="PackedScene" uid="uid://c2tw1i52qxo2f" path="res://Scenes/settings_menu.tscn" id="19_iivbl"]
 [ext_resource type="Texture2D" uid="uid://2jyx1h4ku3j2" path="res://Assets/Art/UI/ui_tutorial_red.png" id="19_mg4q0"]
+[ext_resource type="PackedScene" uid="uid://boiv1xdwo4wls" path="res://Scenes/death_fx.tscn" id="20_cwurv"]
 [ext_resource type="Texture2D" uid="uid://bvr7er31ox6xs" path="res://Assets/Art/UI/ui_tutorial_green.png" id="20_vm72l"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_1l0tm"]
@@ -62,6 +63,7 @@ position = Vector2(0, -300)
 position = Vector2(0, 100)
 jumpAction = "jumpP2"
 bird_sprite_frames = ExtResource("3_nb51f")
+is_player_1 = false
 
 [node name="Environment" type="Node" parent="."]
 
@@ -213,8 +215,11 @@ offset_bottom = 810.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
+[node name="DeathFX" parent="UI" instance=ExtResource("20_cwurv")]
+layout_mode = 1
+
 [node name="ScoreDisplay" parent="UI" instance=ExtResource("4_wowpa")]
-z_index = 2
+z_index = 30
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -227,6 +232,7 @@ grow_horizontal = 0
 grow_vertical = 1
 
 [node name="StartMenu" type="Control" parent="UI"]
+z_index = 99
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

@@ -14,6 +14,7 @@ const SPRITE_ROTATION_SPEED = 80
 @export var jumpAction: String = "jumpP1"
 #@export var bird_texture: Texture2D
 @export var bird_sprite_frames: SpriteFrames
+@export var is_player_1 = true # True if red bird, false if green
 
 var enable_movement: bool = false
 var player_collide_force: float = 50 # Force to apply to player when they collide with another player
@@ -146,7 +147,7 @@ func on_player_died(killzone_type: KillzoneType) -> void:
 	enable_movement = false
 	
 	# Tell game manager that a player died
-	game_manager.on_player_died()
+	game_manager.on_player_died(is_player_1)
 	
 	# Shake camera
 	camera.shake_camera(player_death_shake_intensity, player_death_shake_time)

@@ -66,6 +66,7 @@ const RESTART_ACTION: String = "restart"
 signal game_start
 signal double_speed
 signal game_over
+signal player_died(is_player_1: bool)
 
 func _ready() -> void:
 	# Hide menus
@@ -112,7 +113,10 @@ func on_score_decrease(amount: int) -> void:
 # Called when a player dies
 # If there is one player left, double the speed of pipes
 # Otherwise, end the game
-func on_player_died() -> void:
+func on_player_died(is_player_1: bool) -> void:
+	# Send signal
+	player_died.emit(is_player_1)
+	
 	# Check how many players are left
 	dead_players += 1
 	if dead_players == 1:
