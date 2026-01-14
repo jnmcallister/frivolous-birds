@@ -63,6 +63,10 @@ const RESTART_ACTION: String = "restart"
 @onready var game_over_menu: Control = $"../UI/GameOverMenu"
 @onready var settings_menu: Control = $"../UI/SettingsMenu"
 
+# Menu things
+@onready var game_over_anim_player: AnimationPlayer = $"../UI/GameOverMenu/GameOverAnimPlayer"
+@onready var game_over_wait_timer: Timer = $"../UI/GameOverMenu/GameOverWaitTimer"
+
 signal game_start
 signal double_speed
 signal game_over
@@ -147,9 +151,8 @@ func end_game() -> void:
 	# Play SFX
 	game_over_sound.play()
 	
-	# Show game over menu
-	game_over_menu.show()
-	game_over_button.grab_focus()
+	# Show game over menu (after delay)
+	game_over_wait_timer.start() # Wait before playing fade in animation and showing menu
 	
 	# Communicate that it's game over
 	game_over.emit()
@@ -213,3 +216,9 @@ func _on_taunt_timer_timeout() -> void:
 	# Check if the player's score needs to be decreased from cheating for too long
 	if current_taunt == decrease_score_taunt:
 		on_score_decrease(decrease_score_amount)
+
+
+func _on_game_over_wait_timer_timeout() -> void:
+	game_over_menu.show()
+	game_over_anim_player.play("fade_in") # Play animation
+	game_over_button.grab_focus()
