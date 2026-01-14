@@ -13,8 +13,8 @@ const gravity_multiplier_increase = 1.05 # How much to increase the gravity mult
 const jump_multipler_increase = 1.025 # How much to increase player jump velocity after speed increase timer is up
 const pipe_speed_default = -400 # Default speed of pipes before it's increased
 
-var pipe_elevation_max: float = 180 # Lowest height the pipes can spawn at
-var pipe_elevation_min: float = -260 # Highest height the pipes can spawn at
+var pipe_elevation_max: float = 130 # Lowest height the pipes can spawn at
+var pipe_elevation_min: float = -140 # Highest height the pipes can spawn at
 var free_pipes: Array[Node2D] = []
 var all_pipes: Array[Node2D] = [] # Array of all pipes
 var triple_pipe_count: int = 8
