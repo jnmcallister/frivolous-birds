@@ -144,6 +144,7 @@ repeat_size = Vector2(2048, 0)
 autoscroll = Vector2(-32, 0)
 repeat_times = 3
 script = ExtResource("9_1phco")
+x_offset_bounds = Vector2(0, 1024)
 
 [node name="Sprite2D" type="Sprite2D" parent="Environment/Background/Mountains/MountainsParallax1"]
 texture = ExtResource("10_1phco")
@@ -155,6 +156,7 @@ repeat_size = Vector2(2048, 0)
 autoscroll = Vector2(-20, 0)
 repeat_times = 3
 script = ExtResource("9_1phco")
+x_offset_bounds = Vector2(0, 1024)
 
 [node name="Sprite2D" type="Sprite2D" parent="Environment/Background/Mountains/MountainsParallax2"]
 texture = ExtResource("11_nb51f")
