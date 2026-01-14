@@ -4,6 +4,7 @@ extends Node2D
 # Get pipes
 const PIPE_SCENE_TRIPLE = preload("res://Scenes/triple_pipe.tscn")
 const PIPE_SCENE_DOUBLE = preload("res://Scenes/double_pipe.tscn")
+const PIPE_SCENE_SINGLE = preload("res://Scenes/single_pipe.tscn")
 
 const pipe_death_speed_multiplier: float = 3 # How much to multiply pipe speed when player dies
 const pipe_death_rate_divisor: float = 3 # How much to divide spawn rate when player dies
@@ -19,6 +20,7 @@ var free_pipes: Array[Node2D] = []
 var all_pipes: Array[Node2D] = [] # Array of all pipes
 var triple_pipe_count: int = 8
 var double_pipe_count: int = 2
+var single_pipe_count: int = 2
 var pipe_speed: float = pipe_speed_default
 var gravity_multipler: float = 1 # Multiplier for player gravity
 var jump_multiplier: float = 1 # Multiplier for player jump velocity
@@ -52,6 +54,10 @@ func instantiate_pipes() -> void:
 	# Add double pipes
 	for i in range(double_pipe_count):
 		instantiate_new_pipe(PIPE_SCENE_DOUBLE)
+	
+	# Add single pipes
+	for i in range(single_pipe_count):
+		instantiate_new_pipe(PIPE_SCENE_SINGLE)
 
 
 # Instantiates a new pipe and adds it to free_pipes queue
