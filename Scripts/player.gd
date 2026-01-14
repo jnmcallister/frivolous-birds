@@ -17,7 +17,7 @@ const SPRITE_ROTATION_SPEED = 80
 @export var is_player_1 = true # True if red bird, false if green
 
 var enable_movement: bool = false
-var player_collide_force: float = 50 # Force to apply to player when they collide with another player
+var player_collide_force: float = 500 # Force to apply to player when they collide with another player
 var turkey_init_x_velocity: Vector2 = Vector2(200, 600) # When the player dies, set the x velocity of the turkey to somewhere in this range
 var turkey_init_y_velocity: Vector2 = Vector2(-500, -2000)# When the player dies, set the y velocity of the turkey to somewhere in this range
 var turkey_init_rotation_velocity: Vector2 = Vector2(360 * 2, 360 * 4) # When the player dies, set the rotation velocity of the turkey to somewhere in this range (degrees/second)
@@ -45,9 +45,7 @@ var player_death_shake_time: float = 0.8
 func _ready() -> void:
 	game_manager.game_start.connect(on_game_start)
 	
-	# Set sprite
-	#if bird_texture:
-		#sprite.texture = bird_texture
+	# Set sprite frames
 	if bird_sprite_frames:
 		animated_sprite.sprite_frames = bird_sprite_frames
 
@@ -82,10 +80,14 @@ func _physics_process(delta: float) -> void:
 		for i in get_slide_collision_count():
 			var col_obj = get_slide_collision(i) # Get object at index i
 			if col_obj.get_collider() is player: # Check if this is a player
-				# Add "bounce" force to other player
-				var other_player = col_obj.get_collider() as player
-				other_player.velocity -= col_obj.get_normal() * player_collide_force
-				velocity += col_obj.get_normal() * player_collide_force
+				
+				# Check which player this is
+				if is_player_1: # Top player
+					
+					# Add force to this player
+					velocity += Vector2.UP * player_collide_force
+					
+				break
 
 
 func jump() -> void:
