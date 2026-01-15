@@ -34,9 +34,13 @@ var player_death_shake_time: float = 0.8
 @onready var collision: CollisionShape2D = $CollisionShape2D
 @onready var player_explosion: Node2D = $player_explosion
 @onready var turkey: Sprite2D = $Turkey
+
+# Audio
 @onready var death_sound: AudioStreamPlayer = $DeathSound
 @onready var flap_sound: AudioStreamPlayer = $FlapSound
+@onready var collide_sound: AudioStreamPlayer = $CollideSound
 
+# Singletons
 @onready var game_manager: Node2D = %GameManager
 @onready var pipe_spawner: Node2D = %PipeSpawner
 @onready var camera: Camera2D = %Camera
@@ -86,6 +90,9 @@ func _physics_process(delta: float) -> void:
 					
 					# Add force to this player
 					velocity += Vector2.UP * player_collide_force
+					
+					# Play sound
+					collide_sound.play()
 					
 				break
 

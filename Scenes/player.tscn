@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://daajos2gmdvfu"]
+[gd_scene load_steps=21 format=3 uid="uid://daajos2gmdvfu"]
 
 [ext_resource type="Script" uid="uid://ctni680jrjmne" path="res://Scripts/player.gd" id="1_cvnsp"]
 [ext_resource type="PackedScene" uid="uid://c57maji1j8c1l" path="res://Scenes/player_explosion.tscn" id="3_6t5aa"]
@@ -8,6 +8,9 @@
 [ext_resource type="AudioStream" uid="uid://dfn776cfryiwb" path="res://Assets/SFX/bird_death-01.wav" id="6_x3wgy"]
 [ext_resource type="AudioStream" uid="uid://bxojq15jskis8" path="res://Assets/SFX/flap-01.wav" id="7_8erm5"]
 [ext_resource type="AudioStream" uid="uid://ckldgu45fa1mw" path="res://Assets/SFX/flap-02.wav" id="8_f1ek2"]
+[ext_resource type="AudioStream" uid="uid://dx114y4c10jys" path="res://Assets/SFX/bird_hit-01.wav" id="9_gymyn"]
+[ext_resource type="AudioStream" uid="uid://c17n4f76c5kwc" path="res://Assets/SFX/bird_hit-02.wav" id="10_pu2lt"]
+[ext_resource type="AudioStream" uid="uid://c3i6mh24llws4" path="res://Assets/SFX/bird_hit-03.wav" id="11_ukyrk"]
 
 [sub_resource type="Animation" id="Animation_tx1dd"]
 length = 0.001
@@ -97,6 +100,13 @@ streams_count = 2
 stream_0/stream = ExtResource("7_8erm5")
 stream_1/stream = ExtResource("8_f1ek2")
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_7dp3o"]
+random_pitch = 1.1
+streams_count = 3
+stream_0/stream = ExtResource("9_gymyn")
+stream_1/stream = ExtResource("10_pu2lt")
+stream_2/stream = ExtResource("11_ukyrk")
+
 [node name="player1" type="CharacterBody2D" groups=["player"]]
 z_index = 15
 collision_layer = 2
@@ -132,7 +142,11 @@ bus = &"sfx"
 
 [node name="FlapSound" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamRandomizer_tx1dd")
-volume_db = -6.0
+bus = &"sfx"
+
+[node name="CollideSound" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_7dp3o")
+pitch_scale = 0.8
 bus = &"sfx"
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_sprite_animation_finished"]
