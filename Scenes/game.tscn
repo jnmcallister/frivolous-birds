@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://br6454hx8ajer"]
+[gd_scene load_steps=37 format=3 uid="uid://br6454hx8ajer"]
 
 [ext_resource type="PackedScene" uid="uid://daajos2gmdvfu" path="res://Scenes/player.tscn" id="1_ebmjs"]
 [ext_resource type="Script" uid="uid://bbb1ynfp4rb5b" path="res://Scripts/game_manager.gd" id="1_wowpa"]
@@ -24,6 +24,7 @@
 [ext_resource type="Texture2D" uid="uid://baar54mtnf7dy" path="res://Assets/Art/Background/background_snowman.png" id="12_nnt18"]
 [ext_resource type="Texture2D" uid="uid://dm8yteom0oig8" path="res://Assets/Art/Background/background_trees-01.png" id="14_7t8sx"]
 [ext_resource type="PackedScene" uid="uid://df0oi4nx4wjrf" path="res://Scenes/button_blue.tscn" id="17_7nbq1"]
+[ext_resource type="Texture2D" uid="uid://dw2ng1oeyj70x" path="res://Assets/Art/Background/background_cabin.png" id="19_8m3t6"]
 [ext_resource type="PackedScene" uid="uid://6rgrcwpxyhay" path="res://Scenes/button_trees.tscn" id="19_exi56"]
 [ext_resource type="PackedScene" uid="uid://c2tw1i52qxo2f" path="res://Scenes/settings_menu.tscn" id="19_iivbl"]
 [ext_resource type="Texture2D" uid="uid://2jyx1h4ku3j2" path="res://Assets/Art/UI/ui_tutorial_red.png" id="19_mg4q0"]
@@ -229,6 +230,19 @@ texture = ExtResource("14_7t8sx")
 
 [node name="Objects" type="Node2D" parent="Environment/Background"]
 position = Vector2(0, 590)
+
+[node name="Cabins" type="Parallax2D" parent="Environment/Background/Objects"]
+z_index = -5
+scroll_offset = Vector2(-3000, 60)
+repeat_size = Vector2(7000, 0)
+autoscroll = Vector2(-80, 0)
+repeat_times = 3
+script = ExtResource("9_1phco")
+x_offset_bounds = Vector2(-600, -4000)
+x_repeat_size_bounds = Vector2(7000, 10000)
+
+[node name="Sprite2D" type="Sprite2D" parent="Environment/Background/Objects/Cabins"]
+texture = ExtResource("19_8m3t6")
 
 [node name="Snowmen" type="Parallax2D" parent="Environment/Background/Objects"]
 z_index = -5
