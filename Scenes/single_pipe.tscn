@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://bi3hwnl6j3u3v" path="res://Scenes/pipe_segment_holder.tscn" id="1_sed8v"]
 [ext_resource type="PackedScene" uid="uid://cs87dw8laxtt3" path="res://Scenes/pipe_segment.tscn" id="2_jh3dr"]
 [ext_resource type="PackedScene" uid="uid://12t5wktke00i" path="res://Scenes/pipe_score_area.tscn" id="3_3yyca"]
-[ext_resource type="Texture2D" uid="uid://ht807nb0tlqm" path="res://Assets/Art/Gameplay/giraffe_7x.png" id="3_jh3dr"]
+[ext_resource type="Texture2D" uid="uid://etdb4o08f0yl" path="res://Assets/Art/Gameplay/giraffe_5x.png" id="3_jh3dr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v2tej"]
 size = Vector2(20, 2000)
@@ -14,7 +14,7 @@ size = Vector2(20, 2000)
 
 [node name="PipeSegment" parent="PipeSegmentHolder" instance=ExtResource("2_jh3dr")]
 texture = ExtResource("3_jh3dr")
-scale_factor = 7.0
+scale_factor = 5.0
 
 [node name="PipeScoreArea" parent="PipeSegmentHolder" instance=ExtResource("3_3yyca")]
 
