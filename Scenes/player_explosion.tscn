@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://c57maji1j8c1l"]
+[gd_scene load_steps=11 format=3 uid="uid://c57maji1j8c1l"]
 
 [ext_resource type="Texture2D" uid="uid://bpcyeu0kj1j8k" path="res://Assets/Art/Particles/particle_circle.png" id="1_yudi0"]
+[ext_resource type="Texture2D" uid="uid://cyurxmfk85htp" path="res://Assets/Art/Particles/particle_snowball.png" id="2_g2ca0"]
 
 [sub_resource type="Curve" id="Curve_n0k03"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.4977534, 0.0, 0, 0]
@@ -28,7 +29,7 @@ point_count = 2
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.5294118)
 
 [sub_resource type="Gradient" id="Gradient_hj48p"]
-colors = PackedColorArray(0.89411765, 0.9490196, 0.972549, 1, 0.73333335, 0.89411765, 0.96862745, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.8300166, 0.93211955, 0.98016554, 1)
 
 [node name="player_explosion" type="Node2D"]
 
@@ -67,19 +68,19 @@ color_initial_ramp = SubResource("Gradient_io0rh")
 [node name="SnowParticles" type="CPUParticles2D" parent="."]
 emitting = false
 amount = 100
-texture = ExtResource("1_yudi0")
+texture = ExtResource("2_g2ca0")
 lifetime = 1.5
 one_shot = true
 explosiveness = 0.95
 emission_shape = 1
 emission_sphere_radius = 64.0
-direction = Vector2(5, -20)
+direction = Vector2(8, -20)
 spread = 50.0
 gravity = Vector2(-100, 1960)
 initial_velocity_min = 200.0
 initial_velocity_max = 1800.0
-angular_velocity_min = -90.0
-angular_velocity_max = 90.0
+angular_velocity_min = -360.0
+angular_velocity_max = -180.0
 scale_amount_min = 0.5
 scale_amount_curve = SubResource("Curve_yudi0")
 color_ramp = SubResource("Gradient_hxvol")
