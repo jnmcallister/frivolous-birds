@@ -66,6 +66,7 @@ const RESTART_ACTION: String = "restart"
 # Menu things
 @onready var game_over_anim_player: AnimationPlayer = $"../UI/GameOverMenu/GameOverAnimPlayer"
 @onready var game_over_wait_timer: Timer = $"../UI/GameOverMenu/GameOverWaitTimer"
+@onready var version_number_text: Label = $"../UI/StartMenu/VersionNumber"
 
 signal game_start
 signal double_speed
@@ -83,6 +84,9 @@ func _ready() -> void:
 	
 	# Select start button as default
 	start_button.grab_focus()
+	
+	# Set version number
+	version_number_text.text = "Version " + ProjectSettings.get_setting("application/config/version")
 
 
 func _input(event: InputEvent) -> void:
