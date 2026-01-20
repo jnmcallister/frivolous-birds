@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://br6454hx8ajer"]
+[gd_scene load_steps=38 format=3 uid="uid://br6454hx8ajer"]
 
 [ext_resource type="PackedScene" uid="uid://daajos2gmdvfu" path="res://Scenes/player.tscn" id="1_ebmjs"]
 [ext_resource type="Script" uid="uid://bbb1ynfp4rb5b" path="res://Scripts/game_manager.gd" id="1_wowpa"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://cng4dy32vvoc4" path="res://Scenes/time_freezer.tscn" id="4_81klo"]
 [ext_resource type="PackedScene" uid="uid://dsw4dd8bsfses" path="res://Scenes/score_display.tscn" id="4_wowpa"]
 [ext_resource type="PackedScene" uid="uid://wsg6b4iyhle4" path="res://Scenes/top_area.tscn" id="5_1l0tm"]
+[ext_resource type="PackedScene" uid="uid://1225j75erxs1" path="res://Scenes/screenshotter.tscn" id="6_ese38"]
 [ext_resource type="FontFile" uid="uid://cwunrv3x25417" path="res://Assets/Fonts/Blue Highway Bd.otf" id="6_i6g32"]
 [ext_resource type="PackedScene" uid="uid://ba8ihu64e5ns6" path="res://Scenes/ground.tscn" id="7_ldgsr"]
 [ext_resource type="Texture2D" uid="uid://det6ps3rnrlnr" path="res://Assets/Art/Background/sky-05.png" id="8_o5yvi"]
@@ -91,6 +92,8 @@ unique_name_in_owner = true
 
 [node name="TimeFreezer" parent="." instance=ExtResource("4_81klo")]
 unique_name_in_owner = true
+
+[node name="Screenshotter" parent="." instance=ExtResource("6_ese38")]
 
 [node name="Players" type="Node" parent="."]
 

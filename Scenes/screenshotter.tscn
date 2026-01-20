@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://1225j75erxs1"]
+
+[ext_resource type="Script" uid="uid://ct1g5u673a6dq" path="res://Scripts/screenshotter.gd" id="1_o3453"]
+
+[node name="Screenshotter" type="Node"]
+script = ExtResource("1_o3453")
