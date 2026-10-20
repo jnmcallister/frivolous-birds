@@ -13,6 +13,12 @@ const pipe_rate_divisor: float = 1.1 # How much to divide spawn rate after speed
 const gravity_multiplier_increase = 1.05 # How much to increase the gravity multiplier after speed increase timer is up
 const jump_multipler_increase = 1.025 # How much to increase player jump velocity after speed increase timer is up
 const pipe_speed_default = -400 # Default speed of pipes before it's increased
+const y_move_chance_start: float = 0.1 # Chance a newly spawned pipe moves vertically
+const y_move_chance_multiplier: float = 1.1 # Chance multiplier on each speed increase tick
+const y_move_chance_max: float = 0.6 # Chance never goes above this
+const y_speed_start: float = 100 # Starting peak vertical speed (px/s) of moving pipes
+const y_speed_multiplier: float = 1.1 # Vertical speed multiplier on each speed increase tick
+const y_speed_max: float = 350 # Vertical speed never goes above this
 
 var pipe_elevation_max: float = 130 # Lowest height the pipes can spawn at
 var pipe_elevation_min: float = -140 # Highest height the pipes can spawn at
@@ -24,6 +30,8 @@ var single_pipe_count: int = 1
 var pipe_speed: float = pipe_speed_default
 var gravity_multipler: float = 1 # Multiplier for player gravity
 var jump_multiplier: float = 1 # Multiplier for player jump velocity
+var y_move_chance: float = y_move_chance_start # Current chance a spawned pipe moves vertically
+var y_speed: float = y_speed_start # Current peak vertical speed given to moving pipes
 
 @onready var spawn_timer: Timer = $SpawnTimer
 @onready var speed_increase_timer: Timer = $SpeedIncreaseTimer
@@ -105,8 +113,16 @@ func initialize_pipe(pipe_node: Node2D) -> void:
 	pipe_node.position.y = randf_range(pipe_elevation_min, pipe_elevation_max)
 	
 	# Start movement
-	pipe_node.get_node("PipeSegmentHolder").set_move_pipe(true)
-	pipe_node.get_node("PipeSegmentHolder").set_pipe_speed(pipe_speed)
+	var holder = pipe_node.get_node("PipeSegmentHolder")
+	holder.set_move_pipe(true)
+	holder.set_pipe_speed(pipe_speed)
+	
+	# Roll once per spawn to see if this pipe bobs up and down
+	if randf() < y_move_chance:
+		# Random starting phase so neighboring pipes are out of sync
+		holder.start_y_motion(y_speed, randf_range(0.0, TAU))
+	else:
+		holder.stop_y_motion()
 	
 	# Call initialize pipe function if it exists
 	var pipe_script = pipe_node.get_script()
@@ -118,6 +134,9 @@ func initialize_pipe(pipe_node: Node2D) -> void:
 func remove_pipe(pipe_node: Node2D) -> void:
 	# Stop pipe movement
 	pipe_node.set_move_pipe(false)
+	
+	# Reset vertical motion so the recycled pipe starts clean
+	pipe_node.stop_y_motion()
 	
 	# Set position to offscreen (where it will start moving again)
 	pipe_node.global_position.x = global_position.x
@@ -151,9 +170,18 @@ func _on_speed_increase_timer_timeout() -> void:
 	gravity_multipler *= gravity_multiplier_increase
 	jump_multiplier *= jump_multipler_increase
 	
+	# Increase chance and speed of vertical movement (both capped)
+	y_move_chance = minf(y_move_chance * y_move_chance_multiplier, y_move_chance_max)
+	y_speed = minf(y_speed * y_speed_multiplier, y_speed_max)
+	
 	# Iterate through all pipes and speed them up
 	for pipe in all_pipes:
-		pipe.get_node("PipeSegmentHolder").set_pipe_speed(pipe_speed)
+		var holder = pipe.get_node("PipeSegmentHolder")
+		holder.set_pipe_speed(pipe_speed)
+		
+		# Only speed up pipes already bobbing. Stationary pipes stay stationary
+		if holder.is_moving_vertically():
+			holder.set_y_speed(y_speed)
 	
 	# Send signal
 	speed_increased.emit(pipe_speed)
