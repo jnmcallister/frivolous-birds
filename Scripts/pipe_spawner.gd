@@ -11,10 +11,10 @@ const PIPE_SCENE_SINGLE = preload("res://Scenes/single_pipe.tscn")
 # =============================================================================
 const pipe_death_speed_multiplier: float = 3 # How much to multiply pipe speed when player dies
 const pipe_death_rate_divisor: float = 3 # How much to divide spawn rate when player dies
-const pipe_speed_multiplier: float = 1.1 # How much to multiply pipe speed after speed increase timer is up
-const pipe_rate_divisor: float = 1.1 # How much to divide spawn rate after speed increase timer is up
-const gravity_multiplier_increase = 1.05 # How much to increase the gravity multiplier after speed increase timer is up
-const jump_multipler_increase = 1.025 # How much to increase player jump velocity after speed increase timer is up
+const pipe_speed_multiplier: float = 1.08 # How much to multiply pipe speed after speed increase timer is up
+const pipe_rate_divisor: float = 1.08 # How much to divide spawn rate after speed increase timer is up
+const gravity_multiplier_increase = 1.055 # How much to increase the gravity multiplier after speed increase timer is up
+const jump_multipler_increase = 1.06 # How much to increase player jump velocity after speed increase timer is up
 const pipe_speed_default = -400 # Default speed of pipes before it's increased
 const pipe_elevation_max: float = 130 # Lowest height the pipes can spawn at
 const pipe_elevation_min: float = -140 # Highest height the pipes can spawn at
@@ -25,11 +25,11 @@ const pipe_spawn_interval: float = 3.0 # Seconds between pipe spawns at the star
 const pipe_speed_increase_interval: float = 5.0 # Seconds between each speed increase
 
 # Vertical pipe movement (NORMAL MODE ONLY, classic never uses these)
-const y_move_chance_start: float = 0.1 # Chance a newly spawned pipe moves vertically
-const y_move_chance_multiplier: float = 1.1 # Chance multiplier on each speed increase tick
+const y_move_chance_start: float = 0.08 # Chance a newly spawned pipe moves vertically
+const y_move_chance_multiplier: float = 1.2 # Chance multiplier on each speed increase tick
 const y_move_chance_max: float = 0.6 # Chance never goes above this
-const y_speed_start: float = 100 # Starting peak vertical speed (px/s) of moving pipes
-const y_speed_multiplier: float = 1.1 # Vertical speed multiplier on each speed increase tick
+const y_speed_start: float = 150 # Starting peak vertical speed (px/s) of moving pipes
+const y_speed_multiplier: float = 1.08 # Vertical speed multiplier on each speed increase tick
 const y_speed_max: float = 350 # Vertical speed never goes above this
 
 # =============================================================================
