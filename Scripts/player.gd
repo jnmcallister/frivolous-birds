@@ -6,7 +6,14 @@ enum KillzoneType{
 	GIRAFFE
 }
 
+# ---- NORMAL mode values (tune these freely) ----
 const JUMP_VELOCITY = -700.0
+const GRAVITY = 1960.0 # Downward pull in px/s^2 (project gravity 980 * vector (0, 2))
+
+# ---- CLASSIC mode values (frozen, do not change) ----
+const CLASSIC_JUMP_VELOCITY = -700.0
+const CLASSIC_GRAVITY = 1960.0
+
 const SPRITE_ROTATION_MIN = -15
 const SPRITE_ROTATION_MAX = 100
 const SPRITE_ROTATION_SPEED = 80
@@ -15,6 +22,10 @@ const SPRITE_ROTATION_SPEED = 80
 #@export var bird_texture: Texture2D
 @export var bird_sprite_frames: SpriteFrames
 @export var is_player_1 = true # True if red bird, false if green
+
+# The values actually used while playing. Chosen from the lists above in on_game_start()
+var active_jump_velocity: float = JUMP_VELOCITY
+var active_gravity: float = GRAVITY
 
 var enable_movement: bool = false
 var player_collide_force: float = 500 # Force to apply to player when they collide with another player
@@ -55,6 +66,16 @@ func _ready() -> void:
 
 
 func on_game_start() -> void:
+	# Pick the physics values for the selected mode.
+	# This is done here and not in _ready(), because the mode is only chosen when
+	# a start button is pressed (the static mode could be stale during _ready()).
+	if GameModeConfig.current_mode == GameModeConfig.GameMode.CLASSIC:
+		active_jump_velocity = CLASSIC_JUMP_VELOCITY
+		active_gravity = CLASSIC_GRAVITY
+	else:
+		active_jump_velocity = JUMP_VELOCITY
+		active_gravity = GRAVITY
+	
 	enable_movement = true
 	animation_player.play("falling") # Exit idle animation
 
@@ -64,8 +85,8 @@ func _physics_process(delta: float) -> void:
 	# Check if movement is enabled
 	if enable_movement:
 	
-		# Add the gravity.
-		velocity += get_gravity() * delta * pipe_spawner.get_gravity_multiplier()
+		# Add the gravity (straight down), scaled up over time by the spawner
+		velocity += Vector2.DOWN * active_gravity * delta * pipe_spawner.get_gravity_multiplier()
 
 		# Rotate sprite
 		if animated_sprite.rotation_degrees < SPRITE_ROTATION_MAX:
@@ -98,8 +119,8 @@ func _physics_process(delta: float) -> void:
 
 
 func jump() -> void:
-	# Set velocity
-	velocity.y = JUMP_VELOCITY * pipe_spawner.get_jump_multiplier()
+	# Set velocity (uses the mode's jump velocity, scaled up over time by the spawner)
+	velocity.y = active_jump_velocity * pipe_spawner.get_jump_multiplier()
 	
 	# Rotate sprite
 	animated_sprite.rotation_degrees = SPRITE_ROTATION_MIN

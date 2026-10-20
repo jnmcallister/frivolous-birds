@@ -1,0 +1,23 @@
+[gd_scene load_steps=6 format=3 uid="uid://neagkosswn5c"]
+
+[ext_resource type="PackedScene" uid="uid://binn8tnwfsy6k" path="res://Scenes/license_plate_button.tscn" id="1_cls01"]
+[ext_resource type="Texture2D" uid="uid://c5uut0rakvjbu" path="res://Assets/Art/UI/ui_button_trees.png" id="2_cls02"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_clsnrm"]
+texture = ExtResource("2_cls02")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_clsprs"]
+texture = ExtResource("2_cls02")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_clshov"]
+texture = ExtResource("2_cls02")
+
+[node name="ButtonClassic" instance=ExtResource("1_cls01")]
+theme_override_colors/font_color = Color(0.0018154999, 0.00701271, 0.034190673, 1)
+theme_override_colors/font_focus_color = Color(0.022434002, 0.12348043, 0.057320952, 1)
+theme_override_colors/font_pressed_color = Color(0.23813039, 0.47715402, 0.29475802, 1)
+theme_override_colors/font_hover_color = Color(0, 0.1458416, 0.3208597, 1)
+theme_override_styles/normal = SubResource("StyleBoxTexture_clsnrm")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_clsprs")
+theme_override_styles/hover = SubResource("StyleBoxTexture_clshov")
+text = "CLASSIC"

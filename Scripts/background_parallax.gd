@@ -1,19 +1,24 @@
 extends Parallax2D
 
+# The pipe speed that the autoscroll values in game.tscn were authored for.
+# This is fixed on purpose. The spawner emits speed_increased once when the game
+# starts, and the first ratio is computed against this baseline. In classic mode
+# the start speed is also -400, so that ratio is exactly 1 (no change).
+const BASELINE_PIPE_SPEED: float = -400.0
+
 @onready var pipe_spawner: Node2D = %PipeSpawner
 @onready var parallax: Parallax2D = $"."
 
 @export var x_offset_bounds: Vector2 # Min and max values for x offset (on _ready)
 @export var x_repeat_size_bounds: Vector2 # Min and max values for x repeat size. If both are 0, ignore this
 
-var old_pipe_speed: float = 0 # Speed of pipe before speed increase
+var old_pipe_speed: float = BASELINE_PIPE_SPEED # Speed of pipe before the most recent speed change
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	# Get initial pipe speed
-	old_pipe_speed = pipe_spawner.get_pipe_speed_default()
-	
 	# Connect to speed increase event
+	# (old_pipe_speed is NOT read from the spawner here, because the game mode
+	# has not been chosen yet when this runs)
 	pipe_spawner.speed_increased.connect(increase_speed)
 	
 	# Randomize x offset

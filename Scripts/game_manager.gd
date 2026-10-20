@@ -96,6 +96,9 @@ func _input(event: InputEvent) -> void:
 		# Allow player to press either jump button to start the game
 		if allow_jump_from_start:
 			if event.is_action_pressed(PLAYER_1_JUMP_ACTION) or event.is_action_pressed(PLAYER_2_JUMP_ACTION):
+				# Always start NORMAL from this shortcut, so it never depends on
+				# the mode left over from a previous run
+				GameModeConfig.current_mode = GameModeConfig.GameMode.NORMAL
 				start_game()
 	
 	# Game over screen hotkeys
@@ -141,6 +144,9 @@ func on_player_died(is_player_1: bool) -> void:
 		
 
 
+# Starts the game using whatever GameModeConfig.current_mode is set to.
+# Every caller must set the mode BEFORE calling this, because game_start is
+# emitted here and the spawner and players read the mode when they receive it.
 func start_game() -> void:
 	game_start.emit()
 	start_menu.hide()
@@ -163,7 +169,15 @@ func end_game() -> void:
 	game_state = GameState.GAME_OVER
 
 
+# START button: the normal game with all new features
 func _on_start_button_pressed() -> void:
+	GameModeConfig.current_mode = GameModeConfig.GameMode.NORMAL
+	start_game()
+
+
+# CLASSIC button: the frozen original game
+func _on_classic_button_pressed() -> void:
+	GameModeConfig.current_mode = GameModeConfig.GameMode.CLASSIC
 	start_game()
 
 

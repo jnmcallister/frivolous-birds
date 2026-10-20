@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://br6454hx8ajer"]
+[gd_scene load_steps=39 format=3 uid="uid://br6454hx8ajer"]
 
 [ext_resource type="PackedScene" uid="uid://daajos2gmdvfu" path="res://Scenes/player.tscn" id="1_ebmjs"]
 [ext_resource type="Script" uid="uid://bbb1ynfp4rb5b" path="res://Scripts/game_manager.gd" id="1_wowpa"]
@@ -32,6 +32,7 @@
 [ext_resource type="PackedScene" uid="uid://boiv1xdwo4wls" path="res://Scenes/death_fx.tscn" id="20_cwurv"]
 [ext_resource type="Texture2D" uid="uid://bvr7er31ox6xs" path="res://Assets/Art/UI/ui_tutorial_green.png" id="20_vm72l"]
 [ext_resource type="Texture2D" uid="uid://ctlfxehw5v35e" path="res://Assets/Art/UI/ui_logo.png" id="26_mucmn"]
+[ext_resource type="PackedScene" uid="uid://neagkosswn5c" path="res://Scenes/button_classic.tscn" id="27_clsbtn"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_1l0tm"]
 normal = Vector2(0, 1)
@@ -303,7 +304,23 @@ offset_top = -414.00003
 offset_right = 629.6294
 offset_bottom = -158.0
 rotation = 0.053265374
+focus_neighbor_left = NodePath("../ClassicButton")
+focus_neighbor_top = NodePath("../SettingsButton")
+focus_neighbor_right = NodePath("../ClassicButton")
+focus_neighbor_bottom = NodePath("../SettingsButton")
 text = "START"
+
+[node name="ClassicButton" parent="UI/StartMenu" instance=ExtResource("27_clsbtn")]
+layout_mode = 1
+offset_left = 745.0
+offset_top = -388.0
+offset_right = 1257.0
+offset_bottom = -132.0
+rotation = -0.04
+focus_neighbor_left = NodePath("../StartButton")
+focus_neighbor_top = NodePath("../SettingsButton")
+focus_neighbor_right = NodePath("../StartButton")
+focus_neighbor_bottom = NodePath("../SettingsButton")
 
 [node name="SettingsButton" parent="UI/StartMenu" instance=ExtResource("17_7nbq1")]
 layout_mode = 1
@@ -316,6 +333,10 @@ offset_right = 621.6294
 offset_bottom = -543.0
 grow_vertical = 0
 rotation = -0.027083654
+focus_neighbor_left = NodePath("../StartButton")
+focus_neighbor_top = NodePath("../StartButton")
+focus_neighbor_right = NodePath("../ClassicButton")
+focus_neighbor_bottom = NodePath("../StartButton")
 text = "OPTIONS"
 
 [node name="RedTutorial" type="TextureRect" parent="UI/StartMenu"]
@@ -462,6 +483,7 @@ offset_bottom = 0.0
 
 [connection signal="cheating_taunt" from="Environment/TopArea" to="GameManager" method="_on_top_area_cheating_taunt"]
 [connection signal="pressed" from="UI/StartMenu/StartButton" to="GameManager" method="_on_start_button_pressed"]
+[connection signal="pressed" from="UI/StartMenu/ClassicButton" to="GameManager" method="_on_classic_button_pressed"]
 [connection signal="pressed" from="UI/StartMenu/SettingsButton" to="GameManager" method="_on_settings_button_pressed"]
 [connection signal="pressed" from="UI/GameOverMenu/GameOverButton" to="GameManager" method="_on_game_over_button_pressed"]
 [connection signal="timeout" from="UI/GameOverMenu/GameOverWaitTimer" to="GameManager" method="_on_game_over_wait_timer_timeout"]
