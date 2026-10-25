@@ -6,6 +6,9 @@ const PIPE_SCENE_TRIPLE = preload("res://Scenes/triple_pipe.tscn")
 const PIPE_SCENE_DOUBLE = preload("res://Scenes/double_pipe.tscn")
 const PIPE_SCENE_SINGLE = preload("res://Scenes/single_pipe.tscn")
 
+# Collectible heart that revives a dead player (NORMAL mode only)
+const HEART_SCENE = preload("res://Scenes/heart.tscn")
+
 # =============================================================================
 # NORMAL MODE values. Tune these freely, new features go here.
 # =============================================================================
@@ -77,6 +80,12 @@ var jump_multiplier: float = 1 # Multiplier for player jump velocity
 var y_move_chance: float = y_move_chance_start # Current chance a spawned pipe moves vertically (normal mode only)
 var y_speed: float = y_speed_start # Current peak vertical speed given to moving pipes (normal mode only)
 
+# Heart spawning (NORMAL mode only).
+# When pending_heart is true, the next pipe spawned is forced to be a double or
+# triple pipe and gets a heart placed in one of its gaps.
+var pending_heart: bool = false
+var pending_heart_is_red: bool = true # True = red heart (revives player 1), false = green heart
+
 @onready var spawn_timer: Timer = $SpawnTimer
 @onready var speed_increase_timer: Timer = $SpeedIncreaseTimer
 @onready var game_manager: Node2D = %GameManager
@@ -88,6 +97,7 @@ func _ready() -> void:
 	game_manager.game_start.connect(start_spawning)
 	game_manager.double_speed.connect(multiply_pipe_speed)
 	game_manager.game_over.connect(on_game_over)
+	game_manager.player_respawned.connect(revert_pipe_speed)
 
 
 # Copies either the classic or the normal values into the active_ variables.
@@ -184,12 +194,31 @@ func instantiate_new_pipe(pipe: Resource) -> void:
 func spawn_pipe() -> void:
 	# Check if there is a pipe available
 	if free_pipes.size() > 0:
-		# Add random pipe from list
-		var random_index = randi_range(0, free_pipes.size() - 1)
-		initialize_pipe(free_pipes[random_index])
+		var pipe_index: int
+		
+		if pending_heart:
+			# A heart is waiting, so this pipe must have a gap to hold it (double or triple)
+			pipe_index = find_heart_capable_pipe_index()
+			
+			# No double/triple pipe is free right now, so make a new double pipe
+			# (it gets added to the end of free_pipes)
+			if pipe_index == -1:
+				instantiate_new_pipe(PIPE_SCENE_DOUBLE)
+				pipe_index = free_pipes.size() - 1
+		else:
+			# Normal behavior: random pipe from the list
+			pipe_index = randi_range(0, free_pipes.size() - 1)
+		
+		var chosen_pipe: Node2D = free_pipes[pipe_index]
+		initialize_pipe(chosen_pipe)
 		
 		# Remove pipe from list
-		free_pipes.remove_at(random_index)
+		free_pipes.remove_at(pipe_index)
+		
+		# Heart is attached AFTER initialize_pipe, because triple pipes randomize
+		# their middle segment height there and the gap positions depend on it
+		if pending_heart:
+			attach_heart(chosen_pipe)
 	
 	# If there is no pipe available, instantiate new ones
 	else:
@@ -224,12 +253,16 @@ func initialize_pipe(pipe_node: Node2D) -> void:
 
 
 # Removes pipe from scene and adds it to the free_pipes array
+# NOTE: pipe_node here is actually the PipeSegmentHolder (it emits itself)
 func remove_pipe(pipe_node: Node2D) -> void:
 	# Stop pipe movement
 	pipe_node.set_move_pipe(false)
 	
 	# Reset vertical motion so the recycled pipe starts clean
 	pipe_node.stop_y_motion()
+	
+	# Remove any heart that was never collected, so it does not come back with the recycled pipe
+	free_hearts_on_holder(pipe_node)
 	
 	# Set position to offscreen (where it will start moving again)
 	pipe_node.global_position.x = global_position.x
@@ -253,6 +286,25 @@ func multiply_pipe_speed() -> void:
 		pipe.get_node("PipeSegmentHolder").set_pipe_speed(pipe_speed)
 	
 	# Send signal
+	speed_increased.emit(pipe_speed)
+
+
+# Undoes multiply_pipe_speed() when a dead player is respawned.
+# Division and multiplication commute, so any speed increase ticks that happened
+# in between are preserved correctly.
+func revert_pipe_speed(_is_player_1: bool) -> void:
+	# Restore the pipe speed and spawn rate from before the death
+	pipe_speed /= active_pipe_death_speed_multiplier
+	spawn_timer.wait_time *= active_pipe_death_rate_divisor
+	
+	# Restart the spawn timer so the next pipe is not spawned with a leftover short delay
+	spawn_timer.start()
+	
+	# Iterate through all pipes and slow them down
+	for pipe in all_pipes:
+		pipe.get_node("PipeSegmentHolder").set_pipe_speed(pipe_speed)
+	
+	# Send signal (ground and parallax follow this)
 	speed_increased.emit(pipe_speed)
 
 
@@ -293,6 +345,10 @@ func get_jump_multiplier() -> float:
 
 func on_game_over() -> void:
 	speed_increase_timer.stop()
+	
+	# Both players are dead, so no heart can help anymore
+	pending_heart = false
+	clear_hearts()
 
 
 # Used by the ground before a game starts, when no mode has been chosen yet.
@@ -300,3 +356,99 @@ func on_game_over() -> void:
 # speed_increased signal in start_spawning().
 func get_pipe_speed_default() -> float:
 	return CLASSIC_PIPE_SPEED_DEFAULT
+
+
+# =============================================================================
+# HEART SPAWNING (NORMAL mode only)
+# =============================================================================
+
+# Called by the game manager when the heart timer ends.
+# The next spawned pipe will be a double or triple pipe that carries the heart.
+func queue_heart(is_red: bool) -> void:
+	pending_heart = true
+	pending_heart_is_red = is_red
+
+
+# Returns the index (in free_pipes) of a random free pipe that has gaps, or -1 if none.
+# Double and triple pipes have a "TopSegment" node. Single pipes do not.
+func find_heart_capable_pipe_index() -> int:
+	var candidates: Array[int] = []
+	for i in range(free_pipes.size()):
+		if free_pipes[i].get_node("PipeSegmentHolder").has_node("TopSegment"):
+			candidates.append(i)
+	
+	if candidates.is_empty():
+		return -1
+	return candidates[randi_range(0, candidates.size() - 1)]
+
+
+# Creates a heart and places it at the exact center of the correct gap of this pipe.
+# Green heart: upper gap. Red heart: lower gap. A double pipe has only one gap, so both use it.
+func attach_heart(pipe_node: Node2D) -> void:
+	var holder: Node2D = pipe_node.get_node("PipeSegmentHolder")
+	var gap_centers: Array[float] = get_gap_centers(holder)
+	
+	# Safety: no gap found, so keep the heart pending for the next pipe
+	if gap_centers.is_empty():
+		return
+	
+	# Gaps are sorted top to bottom, so the first is the upper gap and the last is the lower gap
+	var gap_y: float = gap_centers.back() if pending_heart_is_red else gap_centers[0]
+	
+	var heart: Heart = HEART_SCENE.instantiate()
+	heart.is_red = pending_heart_is_red
+	heart.position = Vector2(0, gap_y) # Local to the holder, so it follows the pipe
+	holder.add_child(heart)
+	
+	# Tell the game manager when the heart is collected
+	heart.collected.connect(game_manager.on_heart_collected)
+	
+	# The heart is placed, so nothing is pending anymore
+	pending_heart = false
+
+
+# Finds the vertical center of every gap in a pipe, in holder-local coordinates, sorted top to bottom.
+# It measures the real killzone sizes instead of using hardcoded numbers, so it stays correct
+# if you change segment positions, scale_factor values or the triple pipe's random middle height.
+func get_gap_centers(holder: Node2D) -> Array[float]:
+	# Collect the vertical span (top edge, bottom edge) of every pipe segment
+	var spans: Array[Vector2] = []
+	for child in holder.get_children():
+		# Pipe segments are Sprite2D nodes (the score area is an Area2D, so it is skipped)
+		if child is Sprite2D:
+			spans.append(get_segment_span(child))
+	
+	# Sort top to bottom
+	spans.sort_custom(func(a: Vector2, b: Vector2) -> bool: return a.x < b.x)
+	
+	# A gap is the space between the bottom edge of one segment and the top edge of the next
+	var centers: Array[float] = []
+	for i in range(spans.size() - 1):
+		centers.append((spans[i].y + spans[i + 1].x) * 0.5)
+	return centers
+
+
+# Returns Vector2(top_edge, bottom_edge) of a pipe segment's killzone, in holder-local coordinates.
+func get_segment_span(segment: Node2D) -> Vector2:
+	var killzone_node: Node2D = segment.get_node("Killzone")
+	var shape_node: CollisionShape2D = killzone_node.get_node("CollisionShape2D")
+	
+	# Half height = shape half height x killzone scale x segment scale.
+	# absf() because the top segment is flipped (scale.y = -1).
+	var shape_height: float = (shape_node.shape as RectangleShape2D).size.y
+	var half_height: float = shape_height * 0.5 * absf(killzone_node.scale.y) * absf(segment.scale.y)
+	
+	return Vector2(segment.position.y - half_height, segment.position.y + half_height)
+
+
+# Removes every Heart that is a child of the given holder
+func free_hearts_on_holder(holder: Node) -> void:
+	for child in holder.get_children():
+		if child is Heart:
+			child.queue_free()
+
+
+# Removes every heart currently in the world (used when the game ends)
+func clear_hearts() -> void:
+	for pipe in all_pipes:
+		free_hearts_on_holder(pipe.get_node("PipeSegmentHolder"))

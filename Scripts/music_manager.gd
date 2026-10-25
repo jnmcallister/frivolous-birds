@@ -16,6 +16,7 @@ func _ready() -> void:
 	game_manager.game_start.connect(on_game_start)
 	game_manager.double_speed.connect(on_first_player_died)
 	game_manager.game_over.connect(on_second_player_died)
+	game_manager.player_respawned.connect(on_player_respawned)
 
 
 func on_game_start() -> void:
@@ -32,6 +33,19 @@ func on_first_player_died() -> void:
 	
 	# Start the one player song
 	one_player_stream.play(start_spot)
+
+
+# A dead player was revived, so go back to the two player song.
+# This is the exact inverse of on_first_player_died().
+func on_player_respawned(_is_player_1: bool) -> void:
+	# Convert the one player song position back to the two player song position
+	var start_spot = one_player_stream.get_playback_position() / BPM_MULTIPLIER
+	
+	# Stop the one player song
+	one_player_stream.stop()
+	
+	# Resume the two player song from the matching spot
+	two_player_stream.play(start_spot)
 
 
 func on_second_player_died() -> void:

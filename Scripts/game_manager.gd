@@ -42,16 +42,34 @@ var player_first_death_time_freeze: float = 0.12 # Duration of time freeze after
 var player_second_death_time_freeze: float = 0.8 # Duration of time freeze after player second dies
 var player_death_time_slowdown: float = 0.05 # How fast should time move during time freeze
 
+# ---- Respawn tuning (editable in the inspector on the GameManager node) ----
+@export var heart_delay: float = 3.0 # Seconds after a death before a heart is sent out
+@export var respawn_vertical_offset: float = 280.0 # How far above/below the alive bird the revived bird appears (px). Sprites are 192 px tall, so this must stay above ~200 or they visually overlap
+
+# Respawn placement safety
+const BIRD_HALF_HEIGHT: float = 50.0 # Half of the bird hitbox height (hitbox is 162 x 100)
+const RESPAWN_EDGE_MARGIN: float = 40.0 # Extra space kept between a revived bird and the floor/ceiling
+
 const PLAYER_1_JUMP_ACTION: String = "jumpP1"
 const PLAYER_2_JUMP_ACTION: String = "jumpP2"
 const RESTART_ACTION: String = "restart"
 
+# Heart timer (created in code in _ready, so no scene edit is needed)
+var heart_timer: Timer
+var heart_timer_is_red: bool = true # Color of the player whose death started the heart timer
+
 @onready var top_area: Area2D = $"../Environment/TopArea"
+@onready var floor_killzone: Area2D = $"../Environment/Ground/FloorKillzone"
 @onready var score_display: Control = $"../UI/ScoreDisplay"
 @onready var taunt_label: RichTextLabel = $"../UI/TauntText/TauntLabel"
 @onready var taunt_timer: Timer = $"../UI/TauntText/TauntTimer"
 @onready var time_freezer: Node = %TimeFreezer
+@onready var pipe_spawner: Node2D = %PipeSpawner
 @onready var game_over_sound: AudioStreamPlayer = $GameOverSound
+
+# Players (needed to respawn them)
+@onready var player_1: player = $"../Players/player1" # Red bird (top)
+@onready var player_2: player = $"../Players/player2" # Green bird (bottom)
 
 # Buttons
 @onready var start_button: Button = $"../UI/StartMenu/StartButton"
@@ -72,6 +90,7 @@ signal game_start
 signal double_speed
 signal game_over
 signal player_died(is_player_1: bool)
+signal player_respawned(is_player_1: bool) # A dead player was brought back (reverts speed, music and FX)
 
 func _ready() -> void:
 	# Hide menus
@@ -81,6 +100,13 @@ func _ready() -> void:
 	
 	# Connect signals
 	settings_menu.get_node("SettingsBackButton").pressed.connect(_on_settings_back_button_pressed)
+	
+	# Create the heart timer. When it ends, a heart is sent out on the next double/triple pipe.
+	heart_timer = Timer.new()
+	heart_timer.one_shot = true
+	heart_timer.wait_time = heart_delay
+	heart_timer.timeout.connect(_on_heart_timer_timeout)
+	add_child(heart_timer)
 	
 	# Select start button as default
 	start_button.grab_focus()
@@ -137,6 +163,13 @@ func on_player_died(is_player_1: bool) -> void:
 		# Freeze time
 		time_freezer.freeze_time(player_first_death_time_freeze, player_death_time_slowdown)
 		
+		# NORMAL mode only: after a delay, send out a heart that can revive this player.
+		# One heart per death. Classic mode never gets hearts.
+		if GameModeConfig.current_mode != GameModeConfig.GameMode.CLASSIC:
+			heart_timer_is_red = is_player_1
+			heart_timer.wait_time = heart_delay
+			heart_timer.start()
+		
 	elif dead_players == 2:
 		
 		# End the game
@@ -155,6 +188,9 @@ func start_game() -> void:
 
 # Call when the game is over
 func end_game() -> void:
+	# No heart can help anymore, so cancel the timer (the spawner clears hearts on game_over)
+	heart_timer.stop()
+	
 	# Freeze time
 	time_freezer.freeze_time(player_second_death_time_freeze, player_death_time_slowdown)
 	
@@ -167,6 +203,61 @@ func end_game() -> void:
 	# Communicate that it's game over
 	game_over.emit()
 	game_state = GameState.GAME_OVER
+
+
+# Heart timer ended: ask the spawner to put a heart on the next double or triple pipe
+func _on_heart_timer_timeout() -> void:
+	# Only send a heart if exactly one player is still dead and the game is running
+	if game_state == GameState.PLAYING and dead_players == 1:
+		pipe_spawner.queue_heart(heart_timer_is_red)
+
+
+# Called when the alive player touches a heart.
+# is_red_heart is true if the heart revives the red bird (player 1).
+func on_heart_collected(is_red_heart: bool) -> void:
+	if game_state != GameState.PLAYING:
+		return
+	
+	# The heart revives the player of its own color. The other player collected it.
+	var revived: player = player_1 if is_red_heart else player_2
+	var survivor: player = player_2 if is_red_heart else player_1
+	
+	# Safety check: only revive if exactly this bird is dead and the other is alive
+	if not revived.is_dead or survivor.is_dead:
+		return
+	
+	# One fewer dead player (goes back to 0, so the next death triggers the speed-up again)
+	dead_players -= 1
+	
+	# Bring the bird back next to the survivor
+	revived.respawn(get_respawn_position(is_red_heart, survivor))
+	
+	# Revert speed, music and death FX (the spawner, music manager and death FX listen to this)
+	player_respawned.emit(is_red_heart)
+
+
+# Chooses where a revived bird appears.
+# Red appears above the survivor and green below (matching the "player 1 is the top bird" rule).
+# If that spot is too close to the floor or ceiling, the opposite side is used instead.
+func get_respawn_position(revived_is_red: bool, survivor: player) -> Vector2:
+	# Negative y is up in Godot
+	var direction: float = -1.0 if revived_is_red else 1.0
+	
+	# Lowest and highest safe y for the center of a bird
+	var min_y: float = top_area.global_position.y + BIRD_HALF_HEIGHT + RESPAWN_EDGE_MARGIN
+	var max_y: float = floor_killzone.global_position.y - BIRD_HALF_HEIGHT - RESPAWN_EDGE_MARGIN
+	
+	# Try the preferred side first
+	var spawn_y: float = survivor.global_position.y + direction * respawn_vertical_offset
+	
+	# If it is out of the safe range, flip to the other side of the survivor
+	if spawn_y < min_y or spawn_y > max_y:
+		spawn_y = survivor.global_position.y - direction * respawn_vertical_offset
+	
+	# Last resort: clamp into the safe range
+	spawn_y = clampf(spawn_y, min_y, max_y)
+	
+	return Vector2(survivor.global_position.x, spawn_y)
 
 
 # START button: the normal game with all new features
