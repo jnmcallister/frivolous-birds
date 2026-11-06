@@ -18,6 +18,12 @@ const SPRITE_ROTATION_MIN = -15
 const SPRITE_ROTATION_MAX = 100
 const SPRITE_ROTATION_SPEED = 80
 
+# ---- Fast fall values (NORMAL mode only, classic never uses these) ----
+const FAST_FALL_GRAVITY_MULTIPLIER: float = 2.5 # Gravity AND sprite rotation speed are multiplied by this while the fall key is held
+const FAST_FALL_SQUASH_SCALE: Vector2 = Vector2(1.2, 0.8) # Sprite scale while diving (squash and stretch). Push this further for a stronger look
+const FAST_FALL_BLEND_TIME: float = 0.15 # Seconds to ease the sprite scale into and out of the dive pose
+const FAST_FALL_ANIMATION: StringName = &"fast_fall" # Name of the dive squash animation (built in code, see add_fast_fall_animation)
+
 # Scenes and scripts used by the respawn feature
 const TURKEY_SCENE = preload("res://Scenes/turkey.tscn")
 const KILLZONE_SCRIPT = preload("res://Scripts/killzone.gd")
@@ -37,12 +43,25 @@ const TURKEY_LOCAL_POSITION: Vector2 = Vector2(0, -50) # Where the turkey sits i
 var active_jump_velocity: float = JUMP_VELOCITY
 var active_gravity: float = GRAVITY
 
+# True while the selected game mode is CLASSIC. Set in on_game_start().
+# Classic disables fast fall and keeps the old trigger-to-jump gamepad controls.
+var is_classic_mode: bool = false
+
+# Input action names. Filled in _ready() from jumpAction and is_player_1,
+# so game.tscn does not need a new exported property for player 2.
+var fall_action: String = "fallP1" # Hold to dive (NORMAL mode only)
+var classic_jump_action: String = "jumpP1Classic" # Extra jump input that only works in CLASSIC mode (gamepad triggers)
+
 var enable_movement: bool = false
 var is_dead: bool = false # True from the moment this bird dies until it is respawned
 var player_collide_force: float = 500 # Force to apply to player when they collide with another player
 var turkey_init_x_velocity: Vector2 = Vector2(200, 600) # When the player dies, set the x velocity of the turkey to somewhere in this range
 var turkey_init_y_velocity: Vector2 = Vector2(-500, -2000)# When the player dies, set the y velocity of the turkey to somewhere in this range
 var turkey_init_rotation_velocity: Vector2 = Vector2(360 * 2, 360 * 4) # When the player dies, set the rotation velocity of the turkey to somewhere in this range (degrees/second)
+
+# Fast fall state
+var is_fast_falling: bool = false # True while the fall key is held and this bird is allowed to dive
+var was_fast_falling: bool = false # Value of is_fast_falling on the previous physics frame, used to detect press and release
 
 # Immunity state (only used after a respawn)
 var immune: bool = false # While true, giraffes cannot kill this bird (the floor still can)
@@ -79,6 +98,38 @@ func _ready() -> void:
 	# Set sprite frames
 	if bird_sprite_frames:
 		animated_sprite.sprite_frames = bird_sprite_frames
+	
+	# Pick which fall action belongs to this bird (red = S, green = Down arrow)
+	fall_action = "fallP1" if is_player_1 else "fallP2"
+	
+	# The classic-only jump action is the normal jump action with "Classic" added
+	# (jumpP1 -> jumpP1Classic, jumpP2 -> jumpP2Classic)
+	classic_jump_action = jumpAction + "Classic"
+	
+	# Add the dive squash animation to the AnimationPlayer
+	add_fast_fall_animation()
+
+
+# Builds the "fast_fall" squash animation in code and adds it to the AnimationPlayer's library.
+# Done in code so player.tscn does not need to be hand-edited.
+# The animation is a single constant scale key, so when it is played with a blend time the
+# AnimationPlayer eases from the current scale into the dive pose.
+func add_fast_fall_animation() -> void:
+	var library: AnimationLibrary = animation_player.get_animation_library(&"")
+	
+	# The library is a resource shared by every instance of player.tscn (and it survives scene
+	# reloads), so the second bird and any retry would hit "animation already exists" without this check
+	if library.has_animation(FAST_FALL_ANIMATION):
+		return
+	
+	# Animation as long as the blend, holding a single scale value
+	var anim := Animation.new()
+	anim.length = FAST_FALL_BLEND_TIME
+	var track: int = anim.add_track(Animation.TYPE_VALUE)
+	anim.track_set_path(track, NodePath("AnimatedSprite2D:scale"))
+	anim.track_insert_key(track, 0.0, FAST_FALL_SQUASH_SCALE)
+	
+	library.add_animation(FAST_FALL_ANIMATION, anim)
 
 
 func on_game_start() -> void:
@@ -86,9 +137,11 @@ func on_game_start() -> void:
 	# This is done here and not in _ready(), because the mode is only chosen when
 	# a start button is pressed (the static mode could be stale during _ready()).
 	if GameModeConfig.current_mode == GameModeConfig.GameMode.CLASSIC:
+		is_classic_mode = true
 		active_jump_velocity = CLASSIC_JUMP_VELOCITY
 		active_gravity = CLASSIC_GRAVITY
 	else:
+		is_classic_mode = false
 		active_jump_velocity = JUMP_VELOCITY
 		active_gravity = GRAVITY
 	
@@ -104,18 +157,37 @@ func _physics_process(delta: float) -> void:
 	
 	# Check if movement is enabled
 	if enable_movement:
+		
+		# Fast fall (NORMAL mode only). Held key = dive. Dead birds and the start menu never
+		# get here because enable_movement is false for them.
+		is_fast_falling = not is_classic_mode and Input.is_action_pressed(fall_action)
+		
+		# On press or release, update the squash animation
+		if is_fast_falling != was_fast_falling:
+			was_fast_falling = is_fast_falling
+			update_fall_squash()
+		
+		# 1.0 normally, FAST_FALL_GRAVITY_MULTIPLIER while diving.
+		# Used for both gravity and sprite rotation speed below.
+		var fast_fall_factor: float = FAST_FALL_GRAVITY_MULTIPLIER if is_fast_falling else 1.0
 	
-		# Add the gravity (straight down), scaled up over time by the spawner
-		velocity += Vector2.DOWN * active_gravity * delta * pipe_spawner.get_gravity_multiplier()
+		# Add the gravity (straight down), scaled up over time by the spawner and by fast fall
+		velocity += Vector2.DOWN * active_gravity * delta * pipe_spawner.get_gravity_multiplier() * fast_fall_factor
 
-		# Rotate sprite
+		# Rotate sprite (faster while diving). The cap stays the same, a dive only reaches it sooner.
 		if animated_sprite.rotation_degrees < SPRITE_ROTATION_MAX:
-			animated_sprite.rotation_degrees += SPRITE_ROTATION_SPEED * delta
+			animated_sprite.rotation_degrees += SPRITE_ROTATION_SPEED * fast_fall_factor * delta
 		elif animated_sprite.rotation_degrees > SPRITE_ROTATION_MAX:
 			animated_sprite.rotation_degrees = SPRITE_ROTATION_MAX
 
 		# Handle jump.
-		if Input.is_action_just_pressed(jumpAction):
+		var jump_pressed: bool = Input.is_action_just_pressed(jumpAction)
+		
+		# In CLASSIC mode the gamepad triggers still jump. In NORMAL mode they are used for fast fall.
+		if is_classic_mode:
+			jump_pressed = jump_pressed or Input.is_action_just_pressed(classic_jump_action)
+		
+		if jump_pressed:
 			jump()
 
 		# Move player
@@ -136,6 +208,22 @@ func _physics_process(delta: float) -> void:
 					collide_sound.play()
 					
 				break
+
+
+# Switches the squash animation when the fall key is pressed or released.
+# If the flap squash is playing it is left alone, and _on_sprite_animation_finished()
+# picks the right animation when the flap ends (at most 0.4s later).
+func update_fall_squash() -> void:
+	# Do not cut off the flap squash
+	if animated_sprite.animation == "jump" and animated_sprite.is_playing():
+		return
+	
+	if is_fast_falling:
+		# Ease into the dive pose
+		animation_player.play(FAST_FALL_ANIMATION, FAST_FALL_BLEND_TIME)
+	else:
+		# Ease back to the normal falling squash instead of snapping to scale (1, 1)
+		animation_player.play("falling", FAST_FALL_BLEND_TIME)
 
 
 func jump() -> void:
@@ -172,6 +260,10 @@ func on_player_died(killzone_type: KillzoneType) -> void:
 	is_dead = true
 	immune = false
 	animated_sprite.visible = true
+	
+	# A dead bird is not diving. Reset so a respawn starts from a clean state.
+	is_fast_falling = false
+	was_fast_falling = false
 	
 	# Check which type of killzone this is
 	if killzone_type == KillzoneType.GIRAFFE:
@@ -247,7 +339,9 @@ func respawn(spawn_position: Vector2) -> void:
 	immunity_time_left = immunity_duration
 	blink_time_left = blink_interval
 	
-	# Allow movement again, then do a small hop so the bird does not drop straight down
+	# Allow movement again, then do a small hop so the bird does not drop straight down.
+	# NOTE: if the fall key is already held, the bird starts diving on the next physics
+	# frame (there is deliberately no release latch), which can crush this hop.
 	enable_movement = true
 	jump()
 	velocity.y *= respawn_hop_factor
@@ -323,4 +417,10 @@ func _on_sprite_animation_finished() -> void:
 	# Check which animation this is
 	if animated_sprite.animation == "jump":
 		animated_sprite.play("idle")
-		animation_player.play("falling")
+		
+		# The flap is over, so hand the squash back to the right animation.
+		# If the fall key is still held, go straight into the dive pose.
+		if is_fast_falling:
+			animation_player.play(FAST_FALL_ANIMATION, FAST_FALL_BLEND_TIME)
+		else:
+			animation_player.play("falling")
