@@ -15,10 +15,16 @@ signal collected(is_red: bool)
 # If the heart gets this far left it was never collected, so it is removed.
 const RESPAWN_X_POS: float = -1500
 
-# Placeholder visuals/audio. Swap these out when your real art exists.
+# Heart textures. The matching one is applied to the Sprite2D in _ready().
+const RED_HEART_TEXTURE: Texture2D = preload("res://Assets/Art/Gameplay/heart_red.png")
+const GREEN_HEART_TEXTURE: Texture2D = preload("res://Assets/Art/Gameplay/heart_green.png")
+
+# Placeholder audio. Swap this out when your real pickup sound exists.
 const PICKUP_SFX: AudioStream = preload("res://Assets/SFX/popping-01.wav")
 const PARTICLE_TEXTURE: Texture2D = preload("res://Assets/Art/Particles/particle_circle.png")
 
+# Colors of the pickup particle burst only (the heart itself uses its textures).
+# Tweak these to match your heart art.
 const RED_COLOR: Color = Color(1.0, 0.2, 0.25)
 const GREEN_COLOR: Color = Color(0.3, 0.9, 0.35)
 
@@ -33,13 +39,15 @@ var is_red: bool = true
 # Guards against double collection if two bodies enter in the same frame
 var was_collected: bool = false
 
+@onready var sprite: Sprite2D = $Sprite2D # Shows the red or green heart texture
+
 
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
 	
-	# Placeholder tint so you can tell the colors apart.
-	# Remove this line once your animated sprites are already colored.
-	modulate = RED_COLOR if is_red else GREEN_COLOR
+	# Show the heart texture that matches this heart's color.
+	# is_red is set by the pipe spawner before the heart is added to the scene.
+	sprite.texture = RED_HEART_TEXTURE if is_red else GREEN_HEART_TEXTURE
 
 
 func _physics_process(_delta: float) -> void:
